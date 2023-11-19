@@ -38,6 +38,6 @@ let topicSchema = new mongoose.Schema({
     maxStudents: {
         type: Number,
     },
-}, { timestamps: true }
-);
-module.exports = mongoose.model("Topic", topicSchema);
+}, { timestamps: true });
+
+module.exports = mongoose.model("Topic", topicSchema, "TopicTable");
