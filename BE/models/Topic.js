@@ -18,7 +18,7 @@ let topicSchema = new mongoose.Schema({
         type: String,
         require: true,
     },
-    classType: {
+    faculty: {
         type: String,
         require: true,
         enum: ['CLA', "CLS", "FIE"],
@@ -27,7 +27,7 @@ let topicSchema = new mongoose.Schema({
         type: String,
         require: true,
     },
-    type: {
+    typeTopic: {
         type: String,
         require: true,
     },

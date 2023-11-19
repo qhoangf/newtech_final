@@ -7,19 +7,19 @@ let topicController = {
         try {
             let newTopic = await new Topic({
                 // Kiểu dữ liệu
-                // topicName - require
-                // descriptions - require
+                // topic - require
+                // description - require
                 // instructors - require + unique
-                // classType - require
-                // reviewerLecturer - require
-                // typeSubject
+                // faculty - require
+                // reviewer - require
+                // typeTopic
 
-                topicName: req.body.topicName,
-                descriptions: req.body.descriptions,
+                topic: req.body.topic,
+                description: req.body.description,
                 instructors: req.body.instructors,
-                classType: req.body.classType,
-                reviewerLecturer: req.body.reviewerLecturer,
-                typeSubject: req.body.typeSubject,
+                faculty: req.body.faculty,
+                reviewer: req.body.reviewer,
+                typeTopic: req.body.typeTopic,
             });
 
             // Lưu data xuống Mongo DB
@@ -44,21 +44,21 @@ let topicController = {
     updateTopic: async (req, res) => {
         try {
             let {
-                topicName,
-                descriptions,
+                topic,
+                description,
                 instructors,
-                classType,
-                reviewerLecturer,
-                typeSubject
+                faculty,
+                reviewer,
+                typeTopic
             } = req.body;
 
             let updateTopic = await Topic.findByIdAndUpdate(req.params.id, {
-                topicName,
-                descriptions,
+                topic,
+                description,
                 instructors,
-                classType,
-                reviewerLecturer,
-                typeSubject,
+                faculty,
+                reviewer,
+                typeTopic,
             });
 
             if (!updateTopic) {
