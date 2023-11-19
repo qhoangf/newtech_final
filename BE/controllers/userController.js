@@ -150,6 +150,14 @@ let userController = {
             if(req.body.email){
                 user.email = req.body.email;
             }
+
+            if(req.body.password){
+                let saltcode = await bcrypt.genSalt(10);
+                let hashcode = await bcrypt.hash(req.body.password, saltcode);
+
+                user.password = hashcode;
+            }
+
             await user.save();
             return res.status(200).json("Update successfully!")
         } catch (error) {
