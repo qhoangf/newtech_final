@@ -117,7 +117,7 @@ let userController = {
     //Xóa User
     deleteUser: async (req,res) =>{
         try {
-            let user = await User.findByIdAndDelete(req.params.id);
+            await User.findByIdAndDelete(req.params.id);
             return res.status(200).json("Delete Successfully")
         } catch (error) {
             return res.status(500).json(error);
