@@ -4,12 +4,12 @@ let router = express.Router();
 let hashMiddlewareController = require("../controllers/hashMiddlewareController");
 let topicController = require("../controllers/topicController")
 
-router.post("/register/:id", hashMiddlewareController.verifyTokenAndStudentAuth, topicController.registerTopicFromUser);
+router.post("/registerTopic/:id", hashMiddlewareController.verifyTokenAndStudentAuth, topicController.registerTopicFromUser);
 
-router.post("/create", hashMiddlewareController.verifyTokenAndLecturerAuth, topicController.createTopic);
+router.post("/createTopic", hashMiddlewareController.verifyTokenAndLecturerAuth, topicController.createTopic);
 
-router.get("/", topicController.getAllTopic);
+router.get("/getAllTopic", topicController.getAllTopic);
 
-router.put("/update/:id", hashMiddlewareController.verifyTokenAndLecturerAuth, topicController.updateTopic);
+router.post("/updateTopic/:id", hashMiddlewareController.verifyTokenAndLecturerAuth, topicController.updateTopic);
 
 module.exports = router;

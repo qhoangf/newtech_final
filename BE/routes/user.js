@@ -5,20 +5,20 @@ let router = express.Router();
 let hashMiddlewareController = require("../controllers/hashMiddlewareController");
 
 
-router.post("/register",userController.registerUser);
+router.post("/registerUser", userController.registerUser);
 
-router.post("/login",userController.loginUser);
+router.get("/getAllUser", hashMiddlewareController.verifyToken, userController.getAllUser);
 
-router.get("/getall",hashMiddlewareController.verifyToken,userController.getAllUser);
+router.post("/deleteUser/:id", hashMiddlewareController.verifyTokenAndAdminAuth, userController.deleteUser);
 
-router.delete("/delete/:id",hashMiddlewareController.verifyTokenAndAdminAuth,userController.deleteUser);
+router.post("/refreshToken", userController.requestRefreshToken);
 
-router.post("/refresh",userController.requestRefreshToken);
+router.get("/getUserInfo/:id", hashMiddlewareController.verifyToken, userController.getUserProfile);
 
-router.get("/profile/:id",hashMiddlewareController.verifyToken,userController.getUserProfile);
+router.post("/updateUser/:id", hashMiddlewareController.verifyToken, userController.updateUser);
 
-router.put("/update/:id",hashMiddlewareController.verifyToken,userController.updateUser);
+router.post("/login", userController.loginUser);
 
-router.post("/logout",hashMiddlewareController.verifyToken,userController.logOutUser)
+router.post("/logout", hashMiddlewareController.verifyToken, userController.logOutUser)
 
 module.exports = router;
