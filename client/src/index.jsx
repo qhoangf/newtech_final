@@ -10,9 +10,9 @@ import * as serviceWorker from './serviceWorker';
 import 'perfect-scrollbar/css/perfect-scrollbar.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-
+console.log(window.location.pathname)
 root.render(
-  (window.location.pathname === "") ?
+  (window.location.pathname === "/") ?
     <>
       <React.StrictMode>
         <AppIndex />

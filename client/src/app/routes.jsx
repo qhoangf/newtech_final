@@ -16,7 +16,7 @@ const ForgotPassword = Loadable(lazy(() => import('app/views/sessions/ForgotPass
 const AppEchart = Loadable(lazy(() => import('app/views/charts/echarts/AppEchart')));
 
 // dashboard page
-const Analytics = Loadable(lazy(() => import('app/views/dashboard/Analytics')));
+const Analytics = Loadable(lazy(() => import('app/views/system/Analytics')));
 
 const routes = [
   {
@@ -29,7 +29,7 @@ const routes = [
       ...materialRoutes,
       // dashboard route
       {
-        path: '/dashboard/default',
+        path: '/system/default',
         element: <Analytics />,
         auth: authRoles.admin
       },
@@ -49,7 +49,7 @@ const routes = [
   { path: '/session/signup', element: <JwtRegister /> },
   { path: '/session/forgot-password', element: <ForgotPassword /> },
 
-  { path: '/', element: <Navigate to="dashboard/default" /> },
+  { path: '/', element: <Navigate to="/" /> },
   { path: '*', element: <NotFound /> }
 ];
 

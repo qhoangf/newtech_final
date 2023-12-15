@@ -6,7 +6,7 @@ const Head = () => {
       <section className='head'>
         <div className='container flexSB school-name'>
           <div className="school-logo">
-            <img src="/images/school_logo.png"/>
+            <img src="/assets/images/hcmute/school_logo.png"/>
           </div>
           <div className='logo'>
             <h1 className="has-text-right">HCMUTE</h1>

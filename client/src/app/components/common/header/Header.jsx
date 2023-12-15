@@ -15,16 +15,10 @@ const Header = () => {
             <li>
               <Link to='/'>Trang chủ</Link>
             </li>
-            <li>
-              <Link to='/'>Hệ thống</Link>
-            </li>
           </ul>
           <div className='start'>
-            <div className='button'>ĐĂNG NHẬP (LOGIN)</div>
+            <div className='button' onClick={() => window.location.pathname = "/session/signin"}>ĐĂNG NHẬP (LOGIN)</div>
           </div>
-          <button className='toggle' onClick={() => setClick(!click)}>
-            {click ? <i className='fa fa-times'> </i> : <i className='fa fa-bars'></i>}
-          </button>
         </nav>
       </header>
     </>
