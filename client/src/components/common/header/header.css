@@ -1,0 +1,90 @@
+/*--------head------------*/
+.head {
+  padding: 20px 0;
+  color: #3253ae;
+}
+.school-logo img {
+  width: 7.5rem;
+}
+.has-text-right {
+  text-align: right;
+}
+.logo h1 {
+  font-size: 35px;
+  font-weight: 900;
+}
+hr {
+  border-bottom: 1px solid #3253ae;
+}
+.head .icon {
+  margin-left: 10px;
+}
+/*--------head------------*/
+/*--------header------------*/
+header {
+  background-color: #00000059;
+  border-radius: 15px;
+  margin: 0 60px;
+}
+header .nav {
+  display: flex !important;
+}
+header li {
+  margin-right: 40px;
+}
+header ul {
+  padding: 30px 20px;
+}
+header ul li a {
+  color: #ffffff;
+  font-weight: 900;
+  transition: 0.5s;
+}
+header ul li a:hover {
+  color: #a0beff;
+}
+.start {
+  background-color: #3253aecf;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
+  padding: 30px 70px;
+  color: #ffffffcc;
+  clip-path: polygon(10% 0%, 100% 0, 100% 100%, 0% 100%);
+  cursor: pointer;
+}
+.toggle {
+  display: none;
+}
+/*--------header------------*/
+@media screen and (max-width: 768px) {
+  .start {
+    clip-path: none;
+  }
+  header {
+    margin: 0;
+    background-color: #8b94ef;
+    position: relative;
+  }
+  header ul.flexSB {
+    display: none;
+  }
+  header ul li {
+    margin-bottom: 20px;
+  }
+  .toggle {
+    display: block;
+    background: none;
+    color: #fff;
+    font-size: 30px;
+    position: absolute;
+    right: 0;
+    top: -20px;
+  }
+  .mobile-nav {
+    position: absolute;
+    top: 7vh;
+    left: 0;
+    width: 100%;
+    background-color: #8b94ef;
+  }
+}
