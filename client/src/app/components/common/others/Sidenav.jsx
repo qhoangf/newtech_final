@@ -1,7 +1,7 @@
 import { Fragment } from 'react';
 import Scrollbar from 'react-perfect-scrollbar';
 import { styled } from '@mui/material';
-import { MatxVerticalNav } from 'app/components';
+import { MatxVerticalNav } from 'app/components/common/others';
 import useSettings from 'app/hooks/useSettings';
 import { navigations } from 'app/navigations';
 

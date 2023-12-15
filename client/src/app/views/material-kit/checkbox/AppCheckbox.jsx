@@ -1,5 +1,5 @@
 import { Box, styled } from '@mui/material';
-import { Breadcrumb, SimpleCard } from 'app/components';
+import { Breadcrumb, SimpleCard } from 'app/components/common/others';
 import FormGroupCheckbox from './FormGroupCheckbox';
 import LabelledCheckbox from './LabelledCheckbox';
 import PlacingCheckboxLabel from './PlacingCheckboxLabel';

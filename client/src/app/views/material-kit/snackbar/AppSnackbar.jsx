@@ -1,5 +1,5 @@
 import { Box, Stack, styled } from "@mui/material";
-import { Breadcrumb, SimpleCard } from "app/components";
+import { Breadcrumb, SimpleCard } from "app/components/common/others";
 import ConsecutiveSnackbar from "./ConsecutiveSnackbar";
 import CustomizedSnackbars from "./CustomizedSnackbar";
 import DirectionSnackbar from "./DirectionSnackbar";

@@ -12,16 +12,16 @@ import {
   useTheme
 } from '@mui/material';
 
-import { MatxMenu, MatxSearchBox } from 'app/components';
+import { MatxMenu, MatxSearchBox } from 'app/components/common/others';
 import { themeShadows } from 'app/components/MatxTheme/themeColors';
 import { NotificationProvider } from 'app/contexts/NotificationContext';
 import useAuth from 'app/hooks/useAuth';
 import useSettings from 'app/hooks/useSettings';
 import { topBarHeight } from 'app/utils/constant';
 
-import { Span } from '../../Typography';
+import { Span } from '../../common/others/Typography';
 import NotificationBar from '../../NotificationBar/NotificationBar';
-import ShoppingCart from '../../ShoppingCart';
+import ShoppingCart from '../../common/others/ShoppingCart';
 
 const StyledIconButton = styled(IconButton)(({ theme }) => ({
   color: theme.palette.text.primary

@@ -4,7 +4,7 @@ import { Clear, KeyboardArrowDown, KeyboardArrowUp } from '@mui/icons-material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { H6, Small } from './Typography';
 import useSettings from 'app/hooks/useSettings';
-import { themeShadows } from './MatxTheme/themeColors';
+import { themeShadows } from '../../MatxTheme/themeColors';
 import { sideNavWidth, topBarHeight } from 'app/utils/constant';
 
 // styled components

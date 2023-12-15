@@ -1,6 +1,6 @@
 import { Box, styled, useTheme } from '@mui/material';
-import Breadcrumb from 'app/components/Breadcrumb';
-import SimpleCard from 'app/components/SimpleCard';
+import Breadcrumb from 'app/components/common/others/Breadcrumb';
+import SimpleCard from 'app/components/common/others/SimpleCard';
 import AreaChart from './AreaChart';
 import ComparisonChart from './ComparisonChart';
 import DoughnutChart from './Doughnut';

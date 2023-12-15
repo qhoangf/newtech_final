@@ -1,6 +1,6 @@
 import { Stack } from '@mui/material';
 import { Box, styled } from '@mui/material';
-import { Breadcrumb, SimpleCard } from 'app/components';
+import { Breadcrumb, SimpleCard } from 'app/components/common/others';
 import ConfirmationDialog from './ConfirmationDialog';
 import CustomizedDialogs from './CustomizedDialog';
 import AlertDialogSlide from './DialogTransition';

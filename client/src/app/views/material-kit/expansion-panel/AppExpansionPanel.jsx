@@ -1,5 +1,5 @@
 import { Box, Stack, styled } from "@mui/material";
-import { Breadcrumb, SimpleCard } from "app/components";
+import { Breadcrumb, SimpleCard } from "app/components/common/others";
 import ControlledExpansionPanels from "./ControlledAccordion";
 import CustomizedExpansionPanels from "./CustomizedExpansionPanel";
 import DetailedExpansionPanel from "./DetailedExpansionPanel";

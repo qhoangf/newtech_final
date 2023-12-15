@@ -17,7 +17,7 @@ import useSettings from 'app/hooks/useSettings';
 import { sideNavWidth, topBarHeight } from 'app/utils/constant';
 import { getTimeDifference } from 'app/utils/utils.js';
 import { themeShadows } from '../MatxTheme/themeColors';
-import { Paragraph, Small } from '../Typography';
+import { Paragraph, Small } from '../common/others/Typography';
 
 const Notification = styled('div')(() => ({
   padding: '16px',

@@ -1,5 +1,5 @@
 import { Box, styled } from '@mui/material';
-import { MatxLogo } from 'app/components';
+import { MatxLogo } from 'app/components/common/others';
 import useSettings from 'app/hooks/useSettings';
 import { Span } from './Typography';
 

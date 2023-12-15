@@ -1,6 +1,6 @@
 import { Stack } from '@mui/material';
 import { Box, styled } from '@mui/material';
-import { Breadcrumb, SimpleCard } from 'app/components';
+import { Breadcrumb, SimpleCard } from 'app/components/common/others';
 import PlacingRadioLabel from './PlacingRadioLabel';
 import SimpleRadio from './SimpleRadio';
 import StandaloneRadio from './StandaloneRadio';

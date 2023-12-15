@@ -2,7 +2,7 @@ import { useTheme } from '@emotion/react';
 import { LoadingButton } from '@mui/lab';
 import { Card, Checkbox, Grid, TextField } from '@mui/material';
 import { Box, styled } from '@mui/material';
-import { Paragraph } from 'app/components/Typography';
+import { Paragraph } from 'app/components/common/others/Typography';
 import useAuth from 'app/hooks/useAuth';
 import { Formik } from 'formik';
 import { useState } from 'react';

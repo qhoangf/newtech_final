@@ -1,4 +1,4 @@
-import { MatxSuspense } from 'app/components';
+import { MatxSuspense } from 'app/components/common/others';
 import useSettings from 'app/hooks/useSettings';
 import { MatxLayouts } from './index';
 

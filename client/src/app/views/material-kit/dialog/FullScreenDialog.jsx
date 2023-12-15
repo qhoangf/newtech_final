@@ -12,7 +12,7 @@ import IconButton from '@mui/material/IconButton';
 import ListItemText from '@mui/material/ListItemText';
 import Slide from '@mui/material/Slide';
 import Toolbar from '@mui/material/Toolbar';
-import { H6 } from 'app/components/Typography';
+import { H6 } from 'app/components/common/others/Typography';
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;

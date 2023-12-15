@@ -2,7 +2,7 @@ import { Box, ButtonBase, Icon, styled } from '@mui/material';
 import useSettings from 'app/hooks/useSettings';
 import React, { Fragment } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Paragraph, Span } from '../Typography';
+import { Paragraph, Span } from '../common/others/Typography';
 import MatxVerticalNavExpansionPanel from './MatxVerticalNavExpansionPanel';
 
 const ListLabel = styled(Paragraph)(({ theme, mode }) => ({

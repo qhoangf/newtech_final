@@ -1,5 +1,5 @@
 import { Box, styled } from "@mui/material";
-import { Breadcrumb, SimpleCard } from "app/components";
+import { Breadcrumb, SimpleCard } from "app/components/common/others";
 import PaginationTable from "./PaginationTable";
 import SimpleTable from "./SimpleTable";
 

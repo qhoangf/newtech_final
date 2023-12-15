@@ -4,8 +4,8 @@ import { themeShadows } from 'app/components/MatxTheme/themeColors';
 import useSettings from 'app/hooks/useSettings';
 import { convertHexToRGB } from 'app/utils/utils';
 import { sidenavCompactWidth, sideNavWidth } from 'app/utils/constant';
-import Brand from '../../Brand';
-import Sidenav from '../../Sidenav';
+import Brand from '../../common/others/Brand';
+import Sidenav from '../../common/others/Sidenav';
 
 const SidebarNavRoot = styled(Box)(({ theme, width, bg, image }) => ({
   position: 'fixed',

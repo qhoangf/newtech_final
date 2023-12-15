@@ -1,9 +1,9 @@
 import { Icon, IconButton } from '@mui/material';
 import { styled, useTheme } from '@mui/material';
-import { Chatbox, ChatHead } from 'app/components';
+import { Chatbox, ChatHead } from 'app/components/common/others';
 import MatxCustomizer from '../MatxCustomizer/MatxCustomizer';
-import ShoppingCart from '../ShoppingCart';
-import { Span } from '../Typography';
+import ShoppingCart from '../common/others/ShoppingCart';
+import { Span } from '../common/others/Typography';
 
 const SidebarRoot = styled('div')(({ theme, width }) => ({
   position: 'fixed',

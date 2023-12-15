@@ -1,5 +1,5 @@
 import { Box, Icon, styled, Tooltip } from "@mui/material";
-import { Breadcrumb, SimpleCard } from "app/components";
+import { Breadcrumb, SimpleCard } from "app/components/common/others";
 
 const Container = styled("div")(({ theme }) => ({
   margin: "30px",

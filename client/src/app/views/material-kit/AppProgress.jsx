@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, styled } from '@mui/material';
-import { Breadcrumb, SimpleCard } from 'app/components';
+import { Breadcrumb, SimpleCard } from 'app/components/common/others';
 import { LinearProgress, CircularProgress } from '@mui/material';
 
 const ProgressRoot = styled('div')(({ theme }) => ({

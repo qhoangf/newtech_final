@@ -15,7 +15,7 @@ import useSettings from 'app/hooks/useSettings';
 import { Fragment, useState } from 'react';
 import Scrollbar from 'react-perfect-scrollbar';
 import { themeShadows } from '../MatxTheme/themeColors';
-import { H5, Span } from '../Typography';
+import { H5, Span } from '../common/others/Typography';
 import BadgeSelected from './BadgeSelected';
 
 const Label = styled(Span)(({ theme }) => ({

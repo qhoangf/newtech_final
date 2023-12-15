@@ -1,5 +1,5 @@
 import { Box, styled } from '@mui/material';
-import { Breadcrumb, SimpleCard } from 'app/components';
+import { Breadcrumb, SimpleCard } from 'app/components/common/others';
 import AsyncAutocomplete from './AsyncAutocomplete';
 import AutocompleteCombo from './AutocompleteCombo';
 import BadgeAutocomplete from './BadgeAutocomplete';

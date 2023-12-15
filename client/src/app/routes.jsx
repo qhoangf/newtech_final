@@ -2,7 +2,7 @@ import { lazy } from 'react';
 import { Navigate } from 'react-router-dom';
 import AuthGuard from './auth/AuthGuard';
 import { authRoles } from './auth/authRoles';
-import Loadable from './components/Loadable';
+import Loadable from './components/common/others/Loadable';
 import MatxLayout from './components/MatxLayout/MatxLayout';
 import materialRoutes from 'app/views/material-kit/MaterialRoutes';
 

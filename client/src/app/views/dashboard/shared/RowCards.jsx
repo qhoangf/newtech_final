@@ -11,7 +11,7 @@ import {
   styled,
   useTheme,
 } from '@mui/material';
-import { Span } from 'app/components/Typography';
+import { Span } from 'app/components/common/others/Typography';
 import { format } from 'date-fns';
 import { Fragment } from 'react';
 

@@ -1,5 +1,5 @@
 import { lazy } from 'react';
-import Loadable from 'app/components/Loadable';
+import Loadable from 'app/components/common/others/Loadable';
 
 const AppTable = Loadable(lazy(() => import('./tables/AppTable')));
 const AppForm = Loadable(lazy(() => import('./forms/AppForm')));

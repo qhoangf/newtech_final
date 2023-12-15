@@ -14,7 +14,7 @@ import {
   TableRow,
   useTheme,
 } from '@mui/material';
-import { Paragraph } from 'app/components/Typography';
+import { Paragraph } from 'app/components/common/others/Typography';
 
 const CardHeader = styled(Box)(() => ({
   display: 'flex',
