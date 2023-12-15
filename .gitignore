@@ -1,4 +1,4 @@
 /client/node_modules
 /server/node_modules
-/system_test/node_modules
+/guest/node_modules
 node_modules

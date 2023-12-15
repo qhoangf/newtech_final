@@ -70,7 +70,7 @@ const JwtLogin = () => {
         <Grid container>
           <Grid item sm={6} xs={12}>
             <JustifyBox p={4} height="100%" sx={{ minWidth: 320 }}>
-              <img src="/images/ute_logo_white.png" width="70%" alt="" />
+              <img src="/assets/images/illustrations/dreamer.svg" width="100%" alt="" />
             </JustifyBox>
           </Grid>
 
@@ -113,6 +113,27 @@ const JwtLogin = () => {
                       sx={{ mb: 1.5 }}
                     />
 
+                    <FlexBox justifyContent="space-between">
+                      <FlexBox gap={1}>
+                        <Checkbox
+                          size="small"
+                          name="remember"
+                          onChange={handleChange}
+                          checked={values.remember}
+                          sx={{ padding: 0 }}
+                        />
+
+                        <Paragraph>Remember Me</Paragraph>
+                      </FlexBox>
+
+                      <NavLink
+                        to="/session/forgot-password"
+                        style={{ color: theme.palette.primary.main }}
+                      >
+                        Forgot password?
+                      </NavLink>
+                    </FlexBox>
+
                     <LoadingButton
                       type="submit"
                       color="primary"
@@ -122,6 +143,16 @@ const JwtLogin = () => {
                     >
                       Login
                     </LoadingButton>
+
+                    <Paragraph>
+                      Don't have an account?
+                      <NavLink
+                        to="/session/signup"
+                        style={{ color: theme.palette.primary.main, marginLeft: 5 }}
+                      >
+                        Register
+                      </NavLink>
+                    </Paragraph>
                   </form>
                 )}
               </Formik>
