@@ -1,9 +1,9 @@
 import "./AppIndex.css"
 import Header from "../app/components/common/header/Header"
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
-import About from "./app/components/notification/Notification"
-import Footer from "./app/components/common/footer/Footer"
-import Home from "./app/components/home/Home"
+import About from "../app/components/notification/Notification"
+import Footer from "../app/components/common/footer/Footer"
+import Home from "../app/components/home/Home"
 function App() {
   return (
     <>
