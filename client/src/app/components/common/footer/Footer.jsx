@@ -22,9 +22,9 @@ const Footer = () => {
             <h1>TRƯỜNG ĐẠI HỌC SƯ PHẠM KỸ THUẬT TP.HCM</h1>
             <p>
               <a href="https://www.facebook.com/dhspkt.hcmute/?locale=vi_VN" target="_blank">
-                <i className='fab fa-facebook-f icon'></i>
+                <i className='fab fa-facebook-f icon-index'></i>
               </a>
-              Theo dõi các tin mới nhất của trường qua <a href="https://www.facebook.com/dhspkt.hcmute/?locale=vi_VN" target="_blank">Facebook</a>
+              &nbsp;Theo dõi các tin mới nhất của trường qua <a href="https://www.facebook.com/dhspkt.hcmute/?locale=vi_VN" target="_blank">Facebook</a>
             </p>
           </div>
           <div className='box last'>

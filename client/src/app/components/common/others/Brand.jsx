@@ -1,5 +1,4 @@
 import { Box, styled } from '@mui/material';
-import { MatxLogo } from 'app/components/common/others';
 import useSettings from 'app/hooks/useSettings';
 import { Span } from './Typography';
 
@@ -24,14 +23,10 @@ const Brand = ({ children }) => {
   return (
     <BrandRoot>
       <Box display="flex" alignItems="center">
-        <MatxLogo />
+        <img src="/assets/images/hcmute/ute_icon.png" width={30} />
         <StyledSpan mode={mode} className="sidenavHoverShow">
-          Matx
+          HCMUTE
         </StyledSpan>
-      </Box>
-
-      <Box className="sidenavHoverShow" sx={{ display: mode === 'compact' ? 'none' : 'block' }}>
-        {children || null}
       </Box>
     </BrandRoot>
   );

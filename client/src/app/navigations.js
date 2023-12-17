@@ -43,5 +43,9 @@ export const navigations = [
     icon: 'launch',
     type: 'extLink',
     path: 'http://demos.ui-lib.com/matx-react-doc/'
-  }
+  },
+  { label: 'ADMIN', type: 'label' },
+  { name: 'Giảng viên', path: '/admin/teacher', icon: 'person' },
+  { name: 'Sinh viên', path: '/admin/student', icon: 'people' },
+  { name: 'Đề tài', path: '/admin/topic', icon: 'book' },
 ];

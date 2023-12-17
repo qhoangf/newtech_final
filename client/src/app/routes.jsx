@@ -5,6 +5,8 @@ import { authRoles } from './auth/authRoles';
 import Loadable from './components/common/others/Loadable';
 import MatxLayout from './components/MatxLayout/MatxLayout';
 import materialRoutes from 'app/views/material-kit/MaterialRoutes';
+import adminRoutes from 'app/views/admin/AdminRoutes';
+import App from 'app/AppIndex';
 
 // session pages
 const NotFound = Loadable(lazy(() => import('app/views/sessions/NotFound')));
@@ -26,6 +28,7 @@ const routes = [
       </AuthGuard>
     ),
     children: [
+      ...adminRoutes,
       ...materialRoutes,
       // dashboard route
       {
@@ -49,7 +52,7 @@ const routes = [
   { path: '/session/signup', element: <JwtRegister /> },
   { path: '/session/forgot-password', element: <ForgotPassword /> },
 
-  { path: '/', element: <Navigate to="/" /> },
+  { path: '/', element: <App /> },
   { path: '*', element: <NotFound /> }
 ];
 

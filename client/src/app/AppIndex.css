@@ -17,7 +17,7 @@ body {
   display: flex;
   justify-content: space-between;
 }
-.icon {
+.icon-index {
   width: 40px;
   height: 40px;
   line-height: 40px;
@@ -27,7 +27,7 @@ body {
   color: #3253ae;
   transition: 0.5s;
 }
-.icon:hover {
+.icon-index:hover {
   cursor: pointer;
   background-color: #8b94ef;
   color: #fff;
