@@ -2,3 +2,4 @@
 /server/node_modules
 /guest/node_modules
 node_modules
+/client/yarn.lock
