@@ -1,9 +1,8 @@
-import { Card, Checkbox, Grid, TextField, styled, useTheme } from '@mui/material';
+import { Card, Grid, TextField, styled } from '@mui/material';
 import PaginationTable from "./tables/TopicTable";
 import * as Yup from 'yup';
 import { Fragment, useState } from 'react';
 import { Formik } from 'formik';
-import { Box } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 const ContentBox = styled('div')(({ theme }) => ({
     margin: '30px',

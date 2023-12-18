@@ -24,7 +24,7 @@ const Brand = ({ children }) => {
     <BrandRoot>
       <Box display="flex" alignItems="center">
         <a href='/' style={{ display: 'flex' }}>
-          <img src="/assets/images/hcmute/ute_icon.png" width={30} />
+          <img src="/assets/images/hcmute/ute_icon.png" width={30} alt='ute' />
           <StyledSpan mode={mode} className="sidenavHoverShow">
             HCMUTE
           </StyledSpan>

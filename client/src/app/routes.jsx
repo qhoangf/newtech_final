@@ -1,5 +1,4 @@
 import { lazy } from 'react';
-import { Navigate } from 'react-router-dom';
 import AuthGuard from './auth/AuthGuard';
 import { authRoles } from './auth/authRoles';
 import Loadable from './components/common/others/Loadable';

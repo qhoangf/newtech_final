@@ -1,6 +1,6 @@
-import { Card, Grid, TextField, styled } from '@mui/material';
+import { styled } from '@mui/material';
 import PaginationTable from "./tables/MyTopicTable";
-import { Fragment, useState } from 'react';
+import { Fragment } from 'react';
 
 const ContentBox = styled('div')(({ theme }) => ({
     margin: '30px',
