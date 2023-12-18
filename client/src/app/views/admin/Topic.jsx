@@ -25,15 +25,15 @@ const H4 = styled('h4')(({ theme }) => ({
 }));
 
 const initialValues = {
-    nameTopic: '',
-    majorTopic: '',
+    topicname: '',
+    topicmajor: '',
 };
 
 const validationSchema = Yup.object().shape({
-    nameTopic: Yup.string()
+    topicname: Yup.string()
         .min(6, 'Tên đề tài phải nhiều hơn 6 kí tự')
         .required('Bắt buộc phải có tên đề tài!'),
-    majorTopic: Yup.string()
+    topicmajor: Yup.string()
         .min(6, 'Chuyên ngành phải nhiều hơn 6 kí tự')
         .required('Bắt buộc phải có chuyên ngành!'),
 });
@@ -72,30 +72,30 @@ const Topic = () => {
                                             <TextField
                                                 fullWidth
                                                 size="small"
-                                                type="nameTopic"
-                                                name="nameTopic"
+                                                type="topicname"
+                                                name="topicname"
                                                 label="Tên đề tài"
                                                 variant="outlined"
                                                 onBlur={handleBlur}
-                                                value={values.nameTopic}
+                                                value={values.topicname}
                                                 onChange={handleChange}
-                                                helperText={touched.nameTopic && errors.nameTopic}
-                                                error={Boolean(errors.nameTopic && touched.nameTopic)}
+                                                helperText={touched.topicname && errors.topicname}
+                                                error={Boolean(errors.topicname && touched.topicname)}
                                                 sx={{ mb: 3 }}
                                             />
 
                                             <TextField
                                                 fullWidth
                                                 size="small"
-                                                name="majorTopic"
-                                                type="majorTopic"
+                                                name="topicmajor"
+                                                type="topicmajor"
                                                 label="Chuyên ngành"
                                                 variant="outlined"
                                                 onBlur={handleBlur}
-                                                value={values.majorTopic}
+                                                value={values.topicmajor}
                                                 onChange={handleChange}
-                                                helperText={touched.majorTopic && errors.majorTopic}
-                                                error={Boolean(errors.majorTopic && touched.majorTopic)}
+                                                helperText={touched.topicmajor && errors.topicmajor}
+                                                error={Boolean(errors.topicmajor && touched.topicmajor)}
                                                 sx={{ mb: 1.5 }}
                                             />
 

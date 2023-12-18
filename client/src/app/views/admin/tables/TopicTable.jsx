@@ -35,54 +35,54 @@ const StyledTable = styled(Table)(() => ({
 
 const subscribarList = [
   {
-    nameTopic: "john doe",
-    majorTopic: "ABC Fintech LTD.",
+    topicname: "john doe",
+    topicmajor: "ABC Fintech LTD.",
   },
   {
-    nameTopic: "kessy bryan",
-    majorTopic: "My Fintech LTD.",
+    topicname: "kessy bryan",
+    topicmajor: "My Fintech LTD.",
   },
   {
-    nameTopic: "kessy bryan",
-    majorTopic: "My Fintech LTD.",
+    topicname: "kessy bryan",
+    topicmajor: "My Fintech LTD.",
   },
   {
-    nameTopic: "james cassegne",
-    majorTopic: "Collboy Tech LTD.",
+    topicname: "james cassegne",
+    topicmajor: "Collboy Tech LTD.",
   },
   {
-    nameTopic: "lucy brown",
-    majorTopic: "ABC Fintech LTD.",
+    topicname: "lucy brown",
+    topicmajor: "ABC Fintech LTD.",
   },
   {
-    nameTopic: "lucy brown",
-    majorTopic: "ABC Fintech LTD.",
+    topicname: "lucy brown",
+    topicmajor: "ABC Fintech LTD.",
   },
   {
-    nameTopic: "lucy brown",
-    majorTopic: "ABC Fintech LTD.",
+    topicname: "lucy brown",
+    topicmajor: "ABC Fintech LTD.",
   },
   {
-    nameTopic: "lucy brown",
-    majorTopic: "ABC Fintech LTD.",
+    topicname: "lucy brown",
+    topicmajor: "ABC Fintech LTD.",
   },
   {
-    nameTopic: "lucy brown",
-    majorTopic: "ABC Fintech LTD.",
+    topicname: "lucy brown",
+    topicmajor: "ABC Fintech LTD.",
   },
 ];
 
 
 const initialValues = {
-  nameTopic: '',
-  majorTopic: '',
+  topicname: '',
+  topicmajor: '',
 };
 
 const validationSchema = Yup.object().shape({
-  nameTopic: Yup.string()
+  topicname: Yup.string()
     .min(6, 'Tên đề tài phải nhiều hơn 6 kí tự')
     .required('Bắt buộc phải có tên đề tài!'),
-  majorTopic: Yup.string()
+  topicmajor: Yup.string()
     .min(6, 'Chuyên ngành phải nhiều hơn 6 kí tự')
     .required('Bắt buộc phải có chuyên ngành!'),
 });
@@ -137,8 +137,8 @@ const PaginationTable = () => {
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             .map((subscriber, index) => (
               <TableRow key={index}>
-                <TableCell align="left">{subscriber.nameTopic}</TableCell>
-                <TableCell align="center">{subscriber.majorTopic}</TableCell>
+                <TableCell align="left">{subscriber.topicname}</TableCell>
+                <TableCell align="center">{subscriber.topicmajor}</TableCell>
                 <TableCell align="center">{subscriber.startDate}</TableCell>
                 <TableCell align="center">{subscriber.endDate}</TableCell>
                 <TableCell align="right">
@@ -205,30 +205,30 @@ const PaginationTable = () => {
                 <TextField
                   fullWidth
                   size="small"
-                  type="nameTopic"
-                  name="nameTopic"
+                  type="topicname"
+                  name="topicname"
                   label="Tên đề tài"
                   variant="outlined"
                   onBlur={handleBlur}
-                  value={values.nameTopic}
+                  value={values.topicname}
                   onChange={handleChange}
-                  helperText={touched.nameTopic && errors.nameTopic}
-                  error={Boolean(errors.nameTopic && touched.nameTopic)}
+                  helperText={touched.topicname && errors.topicname}
+                  error={Boolean(errors.topicname && touched.topicname)}
                   sx={{ mb: 3, mt: 1 }}
                 />
 
                 <TextField
                   fullWidth
                   size="small"
-                  name="majorTopic"
-                  type="majorTopic"
+                  name="topicmajor"
+                  type="topicmajor"
                   label="Chuyên ngành"
                   variant="outlined"
                   onBlur={handleBlur}
-                  value={values.majorTopic}
+                  value={values.topicmajor}
                   onChange={handleChange}
-                  helperText={touched.majorTopic && errors.majorTopic}
-                  error={Boolean(errors.majorTopic && touched.majorTopic)}
+                  helperText={touched.topicmajor && errors.topicmajor}
+                  error={Boolean(errors.topicmajor && touched.topicmajor)}
                 />
               </DialogContent>
               <DialogActions>

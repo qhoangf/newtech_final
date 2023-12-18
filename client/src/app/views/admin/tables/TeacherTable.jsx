@@ -35,40 +35,40 @@ const StyledTable = styled(Table)(() => ({
 
 const subscribarList = [
   {
-    nameTopic: "john doe",
-    majorTopic: "ABC Fintech LTD.",
+    topicname: "john doe",
+    topicmajor: "ABC Fintech LTD.",
   },
   {
-    nameTopic: "kessy bryan",
-    majorTopic: "My Fintech LTD.",
+    topicname: "kessy bryan",
+    topicmajor: "My Fintech LTD.",
   },
   {
-    nameTopic: "kessy bryan",
-    majorTopic: "My Fintech LTD.",
+    topicname: "kessy bryan",
+    topicmajor: "My Fintech LTD.",
   },
   {
-    nameTopic: "james cassegne",
-    majorTopic: "Collboy Tech LTD.",
+    topicname: "james cassegne",
+    topicmajor: "Collboy Tech LTD.",
   },
   {
-    nameTopic: "lucy brown",
-    majorTopic: "ABC Fintech LTD.",
+    topicname: "lucy brown",
+    topicmajor: "ABC Fintech LTD.",
   },
   {
-    nameTopic: "lucy brown",
-    majorTopic: "ABC Fintech LTD.",
+    topicname: "lucy brown",
+    topicmajor: "ABC Fintech LTD.",
   },
   {
-    nameTopic: "lucy brown",
-    majorTopic: "ABC Fintech LTD.",
+    topicname: "lucy brown",
+    topicmajor: "ABC Fintech LTD.",
   },
   {
-    nameTopic: "lucy brown",
-    majorTopic: "ABC Fintech LTD.",
+    topicname: "lucy brown",
+    topicmajor: "ABC Fintech LTD.",
   },
   {
-    nameTopic: "lucy brown",
-    majorTopic: "ABC Fintech LTD.",
+    topicname: "lucy brown",
+    topicmajor: "ABC Fintech LTD.",
   },
 ];
 
@@ -143,8 +143,8 @@ const PaginationTable = () => {
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             .map((subscriber, index) => (
               <TableRow key={index}>
-                <TableCell align="left">{subscriber.nameTopic}</TableCell>
-                <TableCell align="center">{subscriber.majorTopic}</TableCell>
+                <TableCell align="left">{subscriber.topicname}</TableCell>
+                <TableCell align="center">{subscriber.topicmajor}</TableCell>
                 <TableCell align="right">
                   <IconButton onClick={handleClickOpenEditModal}>
                     <Icon color="primary">create</Icon>
