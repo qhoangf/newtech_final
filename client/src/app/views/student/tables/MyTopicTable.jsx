@@ -69,45 +69,15 @@ const subscribarList = [
   {
     nameTopic: "lucy brown",
     majorTopic: "ABC Fintech LTD.",
+    studentlist: [],
   },
 ];
-
-
-const initialValues = {
-  nameTopic: '',
-  majorTopic: '',
-};
-
-const validationSchema = Yup.object().shape({
-  nameTopic: Yup.string()
-    .min(6, 'Tên đề tài phải nhiều hơn 6 kí tự')
-    .required('Bắt buộc phải có tên đề tài!'),
-  majorTopic: Yup.string()
-    .min(6, 'Chuyên ngành phải nhiều hơn 6 kí tự')
-    .required('Bắt buộc phải có chuyên ngành!'),
-});
 
 const PaginationTable = () => {
   // Modal Delete
   const [openDeleteModal, setOpenDelete] = useState(false);
   const handleClickOpenDeleteModal = () => setOpenDelete(true);
   const handleCloseDeleteModal = () => setOpenDelete(false);
-
-  // Modal Edit
-  const [openEditModal, setOpenEdit] = useState(false);
-  const handleClickOpenEditModal = () => setOpenEdit(true);
-  const handleCloseEditModal = () => setOpenEdit(false);
-
-  // Edit Submit
-  const [loading, setLoading] = useState(false);
-  const handleFormSubmit = async (values) => {
-    setLoading(true);
-    try {
-      console.log("Do something", values);
-    } catch (e) {
-      setLoading(false);
-    }
-  };
 
   // Pagination
   const [page, setPage] = useState(0);
@@ -127,9 +97,10 @@ const PaginationTable = () => {
           <TableRow>
             <TableCell align="left">Tên đề tài</TableCell>
             <TableCell align="center">Chuyên ngành</TableCell>
-            <TableCell align="center">Ngày tạo</TableCell>
-            <TableCell align="center">Ngày hết hạn</TableCell>
-            <TableCell align="center"></TableCell>
+            <TableCell align="center">Giáo viên hướng dẫn</TableCell>
+            <TableCell align="center">Giáo viên phản biện</TableCell>
+            <TableCell align="center">Số lượng thành viên (Tối đa: 3)</TableCell>
+            <TableCell align="right"></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -139,14 +110,12 @@ const PaginationTable = () => {
               <TableRow key={index}>
                 <TableCell align="left">{subscriber.nameTopic}</TableCell>
                 <TableCell align="center">{subscriber.majorTopic}</TableCell>
-                <TableCell align="center">{subscriber.startDate}</TableCell>
-                <TableCell align="center">{subscriber.endDate}</TableCell>
+                <TableCell align="center">{subscriber.instructor}</TableCell>
+                <TableCell align="center">{subscriber.reviewer}</TableCell>
+                <TableCell align="center">{subscriber.quantity}</TableCell>
                 <TableCell align="right">
-                  <IconButton onClick={handleClickOpenEditModal}>
-                    <Icon color="primary">create</Icon>
-                  </IconButton>
                   <IconButton onClick={handleClickOpenDeleteModal}>
-                    <Icon color="error">close</Icon>
+                    <Icon color="error">deleteforever</Icon>
                   </IconButton>
                 </TableCell>
               </TableRow>
@@ -168,7 +137,6 @@ const PaginationTable = () => {
         labelRowsPerPage="Số dòng mỗi trang"
       />
 
-      {/* Delete modal */}
       <Dialog
         open={openDeleteModal}
         onClose={handleCloseDeleteModal}
@@ -178,7 +146,7 @@ const PaginationTable = () => {
         <DialogTitle id="alert-dialog-title">Cảnh báo</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Bạn có chắc chắn muốn xóa đề tài này?
+            Bạn có chắc chắn muốn hủy đăng ký đề tài này?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -190,66 +158,7 @@ const PaginationTable = () => {
           </Button>
         </DialogActions>
       </Dialog>
-
-      {/* Edit modal */}
-      <Formik
-        onSubmit={handleFormSubmit}
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-      >
-        {({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => (
-          <form onSubmit={handleSubmit}>
-            <Dialog open={openEditModal} onClose={handleCloseEditModal} aria-labelledby="form-dialog-title">
-              <DialogTitle id="form-dialog-title">Thông tin đề tài</DialogTitle>
-              <DialogContent>
-                <TextField
-                  fullWidth
-                  size="small"
-                  type="nameTopic"
-                  name="nameTopic"
-                  label="Tên đề tài"
-                  variant="outlined"
-                  onBlur={handleBlur}
-                  value={values.nameTopic}
-                  onChange={handleChange}
-                  helperText={touched.nameTopic && errors.nameTopic}
-                  error={Boolean(errors.nameTopic && touched.nameTopic)}
-                  sx={{ mb: 3, mt: 1 }}
-                />
-
-                <TextField
-                  fullWidth
-                  size="small"
-                  name="majorTopic"
-                  type="majorTopic"
-                  label="Chuyên ngành"
-                  variant="outlined"
-                  onBlur={handleBlur}
-                  value={values.majorTopic}
-                  onChange={handleChange}
-                  helperText={touched.majorTopic && errors.majorTopic}
-                  error={Boolean(errors.majorTopic && touched.majorTopic)}
-                />
-              </DialogContent>
-              <DialogActions>
-                <Button color="error" onClick={handleCloseEditModal}>
-                  Hủy
-                </Button>
-                <LoadingButton
-                  type="submit"
-                  color="primary"
-                  loading={loading}
-                  variant="contained"
-                  sx={{ mr: 2 }}
-                >
-                  Chỉnh sửa
-                </LoadingButton>
-              </DialogActions>
-            </Dialog>
-          </form>
-        )}
-      </Formik>
-    </Box >
+    </Box>
   );
 };
 

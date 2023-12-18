@@ -23,10 +23,12 @@ const Brand = ({ children }) => {
   return (
     <BrandRoot>
       <Box display="flex" alignItems="center">
-        <img src="/assets/images/hcmute/ute_icon.png" width={30} />
-        <StyledSpan mode={mode} className="sidenavHoverShow">
-          HCMUTE
-        </StyledSpan>
+        <a href='/' style={{ display: 'flex' }}>
+          <img src="/assets/images/hcmute/ute_icon.png" width={30} />
+          <StyledSpan mode={mode} className="sidenavHoverShow">
+            HCMUTE
+          </StyledSpan>
+        </a>
       </Box>
     </BrandRoot>
   );

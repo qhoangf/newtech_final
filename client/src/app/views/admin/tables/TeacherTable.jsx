@@ -135,6 +135,7 @@ const PaginationTable = () => {
           <TableRow>
             <TableCell align="left">Tên đề tài</TableCell>
             <TableCell align="center">Chuyên ngành</TableCell>
+            <TableCell align="center"></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -168,6 +169,7 @@ const PaginationTable = () => {
         onRowsPerPageChange={handleChangeRowsPerPage}
         nextIconButtonProps={{ "aria-label": "Next Page" }}
         backIconButtonProps={{ "aria-label": "Previous Page" }}
+        labelRowsPerPage="Số dòng mỗi trang"
       />
 
       {/* Delete modal */}

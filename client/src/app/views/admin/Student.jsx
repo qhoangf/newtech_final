@@ -56,7 +56,7 @@ const Student = () => {
             <ContentBox className="analytics">
                 <Grid container spacing={3}>
                     <Grid item lg={8} md={8} sm={12} xs={12}>
-                        <H4>Đề tài</H4>
+                        <H4>Tài khoản sinh viên</H4>
                         <PaginationTable />
                     </Grid>
 

@@ -1,4 +1,5 @@
 export const navigations = [
+  // DASHBOARD
   { name: 'Dashboard', path: '/system/default', icon: 'dashboard' },
   { label: 'PAGES', type: 'label' },
   {
@@ -11,6 +12,8 @@ export const navigations = [
       { name: 'Error', iconText: '404', path: '/session/404' }
     ]
   },
+
+  // COMPONENTS
   { label: 'Components', type: 'label' },
   {
     name: 'Components',
@@ -33,6 +36,8 @@ export const navigations = [
       { name: 'Table', path: '/material/table', iconText: 'T' }
     ]
   },
+
+  // CHARTS
   {
     name: 'Charts',
     icon: 'trending_up',
@@ -44,8 +49,15 @@ export const navigations = [
     type: 'extLink',
     path: 'http://demos.ui-lib.com/matx-react-doc/'
   },
-  { label: 'ADMIN', type: 'label' },
+
+  // ADMIN
+  { label: 'Quản trị viên', type: 'label' },
   { name: 'Giảng viên', path: '/admin/teacher', icon: 'person' },
   { name: 'Sinh viên', path: '/admin/student', icon: 'people' },
   { name: 'Đề tài', path: '/admin/topic', icon: 'book' },
+
+  // STUDENT
+  { label: 'Học sinh', type: 'label' },
+  { name: 'Danh sách đề tài', path: '/student/topiclist', icon: 'apps' },
+  { name: 'Đề tài đã đăng ký', path: '/student/mytopic', icon: 'topic' },
 ];

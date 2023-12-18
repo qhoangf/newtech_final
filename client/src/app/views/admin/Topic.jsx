@@ -5,11 +5,16 @@ import { Fragment, useState } from 'react';
 import { Formik } from 'formik';
 import { Box } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
-const FlexBox = styled(Box)(() => ({ display: 'flex', alignItems: 'center' }));
-
 const ContentBox = styled('div')(({ theme }) => ({
     margin: '30px',
     [theme.breakpoints.down('sm')]: { margin: '16px' },
+}));
+
+const H2 = styled('h2')(({ theme }) => ({
+    color: 'red',
+    fontSize: '0.75rem',
+    fontWeight: '500',
+    marginBottom: '16px',
 }));
 
 const H4 = styled('h4')(({ theme }) => ({
@@ -108,6 +113,7 @@ const Topic = () => {
                                     )}
                                 </Formik>
                             </ContentBox>
+                            <H2>*Đề tài sẽ hết hạn sau 60 ngày kể từ khi tạo</H2>
                         </Card>
                     </Grid>
                 </Grid>

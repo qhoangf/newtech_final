@@ -27,7 +27,7 @@ const MatxMenu = (props) => {
           open={!!anchorEl}
           anchorEl={anchorEl}
           onClose={handleClose}
-          getContentAnchorEl={null}
+          // getContentAnchorEl={null}
           anchorOrigin={{ vertical: 'bottom', horizontal: horizontalPosition }}
           transformOrigin={{ vertical: 'top', horizontal: horizontalPosition }}
         >

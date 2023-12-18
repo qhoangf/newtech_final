@@ -25,19 +25,20 @@ const SecondarySidebarToggle = () => {
   const textColor = palette.primary.contrastText;
 
   return (
-    <Toggle className={clsx({ open: settings.secondarySidebar.open })}>
-      {settings.secondarySidebar.open && (
-        <IconButton onClick={toggle} size="small" aria-label="toggle">
-          <Icon sx={{ color: textColor }}>close</Icon>
-        </IconButton>
-      )}
+    // <Toggle className={clsx({ open: settings.secondarySidebar.open })}>
+    //   {settings.secondarySidebar.open && (
+    //     <IconButton onClick={toggle} size="small" aria-label="toggle">
+    //       <Icon sx={{ color: textColor }}>close</Icon>
+    //     </IconButton>
+    //   )}
 
-      {!settings.secondarySidebar.open && (
-        <Fab color="primary" aria-label="expand" onClick={toggle}>
-          <Icon sx={{ color: textColor }}>settings</Icon>
-        </Fab>
-      )}
-    </Toggle>
+    //   {!settings.secondarySidebar.open && (
+    //     <Fab color="primary" aria-label="expand" onClick={toggle}>
+    //       <Icon sx={{ color: textColor }}>settings</Icon>
+    //     </Fab>
+    //   )}
+    // </Toggle>
+    <></>
   );
 };
 

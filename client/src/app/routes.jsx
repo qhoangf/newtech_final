@@ -6,6 +6,7 @@ import Loadable from './components/common/others/Loadable';
 import MatxLayout from './components/MatxLayout/MatxLayout';
 import materialRoutes from 'app/views/material-kit/MaterialRoutes';
 import adminRoutes from 'app/views/admin/AdminRoutes';
+import studentRoutes from 'app/views/student/StudentRoutes';
 import App from 'app/AppIndex';
 
 // session pages
@@ -28,7 +29,11 @@ const routes = [
       </AuthGuard>
     ),
     children: [
+      // EXPAND FLOW
       ...adminRoutes,
+      ...studentRoutes,
+
+      // BASIC FLOW
       ...materialRoutes,
       // dashboard route
       {
