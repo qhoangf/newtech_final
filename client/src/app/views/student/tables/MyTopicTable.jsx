@@ -108,7 +108,7 @@ const PaginationTable = () => {
                 <TableCell align="center">{subscriber.topicmajor}</TableCell>
                 <TableCell align="center">{subscriber.instructor}</TableCell>
                 <TableCell align="center">{subscriber.reviewer}</TableCell>
-                <TableCell align="center">{subscriber.quantity}</TableCell>
+                <TableCell align="center">{subscriber.studentlist}</TableCell>
                 <TableCell align="right">
                   <IconButton onClick={handleClickOpenDeleteModal}>
                     <Icon color="error">deleteforever</Icon>
@@ -142,7 +142,7 @@ const PaginationTable = () => {
         <DialogTitle id="alert-dialog-title">Cảnh báo</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Bạn có chắc chắn muốn hủy đăng ký đề tài này?
+            Bạn có chắc chắn muốn hủy tham gia đề tài này?
           </DialogContentText>
         </DialogContent>
         <DialogActions>

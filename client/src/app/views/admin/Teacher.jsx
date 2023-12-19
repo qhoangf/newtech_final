@@ -124,6 +124,7 @@ const Teacher = () => {
                                                 <RadioGroup
                                                     row
                                                     aria-labelledby="major"
+                                                    defaultValue="software"
                                                     name="major"
                                                 >
                                                     <FormControlLabel value="software" control={<Radio />} label="Phần mềm" />

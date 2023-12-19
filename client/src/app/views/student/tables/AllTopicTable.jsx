@@ -16,6 +16,7 @@ import {
   Button,
   Snackbar,
   Alert,
+  Grid,
 } from "@mui/material";
 
 import React, { useState, useEffect } from "react";
@@ -35,51 +36,58 @@ const subscribarList = [
   {
     topicname: "john doe",
     topicmajor: "ABC Fintech LTD.",
+    studentlist: [1],
   },
   {
     topicname: "kessy bryan",
     topicmajor: "My Fintech LTD.",
+    studentlist: [1],
   },
   {
     topicname: "kessy bryan",
     topicmajor: "My Fintech LTD.",
+    studentlist: ["1", "3"],
   },
   {
     topicname: "james cassegne",
     topicmajor: "Collboy Tech LTD.",
+    studentlist: [1],
   },
   {
     topicname: "lucy brown",
     topicmajor: "ABC Fintech LTD.",
+    studentlist: [1],
   },
   {
     topicname: "lucy brown",
     topicmajor: "ABC Fintech LTD.",
+    studentlist: [1],
   },
   {
     topicname: "lucy brown",
     topicmajor: "ABC Fintech LTD.",
+    studentlist: [1],
   },
   {
     topicname: "lucy brown",
     topicmajor: "ABC Fintech LTD.",
+    studentlist: [1],
   },
   {
     topicname: "lucy brown",
     topicmajor: "ABC Fintech LTD.",
-    studentlist: [],
+    studentlist: [2, 3],
   },
 ];
 
 const PaginationTable = () => {
+  const [loading, setLoading] = useState(false);
+  const [registeredTopic, setRegisteredTopic] = useState({});
+
   // Join modal
   const [openJoinTopicModal, setOpenJoinModal] = useState(false);
   const handleClickOpenJoinModal = () => setOpenJoinModal(true);
   const handleCloseJoinModal = () => setOpenJoinModal(false);
-
-  // Edit Submit
-  const [loading, setLoading] = useState(false);
-  const [registeredTopic, setRegisteredTopic] = useState({});
 
   // Noti success
   const [openSnackbar, setOpen] = React.useState(false);
@@ -96,7 +104,7 @@ const PaginationTable = () => {
   useEffect(() => {
     console.log(registeredTopic);
   }, [registeredTopic])
-  
+
 
   // Pagination
   const [page, setPage] = useState(0);
@@ -131,9 +139,9 @@ const PaginationTable = () => {
                 <TableCell align="center">{subscriber.topicmajor}</TableCell>
                 <TableCell align="center">{subscriber.instructor}</TableCell>
                 <TableCell align="center">{subscriber.reviewer}</TableCell>
-                <TableCell align="center">{subscriber.quantity}</TableCell>
+                <TableCell align="center">{(subscriber.studentlist)?.length}</TableCell>
                 <TableCell align="right">
-                  <IconButton onClick={() => {handleClickOpenJoinModal() ; setRegisteredTopic(subscriber)}}>
+                  <IconButton onClick={() => { handleClickOpenJoinModal(); setRegisteredTopic(subscriber) }}>
                     <Icon color="primary">addcircleoutline</Icon>
                   </IconButton>
                   <IconButton onClick={handleClickSnackbar}>
@@ -160,10 +168,59 @@ const PaginationTable = () => {
       />
 
       {/* Join modal */}
-      <Dialog open={openJoinTopicModal} onClose={handleCloseJoinModal} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">Thông tin đăng ký đề tài</DialogTitle>
-        <DialogContent>
-              {/* {registeredTopic} */}
+      <Dialog
+        open={openJoinTopicModal}
+        onClose={handleCloseJoinModal}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description">
+        <DialogTitle id="alert-dialog-title">Thông tin đăng ký đề tài</DialogTitle>
+        <DialogContent id="alert-dialog-description"
+          style={{ width: "600px" }}>
+          {/* Topic name */}
+          <Grid container spacing={2} sx={{ my: 1 }}>
+            <Grid item xs={6}>
+              Tên đề tài
+            </Grid>
+            <Grid item xs={6}>
+              <b>{registeredTopic.topicname}</b>
+            </Grid>
+          </Grid>
+          {/* Topic major */}
+          <Grid container spacing={2} sx={{ my: 1 }}>
+            <Grid item xs={6}>
+              Chuyên ngành
+            </Grid>
+            <Grid item xs={6}>
+              <b>{registeredTopic.topicmajor}</b>
+            </Grid>
+          </Grid>
+          {/* Instructor */}
+          <Grid container spacing={2} sx={{ my: 1 }}>
+            <Grid item xs={6}>
+              Giáo viên hướng dẫn
+            </Grid>
+            <Grid item xs={6}>
+              <b>{registeredTopic.instructor}</b>
+            </Grid>
+          </Grid>
+          {/* Reviewer */}
+          <Grid container spacing={2} sx={{ my: 1 }}>
+            <Grid item xs={6}>
+              Giáo viên phản biện
+            </Grid>
+            <Grid item xs={6}>
+              <b>{registeredTopic.reviewer}</b>
+            </Grid>
+          </Grid>
+          {/* Quantity */}
+          <Grid container spacing={2} sx={{ my: 1 }}>
+            <Grid item xs={6}>
+              Số lượng thành viên
+            </Grid>
+            <Grid item xs={6}>
+              <b>{(registeredTopic.studentlist)?.length} / 3 tổng thành viên</b>
+            </Grid>
+          </Grid>
         </DialogContent>
         <DialogActions>
           <Button color="error" onClick={handleCloseJoinModal}>
@@ -176,17 +233,17 @@ const PaginationTable = () => {
             variant="contained"
             sx={{ mr: 2 }}
           >
-            Đăng ký
+            Đăng ký tham gia đề tài
           </LoadingButton>
         </DialogActions>
       </Dialog>
 
       <Snackbar open={openSnackbar} autoHideDuration={5000} onClose={handleCloseSnackbar}>
         <Alert onClose={handleCloseSnackbar} severity="success" sx={{ width: '100%' }} variant="filled">
-          Bạn đã đăng ký đề tài này.
+          Bạn đã đăng ký tham gia đề tài này.
         </Alert>
       </Snackbar>
-    </Box>
+    </Box >
   );
 };
 
