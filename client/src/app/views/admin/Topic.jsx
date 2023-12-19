@@ -1,4 +1,4 @@
-import { Card, Grid, TextField, styled } from '@mui/material';
+import { Card, FormControl, FormControlLabel, FormLabel, Grid, Radio, RadioGroup, TextField, styled } from '@mui/material';
 import PaginationTable from "./tables/TopicTable";
 import * as Yup from 'yup';
 import { Fragment, useState } from 'react';
@@ -69,6 +69,7 @@ const Topic = () => {
                                 >
                                     {({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => (
                                         <form onSubmit={handleSubmit}>
+                                            <FormLabel id="info">Thông tin cá nhân</FormLabel>
                                             <TextField
                                                 fullWidth
                                                 size="small"
@@ -81,23 +82,21 @@ const Topic = () => {
                                                 onChange={handleChange}
                                                 helperText={touched.topicname && errors.topicname}
                                                 error={Boolean(errors.topicname && touched.topicname)}
-                                                sx={{ mb: 3 }}
+                                                sx={{ mb: 1.5, mt: 1.5 }}
                                             />
 
-                                            <TextField
-                                                fullWidth
-                                                size="small"
-                                                name="topicmajor"
-                                                type="topicmajor"
-                                                label="Chuyên ngành"
-                                                variant="outlined"
-                                                onBlur={handleBlur}
-                                                value={values.topicmajor}
-                                                onChange={handleChange}
-                                                helperText={touched.topicmajor && errors.topicmajor}
-                                                error={Boolean(errors.topicmajor && touched.topicmajor)}
-                                                sx={{ mb: 1.5 }}
-                                            />
+                                            <FormControl>
+                                                <FormLabel id="major">Chuyên ngành</FormLabel>
+                                                <RadioGroup
+                                                    row
+                                                    aria-labelledby="major"
+                                                    name="major"
+                                                >
+                                                    <FormControlLabel value="software" control={<Radio />} label="Phần mềm" />
+                                                    <FormControlLabel value="hardware" control={<Radio />} label="Phần cứng" />
+                                                    <FormControlLabel value="security" control={<Radio />} label="An ninh mạng" />
+                                                </RadioGroup>
+                                            </FormControl>
 
                                             <LoadingButton
                                                 type="submit"
@@ -108,11 +107,11 @@ const Topic = () => {
                                             >
                                                 Tạo mới
                                             </LoadingButton>
+                                            <H2>*Đề tài sẽ hết hạn sau 60 ngày kể từ khi tạo</H2>
                                         </form>
                                     )}
                                 </Formik>
                             </ContentBox>
-                            <H2>*Đề tài sẽ hết hạn sau 60 ngày kể từ khi tạo</H2>
                         </Card>
                     </Grid>
                 </Grid>

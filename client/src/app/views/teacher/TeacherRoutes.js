@@ -4,9 +4,9 @@ import Loadable from 'app/components/common/others/Loadable';
 const MyTopic = Loadable(lazy(() => import('./MyTopic')));
 const TopicList = Loadable(lazy(() => import('./TopicList')));
 
-const adminRoutes = [
-  { path: '/student/topiclist', element: <TopicList /> },
-  { path: '/student/mytopic', element: <MyTopic /> },
+const teacherRoutes = [
+  { path: '/teacher/topiclist', element: <TopicList /> },
+  { path: '/teacher/mytopic', element: <MyTopic /> },
 ];
 
-export default adminRoutes;
+export default teacherRoutes;

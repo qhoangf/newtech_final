@@ -60,4 +60,9 @@ export const navigations = [
   { label: 'Học sinh', type: 'label' },
   { name: 'Danh sách đề tài', path: '/student/topiclist', icon: 'apps' },
   { name: 'Đề tài đã đăng ký', path: '/student/mytopic', icon: 'topic' },
+
+  // TEACHER
+  { label: 'Giảng viên', type: 'label' },
+  { name: 'Danh sách đề tài', path: '/teacher/topiclist', icon: 'apps' },
+  { name: 'Đề tài đã đăng ký', path: '/teacher/mytopic', icon: 'topic' },
 ];

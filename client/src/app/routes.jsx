@@ -6,6 +6,7 @@ import MatxLayout from './components/MatxLayout/MatxLayout';
 import materialRoutes from 'app/views/material-kit/MaterialRoutes';
 import adminRoutes from 'app/views/admin/AdminRoutes';
 import studentRoutes from 'app/views/student/StudentRoutes';
+import teacherRoutes from 'app/views/teacher/TeacherRoutes';
 import App from 'app/AppIndex';
 
 // session pages
@@ -31,6 +32,7 @@ const routes = [
       // EXPAND FLOW
       ...adminRoutes,
       ...studentRoutes,
+      ...teacherRoutes,
 
       // BASIC FLOW
       ...materialRoutes,

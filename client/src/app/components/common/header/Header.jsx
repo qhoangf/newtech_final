@@ -17,7 +17,7 @@ const Header = () => {
             </li>
           </ul>
           <div className='start'>
-            <div className='button' onClick={() => window.location.pathname = "/session/signin"}>ĐĂNG NHẬP (LOGIN)</div>
+            <div className='button' onClick={() => window.location.pathname = "/session/signin"}>ĐĂNG NHẬP</div>
           </div>
         </nav>
       </header>

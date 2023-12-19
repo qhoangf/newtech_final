@@ -135,6 +135,7 @@ const PaginationTable = () => {
           <TableRow>
             <TableCell align="left">Tên đề tài</TableCell>
             <TableCell align="center">Chuyên ngành</TableCell>
+            <TableCell align="center">Trưởng bộ môn</TableCell>
             <TableCell align="center"></TableCell>
           </TableRow>
         </TableHead>
@@ -145,6 +146,9 @@ const PaginationTable = () => {
               <TableRow key={index}>
                 <TableCell align="left">{subscriber.topicname}</TableCell>
                 <TableCell align="center">{subscriber.topicmajor}</TableCell>
+                <TableCell align="center">
+                  <Icon color="success">done</Icon>
+                </TableCell>
                 <TableCell align="right">
                   <IconButton onClick={handleClickOpenEditModal}>
                     <Icon color="primary">create</Icon>

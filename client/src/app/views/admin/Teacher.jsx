@@ -1,4 +1,4 @@
-import { Card, Grid, TextField, styled } from '@mui/material';
+import { Card, Checkbox, FormControl, FormControlLabel, FormLabel, Grid, Radio, RadioGroup, TextField, styled } from '@mui/material';
 import PaginationTable from "./tables/TeacherTable";
 import * as Yup from 'yup';
 import { Fragment, useState } from 'react';
@@ -71,6 +71,7 @@ const Teacher = () => {
                                 >
                                     {({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => (
                                         <form onSubmit={handleSubmit}>
+                                            <FormLabel id="info">Thông tin cá nhân</FormLabel>
                                             <TextField
                                                 fullWidth
                                                 size="small"
@@ -83,22 +84,7 @@ const Teacher = () => {
                                                 onChange={handleChange}
                                                 helperText={touched.name && errors.name}
                                                 error={Boolean(errors.name && touched.name)}
-                                                sx={{ mb: 3 }}
-                                            />
-
-                                            <TextField
-                                                fullWidth
-                                                size="small"
-                                                name="major"
-                                                type="major"
-                                                label="Chuyên ngành"
-                                                variant="outlined"
-                                                onBlur={handleBlur}
-                                                value={values.major}
-                                                onChange={handleChange}
-                                                helperText={touched.major && errors.major}
-                                                error={Boolean(errors.major && touched.major)}
-                                                sx={{ mb: 3 }}
+                                                sx={{ mb: 1.5, mt: 1.5 }}
                                             />
 
                                             <TextField
@@ -113,7 +99,7 @@ const Teacher = () => {
                                                 onChange={handleChange}
                                                 helperText={touched.username && errors.username}
                                                 error={Boolean(errors.username && touched.username)}
-                                                sx={{ mb: 3 }}
+                                                sx={{ mb: 1.5 }}
                                             />
 
                                             <TextField
@@ -130,6 +116,31 @@ const Teacher = () => {
                                                 error={Boolean(errors.password && touched.password)}
                                                 sx={{ mb: 1.5 }}
                                             />
+
+                                            <FormControl
+                                                sx={{ mb: 1.5 }}
+                                            >
+                                                <FormLabel id="major">Chuyên ngành</FormLabel>
+                                                <RadioGroup
+                                                    row
+                                                    aria-labelledby="major"
+                                                    name="major"
+                                                >
+                                                    <FormControlLabel value="software" control={<Radio />} label="Phần mềm" />
+                                                    <FormControlLabel value="hardware" control={<Radio />} label="Phần cứng" />
+                                                    <FormControlLabel value="security" control={<Radio />} label="An ninh mạng" />
+                                                </RadioGroup>
+                                            </FormControl>
+
+
+                                            <FormControl
+                                                sx={{ mb: 1.5 }}
+                                            >
+                                                <FormLabel id="isleader">Phân công</FormLabel>
+                                                <FormControlLabel required control={<Checkbox />} label="Trưởng bộ môn" />
+                                            </FormControl>
+
+                                            <br />
 
                                             <LoadingButton
                                                 type="submit"
@@ -148,7 +159,7 @@ const Teacher = () => {
                     </Grid>
                 </Grid>
             </ContentBox>
-        </Fragment>
+        </Fragment >
     );
 };
 
