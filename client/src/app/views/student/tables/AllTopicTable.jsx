@@ -18,7 +18,7 @@ import {
   Alert,
 } from "@mui/material";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { LoadingButton } from "@mui/lab";
 
 const StyledTable = styled(Table)(() => ({
@@ -79,6 +79,7 @@ const PaginationTable = () => {
 
   // Edit Submit
   const [loading, setLoading] = useState(false);
+  const [registeredTopic, setRegisteredTopic] = useState({});
 
   // Noti success
   const [openSnackbar, setOpen] = React.useState(false);
@@ -91,6 +92,11 @@ const PaginationTable = () => {
     }
     setOpen(false);
   }
+
+  useEffect(() => {
+    console.log(registeredTopic);
+  }, [registeredTopic])
+  
 
   // Pagination
   const [page, setPage] = useState(0);
@@ -127,7 +133,7 @@ const PaginationTable = () => {
                 <TableCell align="center">{subscriber.reviewer}</TableCell>
                 <TableCell align="center">{subscriber.quantity}</TableCell>
                 <TableCell align="right">
-                  <IconButton onClick={handleClickOpenJoinModal}>
+                  <IconButton onClick={() => {handleClickOpenJoinModal() ; setRegisteredTopic(subscriber)}}>
                     <Icon color="primary">addcircleoutline</Icon>
                   </IconButton>
                   <IconButton onClick={handleClickSnackbar}>
@@ -157,7 +163,7 @@ const PaginationTable = () => {
       <Dialog open={openJoinTopicModal} onClose={handleCloseJoinModal} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Thông tin đăng ký đề tài</DialogTitle>
         <DialogContent>
-
+              {/* {registeredTopic} */}
         </DialogContent>
         <DialogActions>
           <Button color="error" onClick={handleCloseJoinModal}>
