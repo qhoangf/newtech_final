@@ -264,6 +264,22 @@ const PaginationTable = () => {
           <Button color="error" onClick={handleCloseJoinModal}>
             Hủy
           </Button>
+          {(!registeredTopic.isapproved && registeredTopic.instructor) ?
+            <Button
+              color="error"
+              variant="contained"
+              onClick={handleCloseJoinModal}>
+              Từ chối giảng viên
+            </Button> : <></>
+          }
+          {(!registeredTopic.isapproved && registeredTopic.instructor) ?
+            <Button
+              color="success"
+              variant="contained"
+              onClick={handleCloseJoinModal}>
+              Duyệt giảng viên
+            </Button> : <></>
+          }
           {!registeredTopic.instructor ?
             <LoadingButton
               type="submit"
