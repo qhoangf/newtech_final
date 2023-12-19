@@ -276,7 +276,8 @@ const PaginationTable = () => {
             <Button
               color="success"
               variant="contained"
-              onClick={handleCloseJoinModal}>
+              onClick={handleCloseJoinModal}
+              sx={{ mr: 2 }}>
               Duyệt giảng viên
             </Button> : <></>
           }
