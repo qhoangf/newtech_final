@@ -4,36 +4,27 @@ const bcrypt = require("bcrypt");
 const userController = {
   register: async (req, res) => {
     try {
-      const username = req.body.username;
-      const password = req.body.password;
-      const major = req.body.major;
-      const role = req.body.role;
+      let { username, password, major, role, isLeader } = req.body;
       let hashedPassword = "";
 
-      bcrypt.hash(password, 10, async function (err, hash) {
-        if (err) {
-          res.status(200).json({ result: "false", content: "There is an error while register account" });
-          return console.log("Cannot encrypt");
-        }
+      if (password) {
+        const saltcode = await bcrypt.genSalt(10);
+        const hashcode = await bcrypt.hash(req.body.password, saltcode);
 
-        hashedPassword = hash;
-
+        hashedPassword = hashcode;
         const newUser = new User({
           username: username,
           password: hashedPassword,
           major: major,
           role: role,
+          isLeader: isLeader,
         });
 
         const result = await newUser.save();
-        if (result) {
-          res.status(200).json({ result: "true", content: "Register successfully" });
-        } else {
-          res.status(404).json({ result: "false", content: "Register fail" });
-        }
-      });
+        if (result) res.status(200).json({ result: "success", content: "Register successfully" });
+      }
     } catch (error) {
-      return res.status(404).json(error);
+      res.status(404).json({ result: "fail", content: "Register fail" });
     }
   },
 
@@ -64,48 +55,53 @@ const userController = {
   // //Đăng nhập
   login: async (req, res) => {
     try {
-      const username = req.body.username;
-      const password = req.body.password;
+      let { username, password } = req.body;
 
       const user = await User.findOne({ username: username });
       if (!user) {
-        return res.status(404).json({ result: "false", content: "Username Invalid!" });
+        return res.status(404).json({ result: "fail", content: "Username Invalid!" });
       }
 
-      bcrypt.compare(password, user.password, function (err, result) {
-        if (err) {
-          res.status(200).json({ content: "There is an error while checking account" });
-          return console.log("Cannot encrypt");
-        }
+      const result = bcrypt.compareSync(password, user.password);
 
-        if (result) {
-          res.cookie("userSession", user._id.toString(), {
-            httpOnly: true,
-            secure: true,
-            path: "/",
-            sameSite: "strict",
-          });
-          return res.status(200).json({ content: "Login successfully" });
-        } else {
-          return res.status(404).json({ content: "Password Invalid!!!" });
-        }
-      });
+      if (result) {
+        res.cookie("userSession", user._id.toString(), {
+          maxAge: 36000,
+          httpOnly: true,
+          secure: true,
+          path: "/",
+          sameSite: "strict",
+        });
+        return res.status(200).json({ result: "success", content: "Login successfully" });
+      }
     } catch (error) {
-      return res.status(500).json(error);
+      return res.status(404).json({ result: "fail", content: "Password Invalid!!!" });
     }
   },
 
-  getAllUser: async (req, res) => {
+  getAll: async (req, res) => {
     try {
-      const user = await User.find();
-      return res.status(200).json(user);
+      const users = await User.find();
+      return res.status(200).json({ result: "success", content: users });
     } catch (error) {
       return res.status(500).json(error);
     }
   },
 
   logout: async (req, res) => {
-    return res.clearCookie("userSession");
+    try {
+      const userId = req.headers?.cookie.split("userSession=")[1];
+      res.cookie("userSession", userId, {
+        maxAge: 0,
+        httpOnly: true,
+        secure: true,
+        path: "/",
+        sameSite: "strict",
+      });
+      return res.status(200).json({ result: "success", content: "Logout successfully" });
+    } catch (error) {
+      return res.status(404).json({ result: "fail", content: "Logout fail because user is not login" });
+    }
   },
 
   // //Xóa User
@@ -134,34 +130,58 @@ const userController = {
   // },
 
   // //Cập nhật User
-  updateUser: async (req, res) => {
+  update: async (req, res) => {
     try {
-      const user = await User.findById(req.params.id);
-      if (!user) return res.status(404).json("User not found!");
-      if (req.body.email) {
-        user.email = req.body.email;
-      }
+      let { userId, username, password, major, role, isLeader } = req.body;
+      let hashedPassword = null;
 
-      if (req.body.password) {
+      if (password) {
         const saltcode = await bcrypt.genSalt(10);
         const hashcode = await bcrypt.hash(req.body.password, saltcode);
 
-        user.password = hashcode;
+        hashedPassword = hashcode;
       }
 
-      await user.save();
-      return res.status(200).json("Update successfully!");
+      const user = await User.findByIdAndUpdate(userId, { username, hashedPassword, major, role, isLeader });
+      if (!user) return res.status(404).json({ result: "fail", content: "User not found!" });
+      else return res.status(200).json({ result: "success", content: "Update successfully!" });
     } catch (error) {
-      return res.status(500).json(error);
+      return res.status(404).json({ result: "fail", content: error });
     }
   },
 
   checkAuthen: async (req, res) => {
     try {
-      console.log(req.headers?.cookie.split("userSession=")[1]);
-      return res.status(200).json("Test!");
+      const userId = req.headers?.cookie.split("userSession=")[1];
+      const result = await User.findById({ _id: userId });
+
+      if (result) return res.status(200).json({ result: "success", content: "Account is login" });
     } catch (error) {
-      return res.status(500).json({ content: "Not lau" });
+      return res.status(404).json({ result: "fail", content: "Account is not login" });
+    }
+  },
+
+  getDetail: async (req, res) => {
+    try {
+      const userId = req.body.userId;
+
+      const user = await User.findById({ _id: userId });
+      if (!user) return res.status(404).json({ result: "fail", content: "User not found!" });
+
+      return res.status(200).json({ result: "success", content: user });
+    } catch (error) {
+      return res.status(404).json({ result: "fail", content: error });
+    }
+  },
+
+  delete: async (req, res) => {
+    try {
+      const userId = req.body.userId;
+
+      const result = await User.findByIdAndDelete({ _id: userId });
+      if (result) return res.status(200).json({ result: "success", content: "Delete account succesful" });
+    } catch (error) {
+      return res.status(404).json({ result: "fail", content: "Delete account fail" });
     }
   },
 };

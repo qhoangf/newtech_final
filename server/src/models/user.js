@@ -16,7 +16,12 @@ const userSchema = new mongoose.Schema(
     },
     major: {
       type: String,
+      enum: ["software", "hardware", "security"],
       default: "software",
+    },
+    isLeader: {
+      type: Boolean,
+      default: false,
     },
     role: {
       type: String,

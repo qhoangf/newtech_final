@@ -1,95 +1,106 @@
 const Topic = require("../models/Topic");
 
 const topicController = {
-  // Tạo đề tài
-  createTopic: async (req, res) => {
+  create: async (req, res) => {
     try {
-      const newTopic = await new Topic({
-        // Kiểu dữ liệu
-        // topic - require
-        // description - require
-        // instructors - require + unique
-        // faculty - require
-        // reviewer - require
-        // typeTopic
+      let { name, major, instructor, isApproved, reviewer, students } = req.body;
+      let startDate,
+        endDate = new Date();
+      endDate.setDate(startDate.getDate() + 30);
 
-        topic: req.body.topic,
-        description: req.body.description,
-        instructors: req.body.instructors,
-        faculty: req.body.faculty,
-        reviewer: req.body.reviewer,
-        typeTopic: req.body.typeTopic,
+      const newTopic = new Topic({
+        name: name,
+        major: major,
+        startDate: startDate,
+        endDate: endDate,
+        instructor: instructor,
+        isApproved: isApproved,
+        reviewer: reviewer,
+        students: students,
       });
 
-      // Lưu data xuống Mongo DB
-      await newTopic.save();
-      return res.status(200).json("Add topic successfully");
+      const result = await newTopic.save();
+      if (result) return res.status(200).json({ result: "success", content: "Add topic successfully" });
     } catch (error) {
-      return res.status(500).json({ message: "Add topic failed", error: error.message });
+      return res.status(404).json({ result: "fail", content: "Add topic failed" });
     }
   },
 
-  // Show full đề tài
-  getAllTopic: async (req, res) => {
+  getAll: async (req, res) => {
     try {
-      const newTopic = await Topic.find();
-      return res.status(200).json(newTopic);
+      const topics = await Topic.find();
+      return res.status(200).json({ result: "success", content: topics });
     } catch (error) {
       return res.status(500).json(error);
     }
   },
 
-  // Cập nhật dề tài
-  updateTopic: async (req, res) => {
+  update: async (req, res) => {
     try {
-      const { topic, description, instructors, faculty, reviewer, typeTopic } = req.body;
+      const { topicId, name, major, instructor, isApproved, reviewer, students } = req.body;
 
-      const updateTopic = await Topic.findByIdAndUpdate(req.params.id, {
-        topic,
-        description,
-        instructors,
-        faculty,
+      const updateTopic = await Topic.findByIdAndUpdate(topicId, {
+        name,
+        major,
+        instructor,
+        isApproved,
         reviewer,
-        typeTopic,
+        students,
       });
 
       if (!updateTopic) {
-        return res.status(404).json({ message: "Topic not found" });
-      } else {
-        return res.status(200).json({ message: "Topic update successfully" });
+        return res.status(404).json({ result: "success", content: "Update topic successfully" });
       }
     } catch (error) {
-      return res.status(500).json({ message: "Topic update failed", error: error.message });
+      return res.status(404).json({ result: "fail", content: "Update topic fail" });
     }
   },
 
   // Đăng ký đề tài
-  registerTopicFromUser: async (req, res) => {
-    // userId = jsonWebToken
-    const userId = req.user.id;
+  enroll: async (req, res) => {
     try {
-      const topicId = req.params.id;
+      const { userId, topicId } = req.body;
       const chosenTopic = await Topic.findById(topicId);
       if (!chosenTopic) {
-        return res.status(404).json("Topic not found.");
+        return res.status(404).json({ result: "fail", content: "Topic not found." });
       }
       if (chosenTopic.students.includes(userId)) {
-        return res.status(400).json("User registered already.");
+        return res.status(404).json({ result: "fail", content: "User already enrolled." });
       }
-      if (chosenTopic.students.length >= chosenTopic.maxStudents) {
-        return res.status(400).json("Reached max quantity in this topic. Register failed!");
+      if (chosenTopic.students.length == 3) {
+        return res.status(404).json({ result: "fail", content: "Not more available slot" });
       }
 
-      // Thêm MSSV sinh viên vào members đề tài (max 3 sv mỗi đề tài)
       chosenTopic.students.push(userId);
-      if (chosenTopic.students.length >= chosenTopic.maxStudents) {
-        chosenTopic.isHidden = true;
-      }
 
       await chosenTopic.save();
-      return res.status(200).json("Register successfully.");
+      return res.status(200).json({ result: "success", content: "Enroll successfully." });
     } catch (error) {
       return res.status(500).json(error.message);
+    }
+  },
+
+  getDetail: async (req, res) => {
+    try {
+      const topicId = req.body.topicId;
+
+      const topic = await Topic.findById({ _id: topicId });
+      if (!topic) return res.status(404).json({ result: "fail", content: "Topic not found!" });
+
+      return res.status(200).json({ result: "success", content: topic });
+    } catch (error) {
+      return res.status(404).json({ result: "fail", content: error });
+    }
+  },
+
+  delete: async (req, res) => {
+    try {
+      const topicId = req.body.topicId;
+
+      const result = await Topic.findByIdAndDelete({ _id: topicId });
+      if (result) return res.status(200).json({ result: "success", content: "Delete topic succesful" });
+    } catch (error) {
+      return res.status(404).json({ result: "fail", content: "Delete topic fail" });
     }
   },
 };

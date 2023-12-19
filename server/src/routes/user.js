@@ -4,9 +4,11 @@ const router = express.Router();
 
 router.post("/register", userCon.register);
 router.post("/login", userCon.login);
-router.get("/getAllUser", userCon.getAllUser);
+router.get("/getAll", userCon.getAll);
+router.get("/getDetail", userCon.getDetail);
 router.post("/checkAuthen", userCon.checkAuthen);
 router.post("/logout", userCon.logout);
+router.post("/update", userCon.update);
 
 // router.post("/deconsteUser/:id", hashMiddlewareController.verifyTokenAndAdminAuth, userCon.deconsteUser);
 

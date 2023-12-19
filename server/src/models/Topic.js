@@ -1,43 +1,41 @@
 let mongoose = require("mongoose");
-let Schema = mongoose.Schema;
 
-let topicSchema = new mongoose.Schema({
-    topic: {
-        type: String,
-        require: true,
-        minlength: 8,
-        maxlength: 50,
-        unique: true,
+let topicSchema = new mongoose.Schema(
+  {
+    topicName: {
+      type: String,
+      require: true,
+      unique: true,
     },
-    description: {
-        type: String,
-        require: false,
-        minlength: 0
+    topicMajor: {
+      type: String,
+      require: false,
+      minlength: 0,
     },
-    instructors: {
-        type: String,
-        require: true,
+    startDate: {
+      type: String,
     },
-    faculty: {
-        type: String,
-        require: true,
-        enum: ['CLA', "CLS", "FIE"],
+    endDate: {
+      type: String,
+    },
+    instructor: {
+      type: String,
+    },
+    isApproved: {
+      type: Boolean,
+      default: false,
     },
     reviewer: {
-        type: String,
-        require: true,
+      type: String,
     },
-    typeTopic: {
-        type: String,
-        require: true,
-    },
-    students: [{
+    students: [
+      {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-    }],
-    maxStudents: {
-        type: Number,
-    },
-}, { timestamps: true });
+        ref: "users",
+      },
+    ],
+  },
+  { timestamps: true }
+);
 
-module.exports = mongoose.model("Topic", topicSchema, "TopicTable");
+module.exports = mongoose.model("topic", topicSchema);
