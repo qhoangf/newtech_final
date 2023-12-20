@@ -42,28 +42,28 @@ const subscribarList = [
   {
     name: "john doe",
     major: "ABC Fintech LTD.",
-    instructor: "GV A",
-    isapproved: true,
+    lecturer: "GV A",
+    isApproved: true,
     studentlist: [1],
   },
   {
     name: "kessy bryan",
     major: "My Fintech LTD.",
-    instructor: "GV B",
-    isapproved: false,
+    lecturer: "GV B",
+    isApproved: false,
     studentlist: [1],
   },
   {
     name: "kessy bryan",
     major: "My Fintech LTD.",
     studentlist: ["1", "3"],
-    isapproved: false,
+    isApproved: false,
   },
   {
     name: "james cassegne",
     major: "Collboy Tech LTD.",
-    instructor: "GV C",
-    isapproved: true,
+    lecturer: "GV C",
+    isApproved: true,
     studentlist: [1],
   },
   {
@@ -161,7 +161,7 @@ const PaginationTable = () => {
               <TableRow key={index}>
                 <TableCell align="left">{subscriber.name}</TableCell>
                 <TableCell align="center">{subscriber.major}</TableCell>
-                <TableCell align="center">{subscriber.instructor}</TableCell>
+                <TableCell align="center">{subscriber.lecturer}</TableCell>
                 <TableCell align="center">{subscriber.reviewer}</TableCell>
                 <TableCell align="center">{(subscriber.studentlist)?.length}</TableCell>
                 <TableCell align="right">
@@ -227,10 +227,10 @@ const PaginationTable = () => {
               Giáo viên hướng dẫn
             </Grid>
             <Grid item xs={6}>
-              {registeredTopic.instructor ? (
+              {registeredTopic.lecturer ? (
                 <>
-                  {registeredTopic.instructor}{" "}
-                  {registeredTopic.isapproved ? (
+                  {registeredTopic.lecturer}{" "}
+                  {registeredTopic.isApproved ? (
                     <b style={{ color: "#2e7d32" }}>(Đã duyệt)</b>
                   ) : (
                     <b style={{ color: "#FFAF38" }}>(Chờ duyệt)</b>
@@ -264,7 +264,7 @@ const PaginationTable = () => {
           <Button color="error" onClick={handleCloseJoinModal}>
             Hủy
           </Button>
-          {(!registeredTopic.isapproved && registeredTopic.instructor) ?
+          {(!registeredTopic.isApproved && registeredTopic.lecturer) ?
             <Button
               color="error"
               variant="contained"
@@ -272,7 +272,7 @@ const PaginationTable = () => {
               Từ chối giảng viên
             </Button> : <></>
           }
-          {(!registeredTopic.isapproved && registeredTopic.instructor) ?
+          {(!registeredTopic.isApproved && registeredTopic.lecturer) ?
             <Button
               color="success"
               variant="contained"
@@ -281,7 +281,7 @@ const PaginationTable = () => {
               Duyệt giảng viên
             </Button> : <></>
           }
-          {!registeredTopic.instructor ?
+          {!registeredTopic.lecturer ?
             <LoadingButton
               type="submit"
               color="primary"

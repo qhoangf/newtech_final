@@ -1,4 +1,4 @@
-import AxiosCLient from "@/lib/axiosClient";
+import AxiosCLient from "app/lib/axiosClient";
 
 export async function userLogin(data) {
   return await AxiosCLient.fetchingWithData("post", "/user/login", data);

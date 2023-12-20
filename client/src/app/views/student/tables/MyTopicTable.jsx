@@ -106,7 +106,7 @@ const PaginationTable = () => {
               <TableRow key={index}>
                 <TableCell align="left">{subscriber.name}</TableCell>
                 <TableCell align="center">{subscriber.major}</TableCell>
-                <TableCell align="center">{subscriber.instructor}</TableCell>
+                <TableCell align="center">{subscriber.lecturer}</TableCell>
                 <TableCell align="center">{subscriber.reviewer}</TableCell>
                 <TableCell align="center">{subscriber.studentlist}</TableCell>
                 <TableCell align="right">

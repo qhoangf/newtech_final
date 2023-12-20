@@ -18,7 +18,7 @@ let topicSchema = new mongoose.Schema(
     endDate: {
       type: String,
     },
-    instructor: {
+    lecturer: {
       type: String,
     },
     isApproved: {

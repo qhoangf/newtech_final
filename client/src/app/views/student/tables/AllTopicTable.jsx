@@ -137,7 +137,7 @@ const PaginationTable = () => {
               <TableRow key={index}>
                 <TableCell align="left">{subscriber.name}</TableCell>
                 <TableCell align="center">{subscriber.major}</TableCell>
-                <TableCell align="center">{subscriber.instructor}</TableCell>
+                <TableCell align="center">{subscriber.lecturer}</TableCell>
                 <TableCell align="center">{subscriber.reviewer}</TableCell>
                 <TableCell align="center">{(subscriber.studentlist)?.length}</TableCell>
                 <TableCell align="right">
@@ -200,7 +200,7 @@ const PaginationTable = () => {
               Giáo viên hướng dẫn
             </Grid>
             <Grid item xs={6}>
-              <b>{registeredTopic.instructor}</b>
+              <b>{registeredTopic.lecturer}</b>
             </Grid>
           </Grid>
           {/* Reviewer */}

@@ -3,7 +3,7 @@ const Topic = require("../models/Topic");
 const topicController = {
   create: async (req, res) => {
     try {
-      let { name, major, instructor } = req.body;
+      let { name, major, lecturer } = req.body;
       let startDate = new Date();
       let endDate = new Date();
       endDate.setDate(startDate.getDate() + 30);
@@ -13,7 +13,7 @@ const topicController = {
         major: major,
         startDate: startDate.toISOString(),
         endDate: endDate.toISOString(),
-        instructor: instructor,
+        lecturer: lecturer,
         isApproved: false,
         reviewer: "",
         students: [],
@@ -37,12 +37,12 @@ const topicController = {
 
   update: async (req, res) => {
     try {
-      const { topicId, name, major, instructor, isApproved, reviewer, students } = req.body;
+      const { topicId, name, major, lecturer, isApproved, reviewer, students } = req.body;
 
       const updateTopic = await Topic.findByIdAndUpdate(topicId, {
         name,
         major,
-        instructor,
+        lecturer,
         isApproved,
         reviewer,
         students,
