@@ -69,8 +69,8 @@ const userController = {
           maxAge: 60 * 60 * 60 * 24,
           httpOnly: false,
           path: "/",
-          // secure: true,
-          // sameSite: "strict",
+          secure: true,
+          sameSite: "none",
         });
         return res.status(200).json({ result: "success", content: "Login successfully" });
       }
