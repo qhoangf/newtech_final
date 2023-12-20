@@ -66,11 +66,11 @@ const userController = {
 
       if (result) {
         res.cookie("userSession", user._id.toString(), {
-          maxAge: 36000,
-          httpOnly: true,
-          secure: true,
+          maxAge: 60 * 60 * 60 * 24,
+          httpOnly: false,
           path: "/",
-          sameSite: "strict",
+          // secure: true,
+          // sameSite: "strict",
         });
         return res.status(200).json({ result: "success", content: "Login successfully" });
       }

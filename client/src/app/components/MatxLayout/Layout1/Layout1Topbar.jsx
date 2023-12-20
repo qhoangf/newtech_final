@@ -131,7 +131,7 @@ const Layout1Topbar = () => {
               <UserMenu>
                 <Hidden xsDown>
                   <Span>
-                    Hi <strong>{user.name}</strong>
+                    Hi <strong>{user?.name}</strong>
                   </Span>
                 </Hidden>
               </UserMenu>

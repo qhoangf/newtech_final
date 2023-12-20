@@ -40,7 +40,7 @@ const initialValues = {
 
 // form field validation schema
 const validationSchema = Yup.object().shape({
-  username: Yup.string().email('Invalid Email address').required('Email is required!'),
+  username: Yup.string().required('Username is required!'),
   password: Yup.string()
     .min(6, 'Password must be 6 character length')
     .required('Password is required!'),
@@ -57,14 +57,16 @@ const Signin = () => {
     setLoading(true);
     try {
       const data = { "username": values.username, "password": values.password };
+
       const [result, err] = await userLogin(data);
       if (result) {
         setLoading(true);
-        console.log("Login successfully");
-        navigate('/system/default');
+        console.log("Login successfully", result);
+        navigate('/admin/topic');
       } else {
         console.log("Login fail", err);
-        setLoading(true);
+        // setLoading(true);
+        setLoading(false);
       }
     } catch (e) {
       setLoading(false);
@@ -98,10 +100,10 @@ const Signin = () => {
                       label="Tên đăng nhập"
                       variant="outlined"
                       onBlur={handleBlur}
-                      value={values.email}
+                      value={values?.username}
                       onChange={handleChange}
-                      helperText={touched.email && errors.email}
-                      error={Boolean(errors.email && touched.email)}
+                      helperText={touched.username && errors.username}
+                      error={Boolean(errors.username && touched.username)}
                       sx={{ mb: 3 }}
                     />
 
@@ -113,7 +115,7 @@ const Signin = () => {
                       label="Mật khẩu"
                       variant="outlined"
                       onBlur={handleBlur}
-                      value={values.password}
+                      value={values?.password}
                       onChange={handleChange}
                       helperText={touched.password && errors.password}
                       error={Boolean(errors.password && touched.password)}

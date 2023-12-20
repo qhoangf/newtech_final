@@ -10,14 +10,15 @@ const App = () => {
   const content = useRoutes(routes);
 
   return (
-    <SettingsProvider>
-      <AuthProvider>
-        <MatxTheme>
-          <CssBaseline />
-          {content}
-        </MatxTheme>
-      </AuthProvider>
-    </SettingsProvider>
+    <MatxTheme>
+    <CssBaseline />
+    {content}
+  </MatxTheme>
+    // <SettingsProvider>
+    //   {/* <AuthProvider> */}
+
+    //   {/* </AuthProvider> */}
+    // </SettingsProvider>
   );
 };
 

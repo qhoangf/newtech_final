@@ -22,9 +22,9 @@ const Analytics = Loadable(lazy(() => import('app/views/system/Analytics')));
 const routes = [
   {
     element: (
-      <AuthGuard>
+      // <AuthGuard>
         <MatxLayout />
-      </AuthGuard>
+      // </AuthGuard>
     ),
     children: [
       // EXPAND FLOW
