@@ -1,5 +1,7 @@
 const axiosConfig = {
   baseURL: process.env.REACT_APP_BACKEND_API,
+  withCredentials: true,
+  credentials: "include",
   timeout: 5000,
   headers: {
     "content-type": "application/json",

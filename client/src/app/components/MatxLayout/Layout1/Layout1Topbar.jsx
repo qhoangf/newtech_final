@@ -100,12 +100,12 @@ const Layout1Topbar = () => {
 
   const logout = async () => {
     try {
-      const [result, err] = await userLogout();
+      const result = await userLogout();
       if (result) {
         console.log("Logout successfully", result);
         navigate('/session/signin');
       } else {
-        console.log("Logout fail", err);
+        console.log("Logout fail");
       }
     } catch (e) {
       console.log("Process logout fail", e);

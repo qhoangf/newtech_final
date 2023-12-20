@@ -90,13 +90,14 @@ const userController = {
 
   logout: async (req, res) => {
     try {
+      console.log(req.headers?.cookie);
       const userId = req.headers?.cookie.split("userSession=")[1];
       res.cookie("userSession", userId, {
         maxAge: 0,
         httpOnly: true,
         secure: true,
         path: "/",
-        sameSite: "strict",
+        sameSite: "none",
       });
       return res.status(200).json({ result: "success", content: "Logout successfully" });
     } catch (error) {
