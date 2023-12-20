@@ -25,15 +25,15 @@ const H4 = styled('h4')(({ theme }) => ({
 }));
 
 const initialValues = {
-    topicname: '',
-    topicmajor: '',
+    name: '',
+    major: '',
 };
 
 const validationSchema = Yup.object().shape({
-    topicname: Yup.string()
+    name: Yup.string()
         .min(6, 'Tên đề tài phải nhiều hơn 6 kí tự')
         .required('Bắt buộc phải có tên đề tài!'),
-    topicmajor: Yup.string()
+    major: Yup.string()
         .min(6, 'Chuyên ngành phải nhiều hơn 6 kí tự')
         .required('Bắt buộc phải có chuyên ngành!'),
 });
@@ -73,15 +73,15 @@ const Topic = () => {
                                             <TextField
                                                 fullWidth
                                                 size="small"
-                                                type="topicname"
-                                                name="topicname"
+                                                type="name"
+                                                name="name"
                                                 label="Tên đề tài"
                                                 variant="outlined"
                                                 onBlur={handleBlur}
-                                                value={values.topicname}
+                                                value={values.name}
                                                 onChange={handleChange}
-                                                helperText={touched.topicname && errors.topicname}
-                                                error={Boolean(errors.topicname && touched.topicname)}
+                                                helperText={touched.name && errors.name}
+                                                error={Boolean(errors.name && touched.name)}
                                                 sx={{ mb: 1.5, mt: 1.5 }}
                                             />
 

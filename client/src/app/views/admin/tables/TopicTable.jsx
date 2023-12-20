@@ -35,54 +35,54 @@ const StyledTable = styled(Table)(() => ({
 
 const subscribarList = [
   {
-    topicname: "john doe",
-    topicmajor: "ABC Fintech LTD.",
+    name: "john doe",
+    major: "ABC Fintech LTD.",
   },
   {
-    topicname: "kessy bryan",
-    topicmajor: "My Fintech LTD.",
+    name: "kessy bryan",
+    major: "My Fintech LTD.",
   },
   {
-    topicname: "kessy bryan",
-    topicmajor: "My Fintech LTD.",
+    name: "kessy bryan",
+    major: "My Fintech LTD.",
   },
   {
-    topicname: "james cassegne",
-    topicmajor: "Collboy Tech LTD.",
+    name: "james cassegne",
+    major: "Collboy Tech LTD.",
   },
   {
-    topicname: "lucy brown",
-    topicmajor: "ABC Fintech LTD.",
+    name: "lucy brown",
+    major: "ABC Fintech LTD.",
   },
   {
-    topicname: "lucy brown",
-    topicmajor: "ABC Fintech LTD.",
+    name: "lucy brown",
+    major: "ABC Fintech LTD.",
   },
   {
-    topicname: "lucy brown",
-    topicmajor: "ABC Fintech LTD.",
+    name: "lucy brown",
+    major: "ABC Fintech LTD.",
   },
   {
-    topicname: "lucy brown",
-    topicmajor: "ABC Fintech LTD.",
+    name: "lucy brown",
+    major: "ABC Fintech LTD.",
   },
   {
-    topicname: "lucy brown",
-    topicmajor: "ABC Fintech LTD.",
+    name: "lucy brown",
+    major: "ABC Fintech LTD.",
   },
 ];
 
 
 const initialValues = {
-  topicname: '',
-  topicmajor: '',
+  name: '',
+  major: '',
 };
 
 const validationSchema = Yup.object().shape({
-  topicname: Yup.string()
+  name: Yup.string()
     .min(6, 'Tên đề tài phải nhiều hơn 6 kí tự')
     .required('Bắt buộc phải có tên đề tài!'),
-  topicmajor: Yup.string()
+  major: Yup.string()
     .min(6, 'Chuyên ngành phải nhiều hơn 6 kí tự')
     .required('Bắt buộc phải có chuyên ngành!'),
 });
@@ -137,8 +137,8 @@ const PaginationTable = () => {
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             .map((subscriber, index) => (
               <TableRow key={index}>
-                <TableCell align="left">{subscriber.topicname}</TableCell>
-                <TableCell align="center">{subscriber.topicmajor}</TableCell>
+                <TableCell align="left">{subscriber.name}</TableCell>
+                <TableCell align="center">{subscriber.major}</TableCell>
                 <TableCell align="center">{subscriber.startDate}</TableCell>
                 <TableCell align="center">{subscriber.endDate}</TableCell>
                 <TableCell align="right">
@@ -205,30 +205,30 @@ const PaginationTable = () => {
                 <TextField
                   fullWidth
                   size="small"
-                  type="topicname"
-                  name="topicname"
+                  type="name"
+                  name="name"
                   label="Tên đề tài"
                   variant="outlined"
                   onBlur={handleBlur}
-                  value={values.topicname}
+                  value={values.name}
                   onChange={handleChange}
-                  helperText={touched.topicname && errors.topicname}
-                  error={Boolean(errors.topicname && touched.topicname)}
+                  helperText={touched.name && errors.name}
+                  error={Boolean(errors.name && touched.name)}
                   sx={{ mb: 3, mt: 1 }}
                 />
 
                 <TextField
                   fullWidth
                   size="small"
-                  name="topicmajor"
-                  type="topicmajor"
+                  name="major"
+                  type="major"
                   label="Chuyên ngành"
                   variant="outlined"
                   onBlur={handleBlur}
-                  value={values.topicmajor}
+                  value={values.major}
                   onChange={handleChange}
-                  helperText={touched.topicmajor && errors.topicmajor}
-                  error={Boolean(errors.topicmajor && touched.topicmajor)}
+                  helperText={touched.major && errors.major}
+                  error={Boolean(errors.major && touched.major)}
                 />
               </DialogContent>
               <DialogActions>
