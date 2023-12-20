@@ -30,9 +30,9 @@ const validationSchema = Yup.object().shape({
     name: Yup.string()
         .min(6, 'Tên giảng viên phải nhiều hơn 6 kí tự')
         .required('Bắt buộc phải có tên giảng viên!'),
-    major: Yup.string()
-        .min(6, 'Chuyên ngành phải nhiều hơn 6 kí tự')
-        .required('Bắt buộc phải có chuyên ngành!'),
+    // major: Yup.string()
+    //     .min(6, 'Chuyên ngành phải nhiều hơn 6 kí tự')
+    //     .required('Bắt buộc phải có chuyên ngành!'),
     username: Yup.string()
         .min(6, 'Tên đăng nhập phải nhiều hơn 6 kí tự')
         .required('Bắt buộc phải có tên đăng nhập!'),
@@ -44,6 +44,7 @@ const validationSchema = Yup.object().shape({
 const Teacher = () => {
     const [loading, setLoading] = useState(false);
     const handleFormSubmit = async (values) => {
+        console.log("cc");
         setLoading(true);
         try {
             const request = {
@@ -59,6 +60,7 @@ const Teacher = () => {
             //     console.log("Login fail", err);
             //     setLoading(false);
             // }
+            console.log(values)
         } catch (e) {
             console.log("Process register fail", e);
             setLoading(false);
@@ -94,7 +96,7 @@ const Teacher = () => {
                                                 label="Tên giảng viên"
                                                 variant="outlined"
                                                 onBlur={handleBlur}
-                                                value={values.name}
+                                                value={values?.name}
                                                 onChange={handleChange}
                                                 helperText={touched.name && errors.name}
                                                 error={Boolean(errors.name && touched.name)}
@@ -109,7 +111,7 @@ const Teacher = () => {
                                                 label="Tên đăng nhập"
                                                 variant="outlined"
                                                 onBlur={handleBlur}
-                                                value={values.username}
+                                                value={values?.username}
                                                 onChange={handleChange}
                                                 helperText={touched.username && errors.username}
                                                 error={Boolean(errors.username && touched.username)}
@@ -124,7 +126,7 @@ const Teacher = () => {
                                                 label="Mật khẩu"
                                                 variant="outlined"
                                                 onBlur={handleBlur}
-                                                value={values.password}
+                                                value={values?.password}
                                                 onChange={handleChange}
                                                 helperText={touched.password && errors.password}
                                                 error={Boolean(errors.password && touched.password)}
