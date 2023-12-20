@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   Avatar,
   Hidden,
@@ -14,14 +14,10 @@ import {
 
 import { MatxMenu, MatxSearchBox } from 'app/components/common/others';
 import { themeShadows } from 'app/components/MatxTheme/themeColors';
-import { NotificationProvider } from 'app/contexts/NotificationContext';
-import useAuth from 'app/hooks/useAuth';
 import useSettings from 'app/hooks/useSettings';
 import { topBarHeight } from 'app/utils/constant';
-
 import { Span } from '../../common/others/Typography';
-import NotificationBar from '../../NotificationBar/NotificationBar';
-import ShoppingCart from '../../common/others/ShoppingCart';
+import { userLogout } from 'app/lib/api/user';
 
 const StyledIconButton = styled(IconButton)(({ theme }) => ({
   color: theme.palette.text.primary
@@ -83,8 +79,8 @@ const IconBox = styled('div')(({ theme }) => ({
 
 const Layout1Topbar = () => {
   const theme = useTheme();
+  const navigate = useNavigate();
   const { settings, updateSettings } = useSettings();
-  const { logout, user } = useAuth();
   const isMdScreen = useMediaQuery(theme.breakpoints.down('md'));
 
   const updateSidebarMode = (sidebarSettings) => {
@@ -102,6 +98,20 @@ const Layout1Topbar = () => {
     updateSidebarMode({ mode });
   };
 
+  const logout = async () => {
+    try {
+      const [result, err] = await userLogout();
+      if (result) {
+        console.log("Logout successfully", result);
+        navigate('/session/signin');
+      } else {
+        console.log("Logout fail", err);
+      }
+    } catch (e) {
+      console.log("Process logout fail", e);
+    }
+  };
+
   return (
     <TopbarRoot>
       <TopbarContainer>
@@ -109,20 +119,6 @@ const Layout1Topbar = () => {
           <StyledIconButton onClick={handleSidebarToggle}>
             <Icon>menu</Icon>
           </StyledIconButton>
-
-          {/* <IconBox>
-            <StyledIconButton>
-              <Icon>mail_outline</Icon>
-            </StyledIconButton>
-
-            <StyledIconButton>
-              <Icon>web_asset</Icon>
-            </StyledIconButton>
-
-            <StyledIconButton>
-              <Icon>star_outline</Icon>
-            </StyledIconButton>
-          </IconBox> */}
         </Box>
 
         <Box display="flex" alignItems="center">
@@ -131,29 +127,17 @@ const Layout1Topbar = () => {
               <UserMenu>
                 <Hidden xsDown>
                   <Span>
-                    Hi <strong>{user?.name}</strong>
+                    Hi <strong>{
+                      // user ? user.name : "user"
+                    }</strong>
                   </Span>
                 </Hidden>
               </UserMenu>
             }
           >
-            {/* <StyledItem>
-              <Link to="/">
-                <Icon> home </Icon>
-                <Span> Home </Span>
-              </Link>
-            </StyledItem>
-
-            <StyledItem>
-              <Link to="/page-layouts/user-profile">
-                <Icon> person </Icon>
-                <Span> Profile </Span>
-              </Link>
-            </StyledItem> */}
-
             <StyledItem onClick={logout}>
               <Icon> power_settings_new </Icon>
-              <Span> Logout </Span>
+              <Span> Đăng xuất </Span>
             </StyledItem>
           </MatxMenu>
         </Box>

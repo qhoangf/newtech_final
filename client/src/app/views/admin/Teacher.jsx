@@ -4,6 +4,7 @@ import * as Yup from 'yup';
 import { Fragment, useState } from 'react';
 import { Formik } from 'formik';
 import { LoadingButton } from '@mui/lab';
+import { userRegister } from 'app/lib/api/user';
 
 const ContentBox = styled('div')(({ theme }) => ({
     margin: '30px',
@@ -45,8 +46,21 @@ const Teacher = () => {
     const handleFormSubmit = async (values) => {
         setLoading(true);
         try {
-            console.log("Do something", values);
+            const request = {
+                "username": values.username,
+                "password": values.password
+            };
+
+            // const [result, err] = await userRegister(request);
+            // if (result) {
+            //     console.log("Login successfully", result);
+            //     setLoading(true);
+            // } else {
+            //     console.log("Login fail", err);
+            //     setLoading(false);
+            // }
         } catch (e) {
+            console.log("Process register fail", e);
             setLoading(false);
         }
     };
@@ -137,8 +151,8 @@ const Teacher = () => {
                                             <FormControl
                                                 sx={{ mb: 1.5 }}
                                             >
-                                                <FormLabel id="isleader">Phân công</FormLabel>
-                                                <FormControlLabel required control={<Checkbox />} label="Trưởng bộ môn" />
+                                                <FormLabel id="isLeader">Phân công</FormLabel>
+                                                <FormControlLabel name="isLeader" required control={<Checkbox />} label="Trưởng bộ môn" />
                                             </FormControl>
 
                                             <br />

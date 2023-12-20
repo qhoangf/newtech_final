@@ -1,10 +1,9 @@
 import { LoadingButton } from '@mui/lab';
-import { Card, Grid, TextField } from '@mui/material';
-import { Box, styled, useTheme } from '@mui/material';
-import useAuth from 'app/hooks/useAuth';
+import { Alert, Card, Grid, Snackbar, TextField } from '@mui/material';
+import { Box, styled } from '@mui/material';
 import { userLogin } from 'app/lib/api/user';
 import { Formik } from 'formik';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 
@@ -40,36 +39,44 @@ const initialValues = {
 
 // form field validation schema
 const validationSchema = Yup.object().shape({
-  username: Yup.string().required('Username is required!'),
+  username: Yup.string()
+    .min(8, 'Tên đăng nhập có ít nhất 8 kí tự')
+    .required('Cần nhập tên đăng nhập để đăng nhập!'),
   password: Yup.string()
-    .min(6, 'Password must be 6 character length')
-    .required('Password is required!'),
+    .min(6, 'Mật khẩu có ít nhất 6 kí tự')
+    .required('Cần nhập mật khẩu để đăng nhập!'),
 });
 
 const Signin = () => {
-  const theme = useTheme();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
-  const { login } = useAuth();
+  const [open, setOpen] = React.useState(false);
+  function handleClose(_, reason) {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpen(false);
+  }
 
   const handleFormSubmit = async (values) => {
     setLoading(true);
     try {
-      const data = { "username": values.username, "password": values.password };
+      const request = { "username": values.username, "password": values.password };
 
-      const [result, err] = await userLogin(data);
+      const [result, err] = await userLogin(request);
       if (result) {
-        setLoading(true);
         console.log("Login successfully", result);
-        navigate('/admin/topic');
+        setLoading(true);
+        navigate('/admin/teacher');
       } else {
         console.log("Login fail", err);
-        // setLoading(true);
+        setOpen(true);
         setLoading(false);
       }
     } catch (e) {
-      setLoading(false);
+        console.log("Process login fail", e);
+        setLoading(false);
     }
   };
 
@@ -129,7 +136,7 @@ const Signin = () => {
                       variant="contained"
                       sx={{ my: 2 }}
                     >
-                      Login
+                      Đăng nhập
                     </LoadingButton>
                   </form>
                 )}
@@ -138,6 +145,12 @@ const Signin = () => {
           </Grid>
         </Grid>
       </Card>
+
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }} variant="filled">
+          Tài khoản hoặc mật khẩu không đúng!
+        </Alert>
+      </Snackbar>
     </JWTRoot>
   );
 };

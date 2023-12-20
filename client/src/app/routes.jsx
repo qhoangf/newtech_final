@@ -1,6 +1,4 @@
 import { lazy } from 'react';
-import AuthGuard from './auth/AuthGuard';
-import { authRoles } from './auth/authRoles';
 import Loadable from './components/common/others/Loadable';
 import MatxLayout from './components/MatxLayout/MatxLayout';
 import materialRoutes from 'app/views/material-kit/MaterialRoutes';
@@ -22,9 +20,7 @@ const Analytics = Loadable(lazy(() => import('app/views/system/Analytics')));
 const routes = [
   {
     element: (
-      // <AuthGuard>
         <MatxLayout />
-      // </AuthGuard>
     ),
     children: [
       // EXPAND FLOW
@@ -38,14 +34,12 @@ const routes = [
       {
         path: '/system/default',
         element: <Analytics />,
-        auth: authRoles.admin
       },
 
       // e-chart rooute
       {
         path: '/charts/echarts',
         element: <AppEchart />,
-        auth: authRoles.editor
       }
     ]
   },
