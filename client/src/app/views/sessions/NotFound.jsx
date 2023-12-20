@@ -6,15 +6,11 @@ const FlexBox = styled(Box)(() => ({
   alignItems: 'center',
 }));
 
-const JustifyBox = styled(FlexBox)(() => ({
-  maxWidth: 320,
-  flexDirection: 'column',
-  justifyContent: 'center',
-}));
-
-const IMG = styled('img')(() => ({
-  width: '100%',
-  marginBottom: '32px',
+const H6 = styled(Box)(() => ({
+  color: "#000",
+  fontWeight: "bold",
+  fontSize: "4rem",
+  margin: "3rem",
 }));
 
 const NotFoundRoot = styled(FlexBox)(() => ({
@@ -29,18 +25,19 @@ const NotFound = () => {
 
   return (
     <NotFoundRoot>
-      <JustifyBox>
-        <IMG src="/assets/images/illustrations/404.svg" alt="" />
-
-        <Button
-          color="primary"
-          variant="contained"
-          sx={{ textTransform: 'capitalize' }}
-          onClick={() => navigate(-1)}
-        >
-          Go Back
-        </Button>
-      </JustifyBox>
+      <div>
+        <H6>404 Page not found.</H6>
+        <div style={{ textAlign: "center" }}>
+          <Button
+            color="primary"
+            variant="contained"
+            sx={{ textTransform: 'capitalize', textAlign: "center" }}
+            onClick={() => navigate(-1)}
+          >
+            Go Back
+          </Button>
+        </div>
+      </div>
     </NotFoundRoot>
   );
 };
