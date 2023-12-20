@@ -81,7 +81,7 @@ const userController = {
 
   getAll: async (req, res) => {
     try {
-      const users = await User.find();
+      const users = await User.find().select(["-password"]);
       return res.status(200).json({ result: "success", content: users });
     } catch (error) {
       return res.status(500).json(error);
@@ -134,15 +134,22 @@ const userController = {
     try {
       let { userId, username, password, major, role, isLeader } = req.body;
       let hashedPassword = null;
+      let user = null;
+
+      if (role == "student") {
+        isLeader = false;
+      }
 
       if (password) {
         const saltcode = await bcrypt.genSalt(10);
         const hashcode = await bcrypt.hash(req.body.password, saltcode);
 
         hashedPassword = hashcode;
+        user = await User.findByIdAndUpdate(userId, { username, hashedPassword, major, role, isLeader });
+      } else {
+        user = await User.findByIdAndUpdate(userId, { username, major, role, isLeader });
       }
 
-      const user = await User.findByIdAndUpdate(userId, { username, hashedPassword, major, role, isLeader });
       if (!user) return res.status(404).json({ result: "fail", content: "User not found!" });
       else return res.status(200).json({ result: "success", content: "Update successfully!" });
     } catch (error) {
@@ -165,7 +172,7 @@ const userController = {
     try {
       const userId = req.body.userId;
 
-      const user = await User.findById({ _id: userId });
+      const user = await User.findById({ _id: userId }).select(["-password"]);
       if (!user) return res.status(404).json({ result: "fail", content: "User not found!" });
 
       return res.status(200).json({ result: "success", content: user });

@@ -3,20 +3,20 @@ const Topic = require("../models/Topic");
 const topicController = {
   create: async (req, res) => {
     try {
-      let { name, major, instructor, isApproved, reviewer, students } = req.body;
-      let startDate,
-        endDate = new Date();
+      let { name, major, instructor } = req.body;
+      let startDate = new Date();
+      let endDate = new Date();
       endDate.setDate(startDate.getDate() + 30);
 
       const newTopic = new Topic({
         name: name,
         major: major,
-        startDate: startDate,
-        endDate: endDate,
+        startDate: startDate.toISOString(),
+        endDate: endDate.toISOString(),
         instructor: instructor,
-        isApproved: isApproved,
-        reviewer: reviewer,
-        students: students,
+        isApproved: false,
+        reviewer: "",
+        students: [],
       });
 
       const result = await newTopic.save();
@@ -101,6 +101,28 @@ const topicController = {
       if (result) return res.status(200).json({ result: "success", content: "Delete topic succesful" });
     } catch (error) {
       return res.status(404).json({ result: "fail", content: "Delete topic fail" });
+    }
+  },
+
+  approve: async (req, res) => {
+    try {
+      const topicId = req.body.topicId;
+
+      const result = await Topic.findByIdAndUpdate(topicId, { isApproved: true });
+      if (result) return res.status(200).json({ result: "success", content: "Approve topic succesful" });
+    } catch (error) {
+      return res.status(404).json({ result: "fail", content: "Approve topic fail" });
+    }
+  },
+
+  assignReviewer: async (req, res) => {
+    try {
+      const { topicId, reviewer } = req.body;
+
+      const result = await Topic.findByIdAndUpdate(topicId, { reviewer: reviewer });
+      if (result) return res.status(200).json({ result: "success", content: "Assign reviewer to topic succesful" });
+    } catch (error) {
+      return res.status(404).json({ result: "fail", content: "Assign reviewer to topic fail" });
     }
   },
 };
