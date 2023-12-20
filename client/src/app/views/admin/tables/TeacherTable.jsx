@@ -35,40 +35,40 @@ const StyledTable = styled(Table)(() => ({
 
 const subscribarList = [
   {
-    topicname: "john doe",
-    topicmajor: "ABC Fintech LTD.",
+    name: "john doe",
+    major: "ABC Fintech LTD.",
   },
   {
-    topicname: "kessy bryan",
-    topicmajor: "My Fintech LTD.",
+    name: "kessy bryan",
+    major: "My Fintech LTD.",
   },
   {
-    topicname: "kessy bryan",
-    topicmajor: "My Fintech LTD.",
+    name: "kessy bryan",
+    major: "My Fintech LTD.",
   },
   {
-    topicname: "james cassegne",
-    topicmajor: "Collboy Tech LTD.",
+    name: "james cassegne",
+    major: "Collboy Tech LTD.",
   },
   {
-    topicname: "lucy brown",
-    topicmajor: "ABC Fintech LTD.",
+    name: "lucy brown",
+    major: "ABC Fintech LTD.",
   },
   {
-    topicname: "lucy brown",
-    topicmajor: "ABC Fintech LTD.",
+    name: "lucy brown",
+    major: "ABC Fintech LTD.",
   },
   {
-    topicname: "lucy brown",
-    topicmajor: "ABC Fintech LTD.",
+    name: "lucy brown",
+    major: "ABC Fintech LTD.",
   },
   {
-    topicname: "lucy brown",
-    topicmajor: "ABC Fintech LTD.",
+    name: "lucy brown",
+    major: "ABC Fintech LTD.",
   },
   {
-    topicname: "lucy brown",
-    topicmajor: "ABC Fintech LTD.",
+    name: "lucy brown",
+    major: "ABC Fintech LTD.",
   },
 ];
 
@@ -144,8 +144,8 @@ const PaginationTable = () => {
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             .map((subscriber, index) => (
               <TableRow key={index}>
-                <TableCell align="left">{subscriber.topicname}</TableCell>
-                <TableCell align="center">{subscriber.topicmajor}</TableCell>
+                <TableCell align="left">{subscriber.name}</TableCell>
+                <TableCell align="center">{subscriber.major}</TableCell>
                 <TableCell align="center">
                   <Icon color="success">done</Icon>
                 </TableCell>

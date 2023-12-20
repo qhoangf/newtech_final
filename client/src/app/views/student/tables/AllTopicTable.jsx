@@ -34,48 +34,48 @@ const StyledTable = styled(Table)(() => ({
 
 const subscribarList = [
   {
-    topicname: "john doe",
-    topicmajor: "ABC Fintech LTD.",
+    name: "john doe",
+    major: "ABC Fintech LTD.",
     studentlist: [1],
   },
   {
-    topicname: "kessy bryan",
-    topicmajor: "My Fintech LTD.",
+    name: "kessy bryan",
+    major: "My Fintech LTD.",
     studentlist: [1],
   },
   {
-    topicname: "kessy bryan",
-    topicmajor: "My Fintech LTD.",
+    name: "kessy bryan",
+    major: "My Fintech LTD.",
     studentlist: ["1", "3"],
   },
   {
-    topicname: "james cassegne",
-    topicmajor: "Collboy Tech LTD.",
+    name: "james cassegne",
+    major: "Collboy Tech LTD.",
     studentlist: [1],
   },
   {
-    topicname: "lucy brown",
-    topicmajor: "ABC Fintech LTD.",
+    name: "lucy brown",
+    major: "ABC Fintech LTD.",
     studentlist: [1],
   },
   {
-    topicname: "lucy brown",
-    topicmajor: "ABC Fintech LTD.",
+    name: "lucy brown",
+    major: "ABC Fintech LTD.",
     studentlist: [1],
   },
   {
-    topicname: "lucy brown",
-    topicmajor: "ABC Fintech LTD.",
+    name: "lucy brown",
+    major: "ABC Fintech LTD.",
     studentlist: [1],
   },
   {
-    topicname: "lucy brown",
-    topicmajor: "ABC Fintech LTD.",
+    name: "lucy brown",
+    major: "ABC Fintech LTD.",
     studentlist: [1],
   },
   {
-    topicname: "lucy brown",
-    topicmajor: "ABC Fintech LTD.",
+    name: "lucy brown",
+    major: "ABC Fintech LTD.",
     studentlist: [2, 3],
   },
 ];
@@ -135,8 +135,8 @@ const PaginationTable = () => {
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             .map((subscriber, index) => (
               <TableRow key={index}>
-                <TableCell align="left">{subscriber.topicname}</TableCell>
-                <TableCell align="center">{subscriber.topicmajor}</TableCell>
+                <TableCell align="left">{subscriber.name}</TableCell>
+                <TableCell align="center">{subscriber.major}</TableCell>
                 <TableCell align="center">{subscriber.instructor}</TableCell>
                 <TableCell align="center">{subscriber.reviewer}</TableCell>
                 <TableCell align="center">{(subscriber.studentlist)?.length}</TableCell>
@@ -182,7 +182,7 @@ const PaginationTable = () => {
               Tên đề tài
             </Grid>
             <Grid item xs={6}>
-              <b>{registeredTopic.topicname}</b>
+              <b>{registeredTopic.name}</b>
             </Grid>
           </Grid>
           {/* Topic major */}
@@ -191,7 +191,7 @@ const PaginationTable = () => {
               Chuyên ngành
             </Grid>
             <Grid item xs={6}>
-              <b>{registeredTopic.topicmajor}</b>
+              <b>{registeredTopic.major}</b>
             </Grid>
           </Grid>
           {/* Instructor */}
