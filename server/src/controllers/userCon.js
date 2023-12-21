@@ -84,7 +84,7 @@ const userController = {
     try {
       const role = req.body.role;
       let users = null;
-      if (role) users = await User.find().select(["-password"]);
+      if (!role) users = await User.find().select(["-password"]);
       else {
         users = await User.find({ role: role }).select(["-password"]);
       }

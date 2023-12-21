@@ -24,8 +24,8 @@ export async function userDelete(data) {
   return await AxiosCLient.fetchingWithData("post", "/user/delete", data);
 }
 
-export async function userGetAll() {
-  return await AxiosCLient.fetching("get", "/user/getAll");
+export async function userGetAll(data) {
+  return await AxiosCLient.fetchingWithData("post", "/user/getAll", data);
 }
 
 export async function userDetail(data) {
