@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 const userController = {
   register: async (req, res) => {
     try {
-      let { username, password, major, role, isLeader } = req.body;
+      let { name, username, password, major, role, isLeader } = req.body;
       let hashedPassword = "";
 
       if (password) {
@@ -13,6 +13,7 @@ const userController = {
 
         hashedPassword = hashcode;
         const newUser = new User({
+          name: name,
           username: username,
           password: hashedPassword,
           major: major,
@@ -133,7 +134,7 @@ const userController = {
   // //Cập nhật User
   update: async (req, res) => {
     try {
-      let { userId, username, password, major, role, isLeader } = req.body;
+      let { userId, name, username, password, major, role, isLeader } = req.body;
       let hashedPassword = null;
       let user = null;
 
@@ -146,9 +147,9 @@ const userController = {
         const hashcode = await bcrypt.hash(req.body.password, saltcode);
 
         hashedPassword = hashcode;
-        user = await User.findByIdAndUpdate(userId, { username, hashedPassword, major, role, isLeader });
+        user = await User.findByIdAndUpdate(userId, { name, username, hashedPassword, major, role, isLeader });
       } else {
-        user = await User.findByIdAndUpdate(userId, { username, major, role, isLeader });
+        user = await User.findByIdAndUpdate(userId, { name, username, major, role, isLeader });
       }
 
       if (!user) return res.status(404).json({ result: "fail", content: "User not found!" });
@@ -163,9 +164,9 @@ const userController = {
       const userId = req.headers?.cookie.split("userSession=")[1];
       const result = await User.findById({ _id: userId });
 
-      if (result) return res.status(200).json({ result: "success", content: "Account is login" });
+      if (result) return res.status(200).json({ result: "success", content: result });
     } catch (error) {
-      return res.status(404).json({ result: "fail", content: "Account is not login" });
+      return res.status(404).json({ result: "fail", content: null });
     }
   },
 

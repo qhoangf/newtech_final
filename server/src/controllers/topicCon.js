@@ -1,4 +1,4 @@
-const Topic = require("../models/Topic");
+const Topic = require("../models/topic");
 
 const topicController = {
   create: async (req, res) => {
