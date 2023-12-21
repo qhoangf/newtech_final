@@ -4,6 +4,7 @@ import * as Yup from 'yup';
 import { Fragment, useState } from 'react';
 import { Formik } from 'formik';
 import { LoadingButton } from '@mui/lab';
+import { userRegister } from 'app/lib/api/user';
 
 const ContentBox = styled('div')(({ theme }) => ({
     margin: '30px',
@@ -29,9 +30,6 @@ const validationSchema = Yup.object().shape({
     name: Yup.string()
         .min(6, 'Tên sinh viên phải nhiều hơn 6 kí tự')
         .required('Bắt buộc phải có tên sinh viên!'),
-    major: Yup.string()
-        .min(6, 'Chuyên ngành phải nhiều hơn 6 kí tự')
-        .required('Bắt buộc phải có chuyên ngành!'),
     username: Yup.string()
         .min(6, 'Tên đăng nhập phải nhiều hơn 6 kí tự')
         .required('Bắt buộc phải có tên đăng nhập!'),
@@ -42,11 +40,33 @@ const validationSchema = Yup.object().shape({
 
 const Student = () => {
     const [loading, setLoading] = useState(false);
+    let radioGroupValue = "software";
+
+    const handleChangeRadioGroup = (event) => {
+        radioGroupValue = event.target.value;
+    };
     const handleFormSubmit = async (values) => {
         setLoading(true);
         try {
-            console.log("Do something", values);
+            const request = {
+                "name": values.name,
+                "username": values.username,
+                "password": values.password,
+                "major": radioGroupValue,
+                "role": "student",
+            };
+
+            console.log(request)
+            const [result, err] = await userRegister(request);
+            if (result) {
+                console.log("Register successfully", result);
+                setLoading(true);
+            } else {
+                console.log("Register fail", err);
+                setLoading(false);
+            }
         } catch (e) {
+            console.log("Process register fail", e);
             setLoading(false);
         }
     };
@@ -125,6 +145,7 @@ const Student = () => {
                                                     aria-labelledby="major"
                                                     defaultValue="software"
                                                     name="major"
+                                                    onChange={handleChangeRadioGroup}
                                                 >
                                                     <FormControlLabel value="software" control={<Radio />} label="Phần mềm" />
                                                     <FormControlLabel value="hardware" control={<Radio />} label="Phần cứng" />
