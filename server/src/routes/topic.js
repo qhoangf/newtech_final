@@ -9,5 +9,6 @@ router.post("/getDetail", topicCon.getDetail);
 router.post("/update", topicCon.update);
 router.post("/approve", topicCon.approve);
 router.post("/assignReviewer", topicCon.assignReviewer);
+router.post("/assignLecturer", topicCon.assignLecturer);
 
 module.exports = router;

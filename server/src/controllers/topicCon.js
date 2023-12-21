@@ -89,7 +89,7 @@ const topicController = {
 
       return res.status(200).json({ result: "success", content: topic });
     } catch (error) {
-      return res.status(404).json({ result: "fail", content: error });
+      return res.status(404).json({ result: "fail", content: "TopicId is null" });
     }
   },
 
@@ -123,6 +123,17 @@ const topicController = {
       if (result) return res.status(200).json({ result: "success", content: "Assign reviewer to topic succesful" });
     } catch (error) {
       return res.status(404).json({ result: "fail", content: "Assign reviewer to topic fail" });
+    }
+  },
+
+  assignLecturer: async (req, res) => {
+    try {
+      const { topicId, lecturer } = req.body;
+
+      const result = await Topic.findByIdAndUpdate(topicId, { lecturer: lecturer });
+      if (result) return res.status(200).json({ result: "success", content: "Assign lecturer to topic succesful" });
+    } catch (error) {
+      return res.status(404).json({ result: "fail", content: "Assign lecturer to topic fail" });
     }
   },
 };
