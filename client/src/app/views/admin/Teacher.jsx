@@ -1,7 +1,7 @@
-import { Card, Checkbox, FormControl, FormControlLabel, FormLabel, Grid, Radio, RadioGroup, TextField, styled } from '@mui/material';
+import { Card, Checkbox, FormControl, FormControlLabel, FormLabel, Grid, Radio, RadioGroup, TextField, styled, Button } from '@mui/material';
 import PaginationTable from "./tables/TeacherTable";
 import * as Yup from 'yup';
-import { Fragment, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { Formik } from 'formik';
 import { LoadingButton } from '@mui/lab';
 import { userRegister } from 'app/lib/api/user';
@@ -39,6 +39,16 @@ const validationSchema = Yup.object().shape({
 
 const Teacher = () => {
     const [loading, setLoading] = useState(false);
+    const [reloadKey, setReloadKey] = useState(0);
+
+  const handleReload = () => {
+    if(reloadKey > 1)
+    setReloadKey(reloadKey - 1);
+    else
+    setReloadKey(reloadKey + 1);
+  };
+
+
     let radioGroupValue = "software";
     let checkboxValue = false;
 
@@ -51,6 +61,7 @@ const Teacher = () => {
     const handleFormSubmit = async (values) => {
         setLoading(true);
         try {
+            console.log(values)
             const request = {
                 "name": values.name,
                 "username": values.username,
@@ -64,6 +75,7 @@ const Teacher = () => {
             const [result, err] = await userRegister(request);
             if (result) {
                 console.log("Register successfully", result);
+                handleReload();
                 setLoading(false);
             } else {
                 console.log("Register fail", err);
@@ -81,7 +93,7 @@ const Teacher = () => {
                 <Grid container spacing={3}>
                     <Grid item lg={8} md={8} sm={12} xs={12}>
                         <H4>Tài khoản giảng viên</H4>
-                        <PaginationTable />
+                        <PaginationTable isReload={reloadKey} />
                     </Grid>
 
                     <Grid item lg={4} md={4} sm={12} xs={12}>

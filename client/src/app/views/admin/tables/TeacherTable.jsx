@@ -58,27 +58,34 @@ const validationSchema = Yup.object().shape({
     .required('Bắt buộc phải có mật khẩu!'),
 });
 
-const PaginationTable = () => {
+const PaginationTable = ({isReload}) => {
   const [subscribarList, setAllUserData] = useState([]);
   const [isRendered, isRenderedTable] = useState(false);
 
-  useEffect(() => {
-    const getAllUser = async () => {
-      try {
-        const [result, err] = await userGetAll({ role: "lecturer" });
-        if (result) {
-          console.log("Get all user successfully", result);
-          setAllUserData(result.content);
-          isRenderedTable(false);
-        } else {
-          console.log("Get all user fail", err);
-        }
-      } catch (e) {
-        console.log("Process get all user fail", e);
+  const getAllUser = async () => {
+    try {
+      const [result, err] = await userGetAll({ role: "lecturer" });
+      if (result) {
+        console.log("Get all user successfully", result);
+        setAllUserData(result.content);
+        isRenderedTable(false);
+      } else {
+        console.log("Get all user fail", err);
       }
+    } catch (e) {
+      console.log("Process get all user fail", e);
     }
+  }
+
+  useEffect(() => {
     getAllUser();
   }, [isRendered]);
+
+  useEffect(() => {
+    //Flag: sau khi tạo giảng viên thì trigger +1, -1 đẻ chạy api
+    if(isReload > 0)
+    getAllUser();
+  },[isReload])
 
   // Modal Delete
   const [openDeleteModal, setOpenDelete] = useState(false);
@@ -167,7 +174,7 @@ const PaginationTable = () => {
       <StyledTable>
         <TableHead>
           <TableRow>
-            <TableCell align="left">Tên đề tài</TableCell>
+            <TableCell align="left">Tên giảng viên</TableCell>
             <TableCell align="center">Chuyên ngành</TableCell>
             <TableCell align="center">Trưởng bộ môn</TableCell>
             <TableCell align="center"></TableCell>
@@ -242,7 +249,7 @@ const PaginationTable = () => {
         {({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => (
           <form onSubmit={handleSubmit}>
             <Dialog open={openEditModal} onClose={handleCloseEditModal} aria-labelledby="form-dialog-title">
-              <DialogTitle id="form-dialog-title">Thông tin đề tài</DialogTitle>
+              <DialogTitle id="form-dialog-title">Thông tin giảng viên</DialogTitle>
               <DialogContent>
                 <TextField
                   fullWidth
@@ -312,7 +319,7 @@ const PaginationTable = () => {
                   sx={{ mb: 1.5 }}
                 >
                   <FormLabel >Phân công</FormLabel>
-                  <FormControlLabel required control={<Checkbox onChange={handleChangeCheckBox} />} label="Trưởng bộ môn" />
+                  <FormControlLabel required control={<Checkbox defaultChecked={currentEditUser.isLeader} onChange={handleChangeCheckBox} />} label="Trưởng bộ môn" />
                 </FormControl>
 
               </DialogContent>
