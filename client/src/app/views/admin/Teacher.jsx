@@ -30,7 +30,7 @@ const validationSchema = Yup.object().shape({
         .min(6, 'Tên giảng viên phải nhiều hơn 6 kí tự')
         .required('Bắt buộc phải có tên giảng viên!'),
     username: Yup.string()
-        .min(6, 'Tên đăng nhập phải nhiều hơn 6 kí tự')
+        .min(8, 'Tên đăng nhập phải nhiều hơn 6 kí tự')
         .required('Bắt buộc phải có tên đăng nhập!'),
     password: Yup.string()
         .min(6, 'Mật khẩu phải nhiều hơn 6 kí tự')
@@ -57,14 +57,14 @@ const Teacher = () => {
                 "password": values.password,
                 "major": radioGroupValue,
                 "isLeader": checkboxValue,
-                "role": "teacher",
+                "role": "lecturer",
             };
 
             console.log(request)
             const [result, err] = await userRegister(request);
             if (result) {
                 console.log("Register successfully", result);
-                setLoading(true);
+                setLoading(false);
             } else {
                 console.log("Register fail", err);
                 setLoading(false);
