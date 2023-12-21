@@ -5,7 +5,7 @@ const router = express.Router();
 router.post("/create", topicCon.create);
 router.post("/enroll", topicCon.enroll);
 router.get("/getAll", topicCon.getAll);
-router.get("/getDetail", topicCon.getDetail);
+router.post("/getDetail", topicCon.getDetail);
 router.post("/update", topicCon.update);
 router.post("/approve", topicCon.approve);
 router.post("/assignReviewer", topicCon.assignReviewer);
