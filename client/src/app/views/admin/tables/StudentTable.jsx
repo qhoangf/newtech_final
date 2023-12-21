@@ -25,10 +25,10 @@ import {
 } from "@mui/material";
 
 import * as Yup from 'yup';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Formik } from "formik";
 import { LoadingButton } from "@mui/lab";
-import { userUpdate, userDelete } from 'app/lib/api/user';
+import { userGetAll, userUpdate, userDelete } from 'app/lib/api/user';
 
 const StyledTable = styled(Table)(() => ({
   whiteSpace: "pre",
@@ -40,49 +40,8 @@ const StyledTable = styled(Table)(() => ({
   },
 }));
 
-const subscribarList = [
-  {
-    name: "john doe",
-    major: "ABC Fintech LTD.",
-  },
-  {
-    name: "kessy bryan",
-    major: "My Fintech LTD.",
-  },
-  {
-    name: "kessy bryan",
-    major: "My Fintech LTD.",
-  },
-  {
-    name: "james cassegne",
-    major: "Collboy Tech LTD.",
-  },
-  {
-    name: "lucy brown",
-    major: "ABC Fintech LTD.",
-  },
-  {
-    name: "lucy brown",
-    major: "ABC Fintech LTD.",
-  },
-  {
-    name: "lucy brown",
-    major: "ABC Fintech LTD.",
-  },
-  {
-    name: "lucy brown",
-    major: "ABC Fintech LTD.",
-  },
-  {
-    name: "lucy brown",
-    major: "ABC Fintech LTD.",
-  },
-];
-
-
 const initialValues = {
   name: '',
-  major: '',
   username: '',
   password: '',
 };
@@ -100,13 +59,36 @@ const validationSchema = Yup.object().shape({
 });
 
 const PaginationTable = () => {
+  const [subscribarList, setAllUserData] = useState([]);
+  const [isRendered, isRenderedTable] = useState(false);
+
+  useEffect(() => {
+    const getAllUser = async () => {
+      try {
+        const [result, err] = await userGetAll({ role: "student" });
+        if (result) {
+          console.log("Get all user successfully", result);
+          setAllUserData(result.content);
+          isRenderedTable(false);
+        } else {
+          console.log("Get all user fail", err);
+        }
+      } catch (e) {
+        console.log("Process get all user fail", e);
+      }
+    }
+    getAllUser();
+  }, [isRendered]);
+
   // Modal Delete
   const [openDeleteModal, setOpenDelete] = useState(false);
   const handleClickOpenDeleteModal = () => setOpenDelete(true);
-  const handleCloseDeleteModal = async () => {
+  const handleCloseDeleteModal = () => setOpenDelete(false);
+
+  const handleSubmitDeleteModal = async () => {
     try {
       const request = {
-        "userId": currentEditUser.userId,
+        "userId": currentEditUser._id,
       };
 
       console.log(request)
@@ -114,6 +96,7 @@ const PaginationTable = () => {
       if (result) {
         console.log("Delete successfully", result);
         setOpenDelete(false);
+        isRenderedTable(true);
       } else {
         console.log("Delete fail", err);
       }
@@ -140,7 +123,7 @@ const PaginationTable = () => {
     setLoading(true);
     try {
       const request = {
-        "userId": currentEditUser.userId,
+        "userId": currentEditUser._id,
         "name": values.name,
         "username": values.username,
         "password": values.password,
@@ -153,6 +136,7 @@ const PaginationTable = () => {
       if (result) {
         console.log("Update successfully", result);
         setLoading(true);
+        isRenderedTable(true);
       } else {
         console.log("Update fail", err);
         setLoading(false);
@@ -235,7 +219,7 @@ const PaginationTable = () => {
           <Button onClick={handleCloseDeleteModal} color="error">
             Hủy
           </Button>
-          <Button onClick={handleCloseDeleteModal} variant="outlined" color="primary" autoFocus>
+          <Button onClick={handleSubmitDeleteModal} variant="outlined" color="primary" autoFocus>
             Đồng ý
           </Button>
         </DialogActions>

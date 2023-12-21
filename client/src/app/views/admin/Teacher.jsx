@@ -162,8 +162,8 @@ const Teacher = () => {
                                             <FormControl
                                                 sx={{ mb: 1.5 }}
                                             >
-                                                <FormLabel id="isLeader">Phân công</FormLabel>
-                                                <FormControlLabel name="isLeader" required control={<Checkbox onChange={handleChangeCheckBox} />} label="Trưởng bộ môn" />
+                                                <FormLabel >Phân công</FormLabel>
+                                                <FormControlLabel required control={<Checkbox onChange={handleChangeCheckBox} />} label="Trưởng bộ môn" />
                                             </FormControl>
 
                                             <br />
