@@ -75,8 +75,8 @@ const Signin = () => {
         setLoading(false);
       }
     } catch (e) {
-        console.log("Process login fail", e);
-        setLoading(false);
+      console.log("Process login fail", e);
+      setLoading(false);
     }
   };
 

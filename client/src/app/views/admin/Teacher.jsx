@@ -21,7 +21,6 @@ const H4 = styled('h4')(({ theme }) => ({
 
 const initialValues = {
     name: '',
-    major: '',
     username: '',
     password: '',
 };
@@ -30,9 +29,6 @@ const validationSchema = Yup.object().shape({
     name: Yup.string()
         .min(6, 'Tên giảng viên phải nhiều hơn 6 kí tự')
         .required('Bắt buộc phải có tên giảng viên!'),
-    // major: Yup.string()
-    //     .min(6, 'Chuyên ngành phải nhiều hơn 6 kí tự')
-    //     .required('Bắt buộc phải có chuyên ngành!'),
     username: Yup.string()
         .min(6, 'Tên đăng nhập phải nhiều hơn 6 kí tự')
         .required('Bắt buộc phải có tên đăng nhập!'),
@@ -43,24 +39,36 @@ const validationSchema = Yup.object().shape({
 
 const Teacher = () => {
     const [loading, setLoading] = useState(false);
+    let radioGroupValue = "software";
+    let checkboxValue = false;
+
+    const handleChangeCheckBox = (event) => {
+        checkboxValue = event.target.checked;
+    };
+    const handleChangeRadioGroup = (event) => {
+        radioGroupValue = event.target.value;
+    };
     const handleFormSubmit = async (values) => {
-        console.log("cc");
         setLoading(true);
         try {
             const request = {
+                "name": values.name,
                 "username": values.username,
-                "password": values.password
+                "password": values.password,
+                "major": radioGroupValue,
+                "isLeader": checkboxValue,
+                "role": "teacher",
             };
 
-            // const [result, err] = await userRegister(request);
-            // if (result) {
-            //     console.log("Login successfully", result);
-            //     setLoading(true);
-            // } else {
-            //     console.log("Login fail", err);
-            //     setLoading(false);
-            // }
-            console.log(values)
+            console.log(request)
+            const [result, err] = await userRegister(request);
+            if (result) {
+                console.log("Register successfully", result);
+                setLoading(true);
+            } else {
+                console.log("Register fail", err);
+                setLoading(false);
+            }
         } catch (e) {
             console.log("Process register fail", e);
             setLoading(false);
@@ -142,6 +150,7 @@ const Teacher = () => {
                                                     aria-labelledby="major"
                                                     defaultValue="software"
                                                     name="major"
+                                                    onChange={handleChangeRadioGroup}
                                                 >
                                                     <FormControlLabel value="software" control={<Radio />} label="Phần mềm" />
                                                     <FormControlLabel value="hardware" control={<Radio />} label="Phần cứng" />
@@ -154,7 +163,7 @@ const Teacher = () => {
                                                 sx={{ mb: 1.5 }}
                                             >
                                                 <FormLabel id="isLeader">Phân công</FormLabel>
-                                                <FormControlLabel name="isLeader" required control={<Checkbox />} label="Trưởng bộ môn" />
+                                                <FormControlLabel name="isLeader" required control={<Checkbox onChange={handleChangeCheckBox} />} label="Trưởng bộ môn" />
                                             </FormControl>
 
                                             <br />
