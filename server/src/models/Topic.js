@@ -18,15 +18,15 @@ let topicSchema = new mongoose.Schema(
     endDate: {
       type: String,
     },
-    lecturer: {
+    instructor: {
+      type: String,
+    },
+    reviewer: {
       type: String,
     },
     isApproved: {
       type: Boolean,
       default: false,
-    },
-    reviewer: {
-      type: String,
     },
     students: [
       {
