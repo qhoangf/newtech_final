@@ -5,7 +5,7 @@ export async function topicCreate(data) {
 }
 
 export async function topicEnroll(data) {
-  return await AxiosCLient.fetching("get", "/topic/enroll", data);
+  return await AxiosCLient.fetchingWithData("post", "/topic/enroll", data);
 }
 
 export async function topicUpdate(data) {
@@ -13,11 +13,11 @@ export async function topicUpdate(data) {
 }
 
 export async function topicDelete(data) {
-  return await AxiosCLient.fetchingWithData("post", "/topic/delete", data);
+  return await AxiosCLient.fetchingWithData("delete", "/topic/delete", data);
 }
 
-export async function topicGetAll(data) {
-  return await AxiosCLient.fetching("get", "/topic/getAll", data);
+export async function topicGetAll() {
+  return await AxiosCLient.fetching("get", "/topic/getAll");
 }
 
 export async function topicDetail(data) {
@@ -29,5 +29,5 @@ export async function topicApprove(data) {
 }
 
 export async function topicAssign(data) {
-  return await AxiosCLient.fetchingWithData("post", "/topic/assignReviewer", data);
+  return await AxiosCLient.fetchingWithData("post", "/topic/teacherAssign", data);
 }

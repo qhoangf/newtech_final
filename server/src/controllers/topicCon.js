@@ -13,7 +13,7 @@ const topicController = {
         major: major,
         startDate: startDate.toISOString(),
         endDate: endDate.toISOString(),
-        lecturer: "",
+        instructor: "",
         isApproved: false,
         reviewer: "",
         students: [],
@@ -37,12 +37,12 @@ const topicController = {
 
   update: async (req, res) => {
     try {
-      const { topicId, name, major, lecturer, isApproved, reviewer, students } = req.body;
+      const { topicId, name, major, instructor, isApproved, reviewer, students } = req.body;
 
       const updateTopic = await Topic.findByIdAndUpdate(topicId, {
         name,
         major,
-        lecturer,
+        instructor,
         isApproved,
         reviewer,
         students,
@@ -89,7 +89,7 @@ const topicController = {
 
       return res.status(200).json({ result: "success", content: topic });
     } catch (error) {
-      return res.status(404).json({ result: "fail", content: error });
+      return res.status(404).json({ result: "fail", content: "TopicId is null" });
     }
   },
 
@@ -98,7 +98,7 @@ const topicController = {
       const topicId = req.body.topicId;
 
       const result = await Topic.findByIdAndDelete({ _id: topicId });
-      if (result) return res.status(200).json({ result: "success", content: "Delete topic succesful" });
+      if (result) return res.status(200).json({ result: "success", content: "Delete topic succesfully" });
     } catch (error) {
       return res.status(404).json({ result: "fail", content: "Delete topic fail" });
     }
@@ -115,14 +115,19 @@ const topicController = {
     }
   },
 
-  assignReviewer: async (req, res) => {
+  teacherAssign: async (req, res) => {
     try {
-      const { topicId, reviewer } = req.body;
+      const { topicId, teacherName, isReviewer } = req.body;
 
-      const result = await Topic.findByIdAndUpdate(topicId, { reviewer: reviewer });
-      if (result) return res.status(200).json({ result: "success", content: "Assign reviewer to topic succesful" });
+      if (isReviewer) {
+        const result = await Topic.findByIdAndUpdate(topicId, { reviewer: teacherName });
+        if (result) return res.status(200).json({ result: "success", content: "Assign reviewer to topic succesful" });
+      } else {
+        const result = await Topic.findByIdAndUpdate(topicId, { instructor: teacherName });
+        if (result) return res.status(200).json({ result: "success", content: "Assign instructor to topic succesful" });
+      }
     } catch (error) {
-      return res.status(404).json({ result: "fail", content: "Assign reviewer to topic fail" });
+      return res.status(404).json({ result: "fail", content: "Assign to topic fail" });
     }
   },
 };

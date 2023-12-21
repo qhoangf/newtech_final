@@ -2,12 +2,12 @@ let mongoose = require("mongoose");
 
 let topicSchema = new mongoose.Schema(
   {
-    topicName: {
+    name: {
       type: String,
       require: true,
       unique: true,
     },
-    topicMajor: {
+    major: {
       type: String,
       require: false,
       minlength: 0,
@@ -18,15 +18,15 @@ let topicSchema = new mongoose.Schema(
     endDate: {
       type: String,
     },
-    lecturer: {
+    instructor: {
+      type: String,
+    },
+    reviewer: {
       type: String,
     },
     isApproved: {
       type: Boolean,
       default: false,
-    },
-    reviewer: {
-      type: String,
     },
     students: [
       {
