@@ -16,15 +16,15 @@ export async function userUpdate(data) {
   return await AxiosCLient.fetchingWithData("post", "/user/update", data);
 }
 
-export async function userCheckAuthen(data) {
-  return await AxiosCLient.fetching("get", "/user/checkAuthen", data);
+export async function userCheckAuthen() {
+  return await AxiosCLient.fetching("get", "/user/checkAuthen");
 }
 
 export async function userDelete(data) {
   return await AxiosCLient.fetchingWithData("post", "/user/delete", data);
 }
 
-export async function userGetAll(data) {
+export async function userGetAll() {
   return await AxiosCLient.fetching("get", "/user/getAll");
 }
 

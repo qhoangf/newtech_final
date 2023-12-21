@@ -8,6 +8,7 @@ router.get("/getAll", topicCon.getAll);
 router.post("/getDetail", topicCon.getDetail);
 router.post("/update", topicCon.update);
 router.post("/approve", topicCon.approve);
+router.delete("/delete", topicCon.delete);
 router.post("/teacherAssign", topicCon.teacherAssign);
 
 module.exports = router;

@@ -6,7 +6,7 @@ router.post("/register", userCon.register);
 router.post("/login", userCon.login);
 router.get("/getAll", userCon.getAll);
 router.post("/getDetail", userCon.getDetail);
-router.post("/checkAuthen", userCon.checkAuthen);
+router.get("/checkAuthen", userCon.checkAuthen);
 router.get("/logout", userCon.logout);
 router.post("/update", userCon.update);
 router.delete("/delete", userCon.delete);
