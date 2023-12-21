@@ -16,12 +16,19 @@ import {
   TableRow,
   Button,
   TextField,
+  FormControl,
+  FormLabel,
+  RadioGroup,
+  FormControlLabel,
+  Radio,
+  Checkbox,
 } from "@mui/material";
 
 import * as Yup from 'yup';
 import { useState } from "react";
 import { Formik } from "formik";
 import { LoadingButton } from "@mui/lab";
+import { userUpdate, userDelete } from 'app/lib/api/user';
 
 const StyledTable = styled(Table)(() => ({
   whiteSpace: "pre",
@@ -84,9 +91,6 @@ const validationSchema = Yup.object().shape({
   name: Yup.string()
     .min(6, 'Tên sinh viên phải nhiều hơn 6 kí tự')
     .required('Bắt buộc phải có tên sinh viên!'),
-  major: Yup.string()
-    .min(6, 'Chuyên ngành phải nhiều hơn 6 kí tự')
-    .required('Bắt buộc phải có chuyên ngành!'),
   username: Yup.string()
     .min(6, 'Tên đăng nhập phải nhiều hơn 6 kí tự')
     .required('Bắt buộc phải có tên đăng nhập!'),
@@ -99,20 +103,62 @@ const PaginationTable = () => {
   // Modal Delete
   const [openDeleteModal, setOpenDelete] = useState(false);
   const handleClickOpenDeleteModal = () => setOpenDelete(true);
-  const handleCloseDeleteModal = () => setOpenDelete(false);
+  const handleCloseDeleteModal = async () => {
+    try {
+      const request = {
+        "userId": currentEditUser.userId,
+      };
+
+      console.log(request)
+      const [result, err] = await userDelete(request);
+      if (result) {
+        console.log("Delete successfully", result);
+        setOpenDelete(false);
+      } else {
+        console.log("Delete fail", err);
+      }
+    } catch (e) {
+      console.log("Process delete fail", e);
+    }
+  }
 
   // Modal Edit
+  const [currentEditUser, setCurrentEditUser] = useState({});
   const [openEditModal, setOpenEdit] = useState(false);
   const handleClickOpenEditModal = () => setOpenEdit(true);
   const handleCloseEditModal = () => setOpenEdit(false);
+
+  let radioGroupValue = "software";
+
+  const handleChangeRadioGroup = (event) => {
+    radioGroupValue = event.target.value;
+  };
 
   // Edit Submit
   const [loading, setLoading] = useState(false);
   const handleFormSubmit = async (values) => {
     setLoading(true);
     try {
-      console.log("Do something", values);
+      const request = {
+        "userId": currentEditUser.userId,
+        "name": values.name,
+        "username": values.username,
+        "password": values.password,
+        "major": radioGroupValue,
+        "role": "student",
+      };
+
+      console.log(request)
+      const [result, err] = await userUpdate(request);
+      if (result) {
+        console.log("Update successfully", result);
+        setLoading(true);
+      } else {
+        console.log("Update fail", err);
+        setLoading(false);
+      }
     } catch (e) {
+      console.log("Process update fail", e);
       setLoading(false);
     }
   };
@@ -146,10 +192,10 @@ const PaginationTable = () => {
                 <TableCell align="left">{subscriber.name}</TableCell>
                 <TableCell align="center">{subscriber.major}</TableCell>
                 <TableCell align="right">
-                  <IconButton onClick={handleClickOpenEditModal}>
+                  <IconButton onClick={() => { setCurrentEditUser(subscriber); handleClickOpenEditModal(); }}>
                     <Icon color="primary">create</Icon>
                   </IconButton>
-                  <IconButton onClick={handleClickOpenDeleteModal}>
+                  <IconButton onClick={() => { setCurrentEditUser(subscriber); handleClickOpenDeleteModal(); }}>
                     <Icon color="error">close</Icon>
                   </IconButton>
                 </TableCell>
@@ -214,26 +260,11 @@ const PaginationTable = () => {
                   label="Tên sinh viên"
                   variant="outlined"
                   onBlur={handleBlur}
-                  value={values.name}
+                  value={currentEditUser.name}
                   onChange={handleChange}
                   helperText={touched.name && errors.name}
                   error={Boolean(errors.name && touched.name)}
                   sx={{ mb: 3, mt: 1 }}
-                />
-
-                <TextField
-                  fullWidth
-                  size="small"
-                  name="major"
-                  type="major"
-                  label="Chuyên ngành"
-                  variant="outlined"
-                  onBlur={handleBlur}
-                  value={values.major}
-                  onChange={handleChange}
-                  helperText={touched.major && errors.major}
-                  error={Boolean(errors.major && touched.major)}
-                  sx={{ mb: 3 }}
                 />
 
                 <TextField
@@ -244,7 +275,7 @@ const PaginationTable = () => {
                   label="Tên đăng nhập"
                   variant="outlined"
                   onBlur={handleBlur}
-                  value={values.username}
+                  value={currentEditUser.username}
                   onChange={handleChange}
                   helperText={touched.username && errors.username}
                   error={Boolean(errors.username && touched.username)}
@@ -259,12 +290,29 @@ const PaginationTable = () => {
                   label="Mật khẩu"
                   variant="outlined"
                   onBlur={handleBlur}
-                  value={values.password}
+                  value={currentEditUser.password}
                   onChange={handleChange}
                   helperText={touched.password && errors.password}
                   error={Boolean(errors.password && touched.password)}
                   sx={{ mb: 1.5 }}
                 />
+                <FormControl
+                  sx={{ mb: 1.5 }}
+                >
+                  <FormLabel id="major">Chuyên ngành</FormLabel>
+                  <RadioGroup
+                    row
+                    aria-labelledby="major"
+                    defaultValue={currentEditUser.major}
+                    name="major"
+                    onChange={handleChangeRadioGroup}
+                  >
+                    <FormControlLabel value="software" control={<Radio />} label="Phần mềm" />
+                    <FormControlLabel value="hardware" control={<Radio />} label="Phần cứng" />
+                    <FormControlLabel value="security" control={<Radio />} label="An ninh mạng" />
+                  </RadioGroup>
+                </FormControl>
+
               </DialogContent>
               <DialogActions>
                 <Button color="error" onClick={handleCloseEditModal}>

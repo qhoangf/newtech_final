@@ -21,7 +21,6 @@ const H4 = styled('h4')(({ theme }) => ({
 
 const initialValues = {
     name: '',
-    major: '',
     username: '',
     password: '',
 };
@@ -31,7 +30,7 @@ const validationSchema = Yup.object().shape({
         .min(6, 'Tên sinh viên phải nhiều hơn 6 kí tự')
         .required('Bắt buộc phải có tên sinh viên!'),
     username: Yup.string()
-        .min(6, 'Tên đăng nhập phải nhiều hơn 6 kí tự')
+        .min(8, 'Tên đăng nhập phải nhiều hơn 6 kí tự')
         .required('Bắt buộc phải có tên đăng nhập!'),
     password: Yup.string()
         .min(6, 'Mật khẩu phải nhiều hơn 6 kí tự')
