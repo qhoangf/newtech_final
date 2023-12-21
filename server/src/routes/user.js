@@ -7,7 +7,7 @@ router.post("/login", userCon.login);
 router.get("/getAll", userCon.getAll);
 router.post("/getDetail", userCon.getDetail);
 router.post("/checkAuthen", userCon.checkAuthen);
-router.post("/logout", userCon.logout);
+router.get("/logout", userCon.logout);
 router.post("/update", userCon.update);
 router.delete("/delete", userCon.delete);
 
