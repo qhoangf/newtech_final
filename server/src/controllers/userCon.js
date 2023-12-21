@@ -82,7 +82,12 @@ const userController = {
 
   getAll: async (req, res) => {
     try {
-      const users = await User.find().select(["-password"]);
+      const role = req.body.role;
+      let users = null;
+      if (role) users = await User.find().select(["-password"]);
+      else {
+        users = await User.find({ role: role }).select(["-password"]);
+      }
       return res.status(200).json({ result: "success", content: users });
     } catch (error) {
       return res.status(500).json(error);
