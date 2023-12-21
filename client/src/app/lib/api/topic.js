@@ -5,7 +5,7 @@ export async function topicCreate(data) {
 }
 
 export async function topicEnroll(data) {
-  return await AxiosCLient.fetching("post", "/topic/enroll", data);
+  return await AxiosCLient.fetching("get", "/topic/enroll", data);
 }
 
 export async function topicUpdate(data) {
@@ -17,7 +17,7 @@ export async function topicDelete(data) {
 }
 
 export async function topicGetAll(data) {
-  return await AxiosCLient.fetching("post", "/topic/getAll", data);
+  return await AxiosCLient.fetching("get", "/topic/getAll", data);
 }
 
 export async function topicDetail(data) {

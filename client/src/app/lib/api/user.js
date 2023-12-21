@@ -5,7 +5,7 @@ export async function userLogin(data) {
 }
 
 export async function userLogout() {
-  return await AxiosCLient.fetching("post", "/user/logout");
+  return await AxiosCLient.fetching("get", "/user/logout");
 }
 
 export async function userRegister(data) {
@@ -17,7 +17,7 @@ export async function userUpdate(data) {
 }
 
 export async function userCheckAuthen(data) {
-  return await AxiosCLient.fetching("post", "/user/checkAuthen", data);
+  return await AxiosCLient.fetching("get", "/user/checkAuthen", data);
 }
 
 export async function userDelete(data) {
@@ -25,7 +25,7 @@ export async function userDelete(data) {
 }
 
 export async function userGetAll(data) {
-  return await AxiosCLient.fetching("post", "/user/getAll");
+  return await AxiosCLient.fetching("get", "/user/getAll");
 }
 
 export async function userDetail(data) {
