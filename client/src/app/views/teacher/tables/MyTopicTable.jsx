@@ -16,8 +16,9 @@ import {
   TableRow,
   Button,
 } from "@mui/material";
+import { topicGetAll, topicUpdate } from "app/lib/api/topic";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const StyledTable = styled(Table)(() => ({
   whiteSpace: "pre",
@@ -70,10 +71,69 @@ const subscribarList = [
 ];
 
 const PaginationTable = () => {
+  const [subscribarList, setMyTopicData] = useState([]);
+  const [isRendered, isRenderedTable] = useState(false);
+  const [filteredData, setFilteredData] = useState([]);
+
+  const getAllTopic = async () => {
+    try {
+      const result = await topicGetAll();
+      if (result) {
+        console.log("Get all topic successfully", result);
+
+        const username = JSON.parse(localStorage.userInfo).name;
+        setFilteredData((result.content).filter(item =>
+          item.instructor === username
+        ));
+      } else {
+        console.log("Get all topic fail");
+      }
+    } catch (e) {
+      console.log("Process get all topic fail", e);
+    }
+  }
+
+  useEffect(() => {
+    setMyTopicData(filteredData);
+    isRenderedTable(false);
+  }, [filteredData]);
+
+  useEffect(() => {
+    getAllTopic();
+  }, [isRendered]);
+
+
   // Modal Delete
   const [openDeleteModal, setOpenDelete] = useState(false);
+  const [chosenTopic, setChosenTopic] = useState({});
   const handleClickOpenDeleteModal = () => setOpenDelete(true);
   const handleCloseDeleteModal = () => setOpenDelete(false);
+  const handleSubmitDeleteModal = async () => {
+    try {
+      
+      const request = {
+        "userId": JSON.parse(localStorage.userInfo)._id,
+        "topicId": chosenTopic._id,
+        "name": chosenTopic.name,
+        "major": chosenTopic.major,
+        "instructor": "",
+        "isApproved": chosenTopic.isApproved,
+        "reviewer": chosenTopic.reviewer,
+        "students": chosenTopic.students,
+      };
+
+      const [result, err] = await topicUpdate(request);
+      if (result) {
+        console.log("Remove reviewer successfully", result);
+        setOpenDelete(false);
+        isRenderedTable(true);
+      } else {
+        console.log("Remove reviewer successfully", err);
+      }
+    } catch (e) {
+      console.log("Process removing reviewer successfully fail", e);
+    }
+  };
 
   // Pagination
   const [page, setPage] = useState(0);
@@ -95,7 +155,7 @@ const PaginationTable = () => {
             <TableCell align="center">Chuyên ngành</TableCell>
             <TableCell align="center">Giáo viên hướng dẫn</TableCell>
             <TableCell align="center">Giáo viên phản biện</TableCell>
-            <TableCell align="center">Số lượng thành viên (Tối đa: 3)</TableCell>
+            <TableCell align="center">Số lượng sinh viên đã đăng ký</TableCell>
             <TableCell align="right"></TableCell>
           </TableRow>
         </TableHead>
@@ -119,11 +179,11 @@ const PaginationTable = () => {
                     }
                   })()}
                 </TableCell>
-                <TableCell align="center">{subscriber.lecturer}</TableCell>
+                <TableCell align="center">{subscriber.instructor}</TableCell>
                 <TableCell align="center">{subscriber.reviewer}</TableCell>
-                <TableCell align="center">{subscriber.students}</TableCell>
+                <TableCell align="center">{(subscriber.students)?.length}</TableCell>
                 <TableCell align="right">
-                  <IconButton onClick={handleClickOpenDeleteModal}>
+                  <IconButton onClick={() => { handleClickOpenDeleteModal(); setChosenTopic(subscriber) }}>
                     <Icon color="error">deleteforever</Icon>
                   </IconButton>
                 </TableCell>
@@ -162,7 +222,7 @@ const PaginationTable = () => {
           <Button onClick={handleCloseDeleteModal} color="error">
             Hủy
           </Button>
-          <Button onClick={handleCloseDeleteModal} variant="outlined" color="primary" autoFocus>
+          <Button onClick={handleSubmitDeleteModal} variant="outlined" color="primary" autoFocus>
             Đồng ý
           </Button>
         </DialogActions>

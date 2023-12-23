@@ -43,7 +43,7 @@ const PaginationTable = () => {
 
         const userId = JSON.parse(localStorage.userInfo)._id;
         setFilteredData((result.content).filter(item =>
-          item.students.some(student => student.id == userId)
+          item.students.some(student => student.id === userId)
         ));
       } else {
         console.log("Get all topic fail");

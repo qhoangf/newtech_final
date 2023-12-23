@@ -25,7 +25,6 @@ const topicController = {
         isApproved: false,
         reviewer: "",
         students: [],
-        studentsName: [],
       });
 
       const result = await newTopic.save();
@@ -51,7 +50,7 @@ const topicController = {
         return res.status(404).json({ result: "fail", content: "Topic's name is empty" });
       }
 
-      const { topicId, name, major, instructor, isApproved, reviewer, students, studentsName } = req.body;
+      const { topicId, name, major, instructor, isApproved, reviewer, students } = req.body;
 
       const updateTopic = await Topic.findByIdAndUpdate(topicId, {
         name,
@@ -60,7 +59,6 @@ const topicController = {
         isApproved,
         reviewer,
         students,
-        studentsName,
       });
 
       if (updateTopic) {
