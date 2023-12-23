@@ -64,7 +64,7 @@ const topicController = {
       });
 
       if (!updateTopic) {
-        return res.status(404).json({ result: "success", content: "Update topic successfully" });
+        return res.status(200).json({ result: "success", content: "Update topic successfully" });
       }
     } catch (error) {
       return res.status(404).json({ result: "fail", content: "Update topic fail" });
