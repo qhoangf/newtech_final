@@ -59,7 +59,7 @@ const PaginationTable = ({ isReload }) => {
 
   const getAllTopic = async () => {
     try {
-      const [result] = await topicGetAll();
+      const result = await topicGetAll();
       if (result) {
         console.log("Get all topic successfully", result);
         setAllTopicData(result.content);
@@ -174,8 +174,8 @@ const PaginationTable = ({ isReload }) => {
               <TableRow key={index}>
                 <TableCell align="left">{subscriber.name}</TableCell>
                 <TableCell align="center">{subscriber.major}</TableCell>
-                <TableCell align="center">{subscriber.startDate}</TableCell>
-                <TableCell align="center">{subscriber.endDate}</TableCell>
+                <TableCell align="center">{new Date(subscriber.startDate).toLocaleString()}</TableCell>
+                <TableCell align="center">{new Date(subscriber.endDate).toLocaleString()}</TableCell>
                 <TableCell align="right">
                   <IconButton onClick={() => { setCurrentEditUser(subscriber); handleClickOpenEditModal(); }}>
                     <Icon color="primary">create</Icon>
@@ -232,7 +232,7 @@ const PaginationTable = ({ isReload }) => {
         <DialogContent>
           <Formik
             onSubmit={handleFormSubmit}
-            initialValues={initialValues}
+            initialValues={currentEditUser}
             validationSchema={validationSchema}
           >
             {({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => (
@@ -266,24 +266,25 @@ const PaginationTable = ({ isReload }) => {
                     <FormControlLabel value="security" control={<Radio />} label="An ninh mạng" />
                   </RadioGroup>
                 </FormControl>
+                <DialogActions>
+                    <Button color="error" onClick={handleCloseEditModal}>
+                      Hủy
+                    </Button>
+                    <LoadingButton
+                      type="submit"
+                      color="primary"
+                      loading={loading}
+                      variant="contained"
+                      sx={{ mr: 2 }}
+                    >
+                      Chỉnh sửa
+                    </LoadingButton>
+                </DialogActions>
               </form>
             )}
           </Formik>
         </DialogContent>
-        <DialogActions>
-          <Button color="error" onClick={handleCloseEditModal}>
-            Hủy
-          </Button>
-          <LoadingButton
-            type="submit"
-            color="primary"
-            loading={loading}
-            variant="contained"
-            sx={{ mr: 2 }}
-          >
-            Chỉnh sửa
-          </LoadingButton>
-        </DialogActions>
+
       </Dialog>
 
     </Box >

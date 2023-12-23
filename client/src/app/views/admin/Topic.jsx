@@ -7,7 +7,7 @@ import { LoadingButton } from '@mui/lab';
 import { topicCreate } from 'app/lib/api/topic';
 
 const ContentBox = styled('div')(({ theme }) => ({
-    margin: '30px',
+    margin: '30px 15px',
     [theme.breakpoints.down('sm')]: { margin: '16px' },
 }));
 
