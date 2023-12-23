@@ -1,7 +1,7 @@
 import AxiosCLient from "app/lib/axiosClient";
 
 export async function topicCreate(data) {
-  return await AxiosCLient.fetchingWithData("post", "/topic/register", data);
+  return await AxiosCLient.fetchingWithData("post", "/topic/create", data);
 }
 
 export async function topicEnroll(data) {
