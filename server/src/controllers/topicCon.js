@@ -46,7 +46,7 @@ const topicController = {
 
   update: async (req, res) => {
     try {
-      if (!name) {
+      if (!req.body.name) {
         return res.status(404).json({ result: "fail", content: "Topic's name is empty" });
       }
 
@@ -61,7 +61,7 @@ const topicController = {
         students,
       });
 
-      if (!updateTopic) {
+      if (updateTopic) {
         return res.status(200).json({ result: "success", content: "Update topic successfully" });
       }
     } catch (error) {
