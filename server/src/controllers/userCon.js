@@ -1,5 +1,6 @@
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
+const { EmptyCheck } = require("./globalFunc");
 
 const userController = {
   register: async (req, res) => {
