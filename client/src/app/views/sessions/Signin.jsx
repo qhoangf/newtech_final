@@ -6,6 +6,7 @@ import { Formik } from 'formik';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
+import { userCheckAuthen } from 'app/lib/api/user';
 
 const FlexBox = styled(Box)(() => ({ display: 'flex', alignItems: 'center' }));
 
@@ -68,7 +69,7 @@ const Signin = () => {
       if (result) {
         console.log("Login successfully", result);
         setLoading(true);
-        navigate('/admin/teacher');
+        checkAuthen()
       } else {
         console.log("Login fail", err);
         setOpen(true);
@@ -79,6 +80,32 @@ const Signin = () => {
       setLoading(false);
     }
   };
+
+  const checkAuthen = async () => {
+    try {
+      const result = await userCheckAuthen();
+      if (result) {
+        console.log("Check authen successfully", result);
+        localStorage.infoUser = JSON.stringify(result.content);
+
+        switch (result.content.role) {
+          case "admin":
+            navigate('/admin/teacher');
+            break;
+          case "student":
+            navigate('/student/topiclist');
+            break;
+          case "lecturer":
+            navigate('/teacher/topiclist');
+            break;
+        }
+      } else {
+        console.log("Check authen fail");
+      }
+    } catch (e) {
+      console.log("Check authen fail", e);
+    }
+  }
 
   return (
     <JWTRoot>
