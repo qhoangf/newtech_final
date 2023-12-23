@@ -91,6 +91,7 @@ const userController = {
         });
         return res.status(200).json({ result: "success", content: "Login successfully" });
       }
+      return res.status(404).json({ result: "fail", content: "Wrong password" });
     } catch (error) {
       return res.status(404).json({ result: "fail", content: "Password Invalid!!!" });
     }
