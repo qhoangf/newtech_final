@@ -4,6 +4,8 @@ import * as Yup from 'yup';
 import { Fragment, useState } from 'react';
 import { Formik } from 'formik';
 import { LoadingButton } from '@mui/lab';
+import { topicCreate } from 'app/lib/api/topic';
+
 const ContentBox = styled('div')(({ theme }) => ({
     margin: '30px',
     [theme.breakpoints.down('sm')]: { margin: '16px' },
@@ -26,25 +28,48 @@ const H4 = styled('h4')(({ theme }) => ({
 
 const initialValues = {
     name: '',
-    major: '',
 };
 
 const validationSchema = Yup.object().shape({
     name: Yup.string()
         .min(6, 'Tên đề tài phải nhiều hơn 6 kí tự')
         .required('Bắt buộc phải có tên đề tài!'),
-    major: Yup.string()
-        .min(6, 'Chuyên ngành phải nhiều hơn 6 kí tự')
-        .required('Bắt buộc phải có chuyên ngành!'),
 });
 
 const Topic = () => {
     const [loading, setLoading] = useState(false);
+    const [reloadKey, setReloadKey] = useState(0);
+    const handleReload = () => {
+        if (reloadKey > 1)
+            setReloadKey(reloadKey - 1);
+        else
+            setReloadKey(reloadKey + 1);
+    };
+
+    const [majorValue, setMajorValue] = useState("software");
+    const handleChangeRadioGroup = (event) => {
+        setMajorValue(event.target.value);
+    };
     const handleFormSubmit = async (values) => {
         setLoading(true);
         try {
-            console.log("Do something", values);
+            const request = {
+                "name": values.name,
+                "major": majorValue,
+            };
+
+            console.log(request)
+            const [result, err] = await topicCreate(request);
+            if (result) {
+                console.log("Register successfully", result);
+                setLoading(false);
+                handleReload();
+            } else {
+                console.log("Register fail", err);
+                setLoading(false);
+            }
         } catch (e) {
+            console.log("Process register fail", e);
             setLoading(false);
         }
     };
@@ -55,7 +80,7 @@ const Topic = () => {
                 <Grid container spacing={3}>
                     <Grid item lg={8} md={8} sm={12} xs={12}>
                         <H4>Đề tài</H4>
-                        <PaginationTable />
+                        <PaginationTable isReload={reloadKey} />
                     </Grid>
 
                     <Grid item lg={4} md={4} sm={12} xs={12}>
@@ -92,6 +117,7 @@ const Topic = () => {
                                                     aria-labelledby="major"
                                                     defaultValue="software"
                                                     name="major"
+                                                    onChange={handleChangeRadioGroup}
                                                 >
                                                     <FormControlLabel value="software" control={<Radio />} label="Phần mềm" />
                                                     <FormControlLabel value="hardware" control={<Radio />} label="Phần cứng" />

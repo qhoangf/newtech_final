@@ -1,7 +1,7 @@
-import { Card, Checkbox, FormControl, FormControlLabel, FormLabel, Grid, Radio, RadioGroup, TextField, styled, Button } from '@mui/material';
+import { Card, Checkbox, FormControl, FormControlLabel, FormLabel, Grid, Radio, RadioGroup, TextField, styled } from '@mui/material';
 import PaginationTable from "./tables/TeacherTable";
 import * as Yup from 'yup';
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useState } from 'react';
 import { Formik } from 'formik';
 import { LoadingButton } from '@mui/lab';
 import { userRegister } from 'app/lib/api/user';
@@ -58,7 +58,6 @@ const Teacher = () => {
     const handleFormSubmit = async (values) => {
         setLoading(true);
         try {
-            console.log(values)
             const request = {
                 "name": values.name,
                 "username": values.username,
