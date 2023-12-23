@@ -69,7 +69,7 @@ const PaginationTable = () => {
     setLoading(true);
     try {
       const request = {
-        "userId": "",
+        "userId": localStorage.infoUser._id,
         "topicId": registeredTopic._id,
       };
 
@@ -175,20 +175,6 @@ const PaginationTable = () => {
         </TableBody>
       </StyledTable>
 
-      <TablePagination
-        sx={{ px: 2 }}
-        page={page}
-        component="div"
-        rowsPerPage={rowsPerPage}
-        count={subscribarList.length}
-        onPageChange={handleChangePage}
-        rowsPerPageOptions={[5, 10, 25]}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-        nextIconButtonProps={{ "aria-label": "Next Page" }}
-        backIconButtonProps={{ "aria-label": "Previous Page" }}
-        labelRowsPerPage="Số dòng mỗi trang"
-      />
-
       {/* Join modal */}
       <Dialog
         open={openJoinTopicModal}
@@ -273,11 +259,10 @@ const PaginationTable = () => {
                     <>
                       <MenuItem onClick={handleCloseStudentsMenu}>Chưa có thành viên nào tham gia</MenuItem>
                     </> :
-                    <>
-                      <MenuItem onClick={handleCloseStudentsMenu}>{((registeredTopic.students)?.length > 0) ? registeredTopic.students[0] : ""}</MenuItem>
-                      <MenuItem onClick={handleCloseStudentsMenu}>{((registeredTopic.students)?.length > 1) ? registeredTopic.students[1] : ""}</MenuItem>
-                      <MenuItem onClick={handleCloseStudentsMenu}>{((registeredTopic.students)?.length > 2) ? registeredTopic.students[2] : ""}</MenuItem>
-                    </>
+                    registeredTopic.students
+                      ?.map((registeredTopicChild, index) => {
+                        <MenuItem onClick={handleCloseStudentsMenu}>{((registeredTopic.students)?.length > index) ? registeredTopicChild : ""}</MenuItem>
+                      })
                 }
               </Menu>
             </Grid>
@@ -305,6 +290,20 @@ const PaginationTable = () => {
           Bạn đã đăng ký tham gia đề tài này.
         </Alert>
       </Snackbar>
+
+      <TablePagination
+        sx={{ px: 2 }}
+        page={page}
+        component="div"
+        rowsPerPage={rowsPerPage}
+        count={subscribarList.length}
+        onPageChange={handleChangePage}
+        rowsPerPageOptions={[5, 10, 25]}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+        nextIconButtonProps={{ "aria-label": "Next Page" }}
+        backIconButtonProps={{ "aria-label": "Previous Page" }}
+        labelRowsPerPage="Số dòng mỗi trang"
+      />
     </Box >
   );
 };

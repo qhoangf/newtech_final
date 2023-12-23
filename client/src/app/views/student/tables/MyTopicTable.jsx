@@ -17,7 +17,8 @@ import {
   Button,
 } from "@mui/material";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { topicGetAll, topicEnroll } from 'app/lib/api/topic';
 
 const StyledTable = styled(Table)(() => ({
   whiteSpace: "pre",
@@ -29,51 +30,60 @@ const StyledTable = styled(Table)(() => ({
   },
 }));
 
-const subscribarList = [
-  {
-    name: "john doe",
-    major: "ABC Fintech LTD.",
-  },
-  {
-    name: "kessy bryan",
-    major: "My Fintech LTD.",
-  },
-  {
-    name: "kessy bryan",
-    major: "My Fintech LTD.",
-  },
-  {
-    name: "james cassegne",
-    major: "Collboy Tech LTD.",
-  },
-  {
-    name: "lucy brown",
-    major: "ABC Fintech LTD.",
-  },
-  {
-    name: "lucy brown",
-    major: "ABC Fintech LTD.",
-  },
-  {
-    name: "lucy brown",
-    major: "ABC Fintech LTD.",
-  },
-  {
-    name: "lucy brown",
-    major: "ABC Fintech LTD.",
-  },
-  {
-    name: "lucy brown",
-    major: "ABC Fintech LTD.",
-    students: [],
-  },
-];
-
 const PaginationTable = () => {
+  const [subscribarList, setMyTopicData] = useState([]);
+  const [isRendered, isRenderedTable] = useState(false);
+
+  const filterDataByStudent = (data, student) => {
+    return data.filter(item => item.students.includes(student));
+  }
+
+  const getAllTopic = async () => {
+    try {
+      const result = await topicGetAll();
+      if (result) {
+        console.log("Get all topic successfully", result);
+
+        const myTopicData = filterDataByStudent(result.content, "user1");
+        setMyTopicData(myTopicData);
+        isRenderedTable(false);
+      } else {
+        console.log("Get all topic fail");
+      }
+    } catch (e) {
+      console.log("Process get all topic fail", e);
+    }
+  }
+
+  useEffect(() => {
+    getAllTopic();
+  }, [isRendered]);
+
   // Modal Delete
   const [openDeleteModal, setOpenDelete] = useState(false);
+  const [chosenTopic, setChosenTopic] = useState({});
   const handleClickOpenDeleteModal = () => setOpenDelete(true);
   const handleCloseDeleteModal = () => setOpenDelete(false);
+  const handleSubmitDeleteModal = async () => {
+    // try {
+    //   const request = {
+    //     "userId": localStorage.infoUser._id,
+    //     "topicId": chosenTopic._id,
+    //   };
+
+    //   console.log(request)
+    //   const [result, err] = await topicDisenroll(request);
+    //   if (result) {
+    //     console.log("Disenroll successfully", result);
+    //     setOpenDelete(false);
+    //     isRenderedTable(true);
+    //   } else {
+    //     console.log("Disenroll fail", err);
+    //   }
+    // } catch (e) {
+    //   console.log("Process disenroll fail", e);
+    // }
+  };
 
   // Pagination
   const [page, setPage] = useState(0);
@@ -123,7 +133,7 @@ const PaginationTable = () => {
                 <TableCell align="center">{subscriber.reviewer}</TableCell>
                 <TableCell align="center">{subscriber.students}</TableCell>
                 <TableCell align="right">
-                  <IconButton onClick={handleClickOpenDeleteModal}>
+                  <IconButton onClick={() => { handleClickOpenDeleteModal(); setChosenTopic(subscriber) }}>
                     <Icon color="error">deleteforever</Icon>
                   </IconButton>
                 </TableCell>
@@ -162,7 +172,7 @@ const PaginationTable = () => {
           <Button onClick={handleCloseDeleteModal} color="error">
             Hủy
           </Button>
-          <Button onClick={handleCloseDeleteModal} variant="outlined" color="primary" autoFocus>
+          <Button onClick={handleSubmitDeleteModal} variant="outlined" color="primary" autoFocus>
             Đồng ý
           </Button>
         </DialogActions>

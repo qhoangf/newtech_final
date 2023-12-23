@@ -77,16 +77,14 @@ export const navigations =
   ],
   lecturer: [
     // TEACHER
-    { label: 'Quản trị viên', type: 'label' },
-    { name: 'Giảng viên', path: '/admin/teacher', icon: 'person' },
-    { name: 'Sinh viên', path: '/admin/student', icon: 'people' },
-    { name: 'Đề tài', path: '/admin/topic', icon: 'book' },
+    { label: 'Giảng viên', type: 'label' },
+    { name: 'Danh sách đề tài', path: '/teacher/topiclist', icon: 'apps' },
+    { name: 'Đề tài đã đăng ký', path: '/teacher/mytopic', icon: 'topic' },
   ],
   student: [
     // STUDENT
-    { label: 'Quản trị viên', type: 'label' },
-    { name: 'Giảng viên', path: '/admin/teacher', icon: 'person' },
-    { name: 'Sinh viên', path: '/admin/student', icon: 'people' },
-    { name: 'Đề tài', path: '/admin/topic', icon: 'book' },
+    { label: 'Sinh viên', type: 'label' },
+    { name: 'Danh sách đề tài', path: '/student/topiclist', icon: 'apps' },
+    { name: 'Đề tài đã đăng ký', path: '/student/mytopic', icon: 'topic' },
   ]
 };
