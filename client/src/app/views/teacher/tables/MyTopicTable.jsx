@@ -15,8 +15,10 @@ import {
   TablePagination,
   TableRow,
   Button,
+  Tooltip,
 } from "@mui/material";
 import { topicGetAll, topicUpdate } from "app/lib/api/topic";
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
 
 import { useEffect, useState } from "react";
 
@@ -30,47 +32,8 @@ const StyledTable = styled(Table)(() => ({
   },
 }));
 
-const subscribarList = [
-  {
-    name: "john doe",
-    major: "ABC Fintech LTD.",
-  },
-  {
-    name: "kessy bryan",
-    major: "My Fintech LTD.",
-  },
-  {
-    name: "kessy bryan",
-    major: "My Fintech LTD.",
-  },
-  {
-    name: "james cassegne",
-    major: "Collboy Tech LTD.",
-  },
-  {
-    name: "lucy brown",
-    major: "ABC Fintech LTD.",
-  },
-  {
-    name: "lucy brown",
-    major: "ABC Fintech LTD.",
-  },
-  {
-    name: "lucy brown",
-    major: "ABC Fintech LTD.",
-  },
-  {
-    name: "lucy brown",
-    major: "ABC Fintech LTD.",
-  },
-  {
-    name: "lucy brown",
-    major: "ABC Fintech LTD.",
-    students: [],
-  },
-];
-
 const PaginationTable = () => {
+  // Topic
   const [subscribarList, setMyTopicData] = useState([]);
   const [isRendered, isRenderedTable] = useState(false);
   const [filteredData, setFilteredData] = useState([]);
@@ -183,6 +146,20 @@ const PaginationTable = () => {
                 <TableCell align="center">{(subscriber.reviewer).replaceAll(" ", "\n")}</TableCell>
                 <TableCell align="center">{(subscriber.students)?.length}</TableCell>
                 <TableCell align="right">
+                  {(subscriber.isApproved)
+                    ?
+                    <Tooltip title="Đã duyệt">
+                      <IconButton>
+                        <Icon color="success">done</Icon>
+                      </IconButton>
+                    </Tooltip>
+                    :
+                    <Tooltip title="Chờ duyệt">
+                      <IconButton>
+                        <AccessTimeIcon color="secondary" />
+                      </IconButton>
+                    </Tooltip>
+                  }
                   <IconButton onClick={() => { handleClickOpenDeleteModal(); setChosenTopic(subscriber) }}>
                     <Icon color="error">deleteforever</Icon>
                   </IconButton>
