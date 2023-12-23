@@ -5,11 +5,10 @@ let topicSchema = new mongoose.Schema(
     name: {
       type: String,
       require: true,
-      unique: true,
     },
     major: {
       type: String,
-      require: false,
+      require: true,
       minlength: 0,
     },
     startDate: {

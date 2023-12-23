@@ -1,12 +1,20 @@
 const Topic = require("../models/topic");
+const { EmptyCheck } = require("./globalFunc");
 
 const topicController = {
   create: async (req, res) => {
     try {
+      const checkResult = EmptyCheck(req);
+
+      if (!checkResult.isValid) {
+        return res.status(404).json({ result: "fail", content: checkResult.message });
+      }
+
       let { name, major } = req.body;
+
       let startDate = new Date();
       let endDate = new Date();
-      endDate.setDate(startDate.getDate() + 30);
+      endDate.setDate(startDate.getDate() + 60);
 
       const newTopic = new Topic({
         name: name,
@@ -20,6 +28,7 @@ const topicController = {
       });
 
       const result = await newTopic.save();
+
       if (result) return res.status(200).json({ result: "success", content: "Add topic successfully" });
     } catch (error) {
       return res.status(404).json({ result: "fail", content: "Add topic failed" });
@@ -37,6 +46,12 @@ const topicController = {
 
   update: async (req, res) => {
     try {
+      const checkResult = EmptyCheck(req);
+
+      if (!checkResult.isValid) {
+        return res.status(404).json({ result: "fail", content: checkResult.message });
+      }
+
       const { topicId, name, major, instructor, isApproved, reviewer, students } = req.body;
 
       const updateTopic = await Topic.findByIdAndUpdate(topicId, {
@@ -59,6 +74,12 @@ const topicController = {
   // Đăng ký đề tài
   enroll: async (req, res) => {
     try {
+      const checkResult = EmptyCheck(req);
+
+      if (!checkResult.isValid) {
+        return res.status(404).json({ result: "fail", content: checkResult.message });
+      }
+
       const { userId, topicId } = req.body;
       const chosenTopic = await Topic.findById(topicId);
       if (!chosenTopic) {
@@ -117,6 +138,12 @@ const topicController = {
 
   teacherAssign: async (req, res) => {
     try {
+      const checkResult = EmptyCheck(req);
+
+      if (!checkResult.isValid) {
+        return res.status(404).json({ result: "fail", content: checkResult.message });
+      }
+
       const { topicId, teacherName, isReviewer } = req.body;
 
       if (isReviewer) {

@@ -4,12 +4,21 @@ const bcrypt = require("bcrypt");
 const userController = {
   register: async (req, res) => {
     try {
+      const checkResult = EmptyCheck(req);
+
+      if (!checkResult.isValid) {
+        return res.status(404).json({ result: "fail", content: checkResult.message });
+      }
+
       let { name, username, password, major, role, isLeader } = req.body;
       let hashedPassword = "";
 
       if (password) {
         const saltcode = await bcrypt.genSalt(10);
         const hashcode = await bcrypt.hash(req.body.password, saltcode);
+
+        const findDup = await User.findOne({ username: username });
+        if (findDup) res.status(404).json({ result: "fail", content: "Username is already exist" });
 
         hashedPassword = hashcode;
         const newUser = new User({
@@ -56,6 +65,12 @@ const userController = {
   // //Đăng nhập
   login: async (req, res) => {
     try {
+      const checkResult = EmptyCheck(req);
+
+      if (!checkResult.isValid) {
+        return res.status(404).json({ result: "fail", content: checkResult.message });
+      }
+
       let { username, password } = req.body;
 
       const user = await User.findOne({ username: username });
@@ -110,31 +125,6 @@ const userController = {
       return res.status(404).json({ result: "fail", content: "Logout fail because user is not login" });
     }
   },
-
-  // //Xóa User
-  // deconsteUser: async (req, res) => {
-  //   try {
-  //     await User.findByIdAndDeconste(req.params.id);
-  //     return res.status(200).json("Deconste Successfully");
-  //   } catch (error) {
-  //     return res.status(500).json(error);
-  //   }
-  // },
-
-  // //Đăng xuất
-
-  // //Lấy UserProfile
-  // getUserProfile: async (req, res) => {
-  //   try {
-  //     const user = await User.findById(req.params.id);
-  //     if (!user) {
-  //       return res.status(404).json({ content: "User not found!" });
-  //     }
-  //     res.status(200).json({ user });
-  //   } catch (error) {
-  //     res.status(500).json({ content: "Error while getting user profile!" });
-  //   }
-  // },
 
   // //Cập nhật User
   update: async (req, res) => {
