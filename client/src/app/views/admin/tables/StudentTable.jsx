@@ -58,27 +58,34 @@ const validationSchema = Yup.object().shape({
     .required('Bắt buộc phải có mật khẩu!'),
 });
 
-const PaginationTable = () => {
+const PaginationTable = ({ isReload }) => {
   const [subscribarList, setAllUserData] = useState([]);
   const [isRendered, isRenderedTable] = useState(false);
 
-  useEffect(() => {
-    const getAllUser = async () => {
-      try {
-        const [result, err] = await userGetAll({ role: "student" });
-        if (result) {
-          console.log("Get all user successfully", result);
-          setAllUserData(result.content);
-          isRenderedTable(false);
-        } else {
-          console.log("Get all user fail", err);
-        }
-      } catch (e) {
-        console.log("Process get all user fail", e);
+  const getAllUser = async () => {
+    try {
+      const [result, err] = await userGetAll({ role: "student" });
+      if (result) {
+        console.log("Get all user successfully", result);
+        setAllUserData(result.content);
+        isRenderedTable(false);
+      } else {
+        console.log("Get all user fail", err);
       }
+    } catch (e) {
+      console.log("Process get all user fail", e);
     }
+  }
+
+  useEffect(() => {
     getAllUser();
   }, [isRendered]);
+
+  useEffect(() => {
+    //Flag: sau khi tạo sinh viên thì trigger +1, -1 đẻ chạy api
+    if (isReload > 0)
+      getAllUser();
+  }, [isReload])
 
   // Modal Delete
   const [openDeleteModal, setOpenDelete] = useState(false);

@@ -61,7 +61,7 @@ const validationSchema = Yup.object().shape({
 const PaginationTable = ({ isReload }) => {
   const [subscribarList, setAllUserData] = useState([]);
   const [isRendered, isRenderedTable] = useState(false);
-  const [currentUser, setCurrentUser] = useState({});
+
 
   const getAllUser = async () => {
     try {

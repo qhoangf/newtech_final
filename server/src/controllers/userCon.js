@@ -19,7 +19,7 @@ const userController = {
         const hashcode = await bcrypt.hash(req.body.password, saltcode);
 
         const findDup = await User.findOne({ username: username });
-        if (findDup) res.status(404).json({ result: "fail", content: "Username is already exist" });
+        if (findDup) return res.status(404).json({ result: "fail", content: "Username is already exist" });
 
         hashedPassword = hashcode;
         const newUser = new User({
