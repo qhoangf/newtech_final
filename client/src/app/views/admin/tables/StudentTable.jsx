@@ -144,7 +144,8 @@ const PaginationTable = ({ isReload }) => {
       const [result, err] = await userUpdate(request);
       if (result) {
         console.log("Update successfully", result);
-        setLoading(true);
+        setOpenEdit(false);
+        setLoading(false);
         isRenderedTable(true);
       } else {
         console.log("Update fail", err);

@@ -89,7 +89,7 @@ const PaginationTable = ({ isReload }) => {
   const handleSubmitDeleteModal = async () => {
     try {
       const request = {
-        "userId": currentEditUser._id,
+        "topicId": currentEditTopic._id,
       };
 
       console.log(request)
@@ -107,7 +107,7 @@ const PaginationTable = ({ isReload }) => {
   }
 
   // Modal Edit
-  const [currentEditUser, setCurrentEditUser] = useState({});
+  const [currentEditTopic, setCurrentEditTopic] = useState({});
   const [openEditModal, setOpenEdit] = useState(false);
   const handleClickOpenEditModal = () => setOpenEdit(true);
   const handleCloseEditModal = () => setOpenEdit(false);
@@ -123,15 +123,20 @@ const PaginationTable = ({ isReload }) => {
     setLoading(true);
     try {
       const request = {
-        "userId": currentEditUser._id,
+        "topicId": currentEditTopic._id,
         "name": values.name,
         "major": majorValue,
+        "instructor": "",
+        "isApproved": false,
+        "reviewer": "",
+        "students": []
       };
 
       console.log(request)
       const [result, err] = await topicUpdate(request);
       if (result) {
         console.log("Update successfully", result);
+        setOpenEdit(false);
         setLoading(false);
         isRenderedTable(true);
       } else {
@@ -174,13 +179,21 @@ const PaginationTable = ({ isReload }) => {
               <TableRow key={index}>
                 <TableCell align="left">{subscriber.name}</TableCell>
                 <TableCell align="center">{subscriber.major}</TableCell>
-                <TableCell align="center">{new Date(subscriber.startDate).toLocaleString()}</TableCell>
-                <TableCell align="center">{new Date(subscriber.endDate).toLocaleString()}</TableCell>
+                <TableCell align="center">
+                  <span>{(new Date(subscriber.startDate).toLocaleString()).split(",")[0].trim()}</span>
+                  <br />
+                  <span>{(new Date(subscriber.startDate).toLocaleString()).split(",")[1].trim()}</span>
+                </TableCell>
+                <TableCell align="center">
+                  <span>{(new Date(subscriber.endDate).toLocaleString()).split(",")[0].trim()}</span>
+                  <br />
+                  <span>{(new Date(subscriber.endDate).toLocaleString()).split(",")[1].trim()}</span>
+                </TableCell>
                 <TableCell align="right">
-                  <IconButton onClick={() => { setCurrentEditUser(subscriber); handleClickOpenEditModal(); }}>
+                  <IconButton onClick={() => { setCurrentEditTopic(subscriber); handleClickOpenEditModal(); }}>
                     <Icon color="primary">create</Icon>
                   </IconButton>
-                  <IconButton onClick={() => { setCurrentEditUser(subscriber); handleClickOpenDeleteModal(); }}>
+                  <IconButton onClick={() => { setCurrentEditTopic(subscriber); handleClickOpenDeleteModal(); }}>
                     <Icon color="error">close</Icon>
                   </IconButton>
                 </TableCell>
@@ -232,7 +245,7 @@ const PaginationTable = ({ isReload }) => {
         <DialogContent>
           <Formik
             onSubmit={handleFormSubmit}
-            initialValues={currentEditUser}
+            initialValues={currentEditTopic}
             validationSchema={validationSchema}
           >
             {({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => (
@@ -252,12 +265,14 @@ const PaginationTable = ({ isReload }) => {
                   sx={{ mb: 3, mt: 1 }}
                 />
 
-                <FormControl>
+                <FormControl
+                  sx={{ mb: 1.5 }}
+                >
                   <FormLabel id="major">Chuyên ngành</FormLabel>
                   <RadioGroup
                     row
                     aria-labelledby="major"
-                    defaultValue="software"
+                    defaultValue={currentEditTopic.major}
                     name="major"
                     onChange={handleChangeRadioGroup}
                   >
@@ -267,18 +282,18 @@ const PaginationTable = ({ isReload }) => {
                   </RadioGroup>
                 </FormControl>
                 <DialogActions>
-                    <Button color="error" onClick={handleCloseEditModal}>
-                      Hủy
-                    </Button>
-                    <LoadingButton
-                      type="submit"
-                      color="primary"
-                      loading={loading}
-                      variant="contained"
-                      sx={{ mr: 2 }}
-                    >
-                      Chỉnh sửa
-                    </LoadingButton>
+                  <Button color="error" onClick={handleCloseEditModal}>
+                    Hủy
+                  </Button>
+                  <LoadingButton
+                    type="submit"
+                    color="primary"
+                    loading={loading}
+                    variant="contained"
+                    sx={{ mr: 2 }}
+                  >
+                    Chỉnh sửa
+                  </LoadingButton>
                 </DialogActions>
               </form>
             )}
