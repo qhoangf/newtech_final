@@ -178,7 +178,20 @@ const PaginationTable = ({ isReload }) => {
             .map((subscriber, index) => (
               <TableRow key={index}>
                 <TableCell align="left">{subscriber.name}</TableCell>
-                <TableCell align="center">{subscriber.major}</TableCell>
+                <TableCell align="center">
+                  {(() => {
+                    switch (subscriber.major?.toLowerCase()) {
+                      case "software":
+                        return "Phần mềm";
+                      case "hardware":
+                        return "Phần cứng";
+                      case "security":
+                        return "An ninh mạng";
+                      default:
+                        return subscriber.major;
+                    }
+                  })()}
+                </TableCell>
                 <TableCell align="center">
                   <span>{(new Date(subscriber.startDate).toLocaleString()).split(",")[0].trim()}</span>
                   <br />

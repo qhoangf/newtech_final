@@ -17,10 +17,13 @@ import {
   Snackbar,
   Alert,
   Grid,
+  Menu,
+  MenuItem,
 } from "@mui/material";
 
 import React, { useState, useEffect } from "react";
 import { LoadingButton } from "@mui/lab";
+import { topicGetAll, topicEnroll } from 'app/lib/api/topic';
 
 const StyledTable = styled(Table)(() => ({
   whiteSpace: "pre",
@@ -32,55 +35,29 @@ const StyledTable = styled(Table)(() => ({
   },
 }));
 
-const subscribarList = [
-  {
-    name: "john doe",
-    major: "ABC Fintech LTD.",
-    studentlist: [1],
-  },
-  {
-    name: "kessy bryan",
-    major: "My Fintech LTD.",
-    studentlist: [1],
-  },
-  {
-    name: "kessy bryan",
-    major: "My Fintech LTD.",
-    studentlist: ["1", "3"],
-  },
-  {
-    name: "james cassegne",
-    major: "Collboy Tech LTD.",
-    studentlist: [1],
-  },
-  {
-    name: "lucy brown",
-    major: "ABC Fintech LTD.",
-    studentlist: [1],
-  },
-  {
-    name: "lucy brown",
-    major: "ABC Fintech LTD.",
-    studentlist: [1],
-  },
-  {
-    name: "lucy brown",
-    major: "ABC Fintech LTD.",
-    studentlist: [1],
-  },
-  {
-    name: "lucy brown",
-    major: "ABC Fintech LTD.",
-    studentlist: [1],
-  },
-  {
-    name: "lucy brown",
-    major: "ABC Fintech LTD.",
-    studentlist: [2, 3],
-  },
-];
-
 const PaginationTable = () => {
+  const [subscribarList, setAllTopicData] = useState([]);
+  const [isRendered, isRenderedTable] = useState(false);
+
+  const getAllTopic = async () => {
+    try {
+      const result = await topicGetAll();
+      if (result) {
+        console.log("Get all topic successfully", result);
+        setAllTopicData(result.content);
+        isRenderedTable(false);
+      } else {
+        console.log("Get all topic fail");
+      }
+    } catch (e) {
+      console.log("Process get all topic fail", e);
+    }
+  }
+
+  useEffect(() => {
+    getAllTopic();
+  }, [isRendered]);
+
   const [loading, setLoading] = useState(false);
   const [registeredTopic, setRegisteredTopic] = useState({});
 
@@ -88,6 +65,28 @@ const PaginationTable = () => {
   const [openJoinTopicModal, setOpenJoinModal] = useState(false);
   const handleClickOpenJoinModal = () => setOpenJoinModal(true);
   const handleCloseJoinModal = () => setOpenJoinModal(false);
+  const handleEnrollTopic = async () => {
+    setLoading(true);
+    try {
+      const request = {
+        "userId": "",
+        "topicId": registeredTopic._id,
+      };
+
+      console.log(request)
+      const [result, err] = await topicEnroll(request);
+      if (result) {
+        console.log("Enroll successfully", result);
+        setOpenJoinModal(false);
+        setLoading(false);
+        isRenderedTable(true);
+      } else {
+        console.log("Enroll fail", err);
+      }
+    } catch (e) {
+      console.log("Process enroll fail", e);
+    }
+  }
 
   // Noti success
   const [openSnackbar, setOpen] = React.useState(false);
@@ -117,6 +116,16 @@ const PaginationTable = () => {
     setPage(0);
   };
 
+  // Menu students
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const openMenuStudents = Boolean(anchorEl);
+  const handleClickStudentsMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleCloseStudentsMenu = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <Box width="100%" overflow="auto">
       <StyledTable>
@@ -136,10 +145,23 @@ const PaginationTable = () => {
             .map((subscriber, index) => (
               <TableRow key={index}>
                 <TableCell align="left">{subscriber.name}</TableCell>
-                <TableCell align="center">{subscriber.major}</TableCell>
-                <TableCell align="center">{subscriber.lecturer}</TableCell>
+                <TableCell align="center">
+                  {(() => {
+                    switch (subscriber.major?.toLowerCase()) {
+                      case "software":
+                        return "Phần mềm";
+                      case "hardware":
+                        return "Phần cứng";
+                      case "security":
+                        return "An ninh mạng";
+                      default:
+                        return subscriber.major;
+                    }
+                  })()}
+                </TableCell>
+                <TableCell align="center">{subscriber.instructor}</TableCell>
                 <TableCell align="center">{subscriber.reviewer}</TableCell>
-                <TableCell align="center">{(subscriber.studentlist)?.length}</TableCell>
+                <TableCell align="center">{(subscriber.students)?.length}</TableCell>
                 <TableCell align="right">
                   <IconButton onClick={() => { handleClickOpenJoinModal(); setRegisteredTopic(subscriber) }}>
                     <Icon color="primary">addcircleoutline</Icon>
@@ -191,7 +213,18 @@ const PaginationTable = () => {
               Chuyên ngành
             </Grid>
             <Grid item xs={6}>
-              <b>{registeredTopic.major}</b>
+              {(() => {
+                switch (registeredTopic.major?.toLowerCase()) {
+                  case "software":
+                    return "Phần mềm";
+                  case "hardware":
+                    return "Phần cứng";
+                  case "security":
+                    return "An ninh mạng";
+                  default:
+                    return registeredTopic.major;
+                }
+              })()}
             </Grid>
           </Grid>
           {/* Instructor */}
@@ -218,7 +251,35 @@ const PaginationTable = () => {
               Số lượng thành viên
             </Grid>
             <Grid item xs={6}>
-              <b>{(registeredTopic.studentlist)?.length} / 3 tổng thành viên</b>
+              <Button
+                color={((registeredTopic.students)?.length == 3) ? "success" : "secondary"}
+                aria-controls={openMenuStudents ? 'basic-menu' : undefined}
+                aria-haspopup="true"
+                aria-expanded={openMenuStudents ? 'true' : undefined}
+                onClick={handleClickStudentsMenu}>
+                <b>{(registeredTopic.students)?.length} / 3 tổng thành viên</b>
+              </Button>
+              <Menu
+                id="basic-menu"
+                anchorEl={anchorEl}
+                open={openMenuStudents}
+                onClose={handleCloseStudentsMenu}
+                MenuListProps={{
+                  'aria-labelledby': 'basic-button',
+                }}
+              >
+                {
+                  ((registeredTopic.students)?.length == 0) ?
+                    <>
+                      <MenuItem onClick={handleCloseStudentsMenu}>Chưa có thành viên nào tham gia</MenuItem>
+                    </> :
+                    <>
+                      <MenuItem onClick={handleCloseStudentsMenu}>{((registeredTopic.students)?.length > 0) ? registeredTopic.students[0] : ""}</MenuItem>
+                      <MenuItem onClick={handleCloseStudentsMenu}>{((registeredTopic.students)?.length > 1) ? registeredTopic.students[1] : ""}</MenuItem>
+                      <MenuItem onClick={handleCloseStudentsMenu}>{((registeredTopic.students)?.length > 2) ? registeredTopic.students[2] : ""}</MenuItem>
+                    </>
+                }
+              </Menu>
             </Grid>
           </Grid>
         </DialogContent>
@@ -232,6 +293,7 @@ const PaginationTable = () => {
             loading={loading}
             variant="contained"
             sx={{ mr: 2 }}
+            onClick={handleEnrollTopic}
           >
             Đăng ký tham gia đề tài
           </LoadingButton>

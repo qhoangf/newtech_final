@@ -26,7 +26,7 @@ import {
 
 import * as Yup from 'yup';
 import { useEffect, useState } from "react";
-import { Formik,Field } from "formik";
+import { Formik, Field } from "formik";
 import { LoadingButton } from "@mui/lab";
 import { userGetAll, userUpdate, userDelete } from 'app/lib/api/user';
 
@@ -49,13 +49,13 @@ const initialValues = {
 const validationSchema = Yup.object().shape({
   name: Yup.string()
     .min(6, 'Tên sinh viên phải nhiều hơn 6 kí tự'),
-    // .required('Bắt buộc phải có tên sinh viên!'),
+  // .required('Bắt buộc phải có tên sinh viên!'),
   username: Yup.string()
     .min(8, 'Tên đăng nhập phải nhiều hơn 6 kí tự'),
-    // .required('Bắt buộc phải có tên đăng nhập!'),
+  // .required('Bắt buộc phải có tên đăng nhập!'),
   password: Yup.string()
     .min(6, 'Mật khẩu phải nhiều hơn 6 kí tự')
-    // .required('Bắt buộc phải có mật khẩu!'),
+  // .required('Bắt buộc phải có mật khẩu!'),
 });
 
 const PaginationTable = ({ isReload }) => {
@@ -119,7 +119,7 @@ const PaginationTable = ({ isReload }) => {
   const handleClickOpenEditModal = () => setOpenEdit(true);
   const handleCloseEditModal = () => setOpenEdit(false);
 
-  
+
   let radioGroupValue = "software";
 
   const handleChangeRadioGroup = (event) => {
@@ -184,7 +184,20 @@ const PaginationTable = ({ isReload }) => {
             .map((subscriber, index) => (
               <TableRow key={index}>
                 <TableCell align="left">{subscriber.name}</TableCell>
-                <TableCell align="center">{subscriber.major}</TableCell>
+                <TableCell align="center">
+                  {(() => {
+                    switch (subscriber.major?.toLowerCase()) {
+                      case "software":
+                        return "Phần mềm";
+                      case "hardware":
+                        return "Phần cứng";
+                      case "security":
+                        return "An ninh mạng";
+                      default:
+                        return subscriber.major;
+                    }
+                  })()}
+                </TableCell>
                 <TableCell align="right">
                   <IconButton onClick={() => { setCurrentEditUser(subscriber); handleClickOpenEditModal(); }}>
                     <Icon color="primary">create</Icon>
@@ -237,16 +250,16 @@ const PaginationTable = ({ isReload }) => {
 
       {/* Edit modal */}
       <Dialog open={openEditModal} onClose={handleCloseEditModal} aria-labelledby="form-dialog-title">
-              <DialogTitle id="form-dialog-title">Thông tin đề tài</DialogTitle>
-              <DialogContent>
-      <Formik
-        onSubmit={handleFormSubmit}
-        initialValues={currentEditUser}
-        enableReinitialize
-        validationSchema={validationSchema}
-      >
-        {({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => (
-          <form onSubmit={handleSubmit}>
+        <DialogTitle id="form-dialog-title">Thông tin đề tài</DialogTitle>
+        <DialogContent>
+          <Formik
+            onSubmit={handleFormSubmit}
+            initialValues={currentEditUser}
+            enableReinitialize
+            validationSchema={validationSchema}
+          >
+            {({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => (
+              <form onSubmit={handleSubmit}>
 
                 <TextField
                   fullWidth
@@ -311,25 +324,25 @@ const PaginationTable = ({ isReload }) => {
                     <FormControlLabel value="security" control={<Radio />} label="An ninh mạng" />
                   </RadioGroup>
                 </FormControl>
-                  <DialogActions>
-                    <Button color="error" onClick={handleCloseEditModal}>
-                      Hủy
-                    </Button>
-                      <LoadingButton
-                          type="submit"
-                          color="primary"
-                          loading={loading}
-                          variant="contained"
-                          sx={{ mr: 2 }}
-                        >
-                          Chỉnh sửa
-                        </LoadingButton>
-                      </DialogActions>
+                <DialogActions>
+                  <Button color="error" onClick={handleCloseEditModal}>
+                    Hủy
+                  </Button>
+                  <LoadingButton
+                    type="submit"
+                    color="primary"
+                    loading={loading}
+                    variant="contained"
+                    sx={{ mr: 2 }}
+                  >
+                    Chỉnh sửa
+                  </LoadingButton>
+                </DialogActions>
               </form>
             )}
           </Formik>
         </DialogContent>
-          </Dialog>
+      </Dialog>
     </Box>
   );
 };

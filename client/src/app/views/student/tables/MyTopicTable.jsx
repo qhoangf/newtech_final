@@ -65,7 +65,7 @@ const subscribarList = [
   {
     name: "lucy brown",
     major: "ABC Fintech LTD.",
-    studentlist: [],
+    students: [],
   },
 ];
 
@@ -105,10 +105,23 @@ const PaginationTable = () => {
             .map((subscriber, index) => (
               <TableRow key={index}>
                 <TableCell align="left">{subscriber.name}</TableCell>
-                <TableCell align="center">{subscriber.major}</TableCell>
+                <TableCell align="center">
+                  {(() => {
+                    switch (subscriber.major?.toLowerCase()) {
+                      case "software":
+                        return "Phần mềm";
+                      case "hardware":
+                        return "Phần cứng";
+                      case "security":
+                        return "An ninh mạng";
+                      default:
+                        return subscriber.major;
+                    }
+                  })()}
+                </TableCell>
                 <TableCell align="center">{subscriber.lecturer}</TableCell>
                 <TableCell align="center">{subscriber.reviewer}</TableCell>
-                <TableCell align="center">{subscriber.studentlist}</TableCell>
+                <TableCell align="center">{subscriber.students}</TableCell>
                 <TableCell align="right">
                   <IconButton onClick={handleClickOpenDeleteModal}>
                     <Icon color="error">deleteforever</Icon>
