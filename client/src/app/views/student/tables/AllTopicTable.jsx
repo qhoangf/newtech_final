@@ -184,8 +184,8 @@ const PaginationTable = () => {
                     }
                   })()}
                 </TableCell>
-                <TableCell align="center">{subscriber.instructor}</TableCell>
-                <TableCell align="center">{subscriber.reviewer}</TableCell>
+                <TableCell align="center">{(subscriber.instructor).replaceAll(" ", "\n")}</TableCell>
+                <TableCell align="center">{(subscriber.reviewer).replaceAll(" ", "\n")}</TableCell>
                 <TableCell align="center">{(subscriber.students)?.length}</TableCell>
                 <TableCell align="right">
                   {(isUserInStudents(subscriber))
@@ -272,7 +272,7 @@ const PaginationTable = () => {
                 aria-haspopup="true"
                 aria-expanded={openMenuStudents ? 'true' : undefined}
                 onClick={handleClickStudentsMenu}>
-                <b>{(registeredTopic.students)?.length} / 3 tổng thành viên</b>
+                <b>{(registeredTopic.students)?.length} / 3 tổng thành viên đã tham gia</b>
               </Button>
               <Menu
                 id="basic-menu"

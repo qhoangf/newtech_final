@@ -24,6 +24,7 @@ import {
   Select,
 } from "@mui/material";
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import { topicGetAll, topicUpdate } from 'app/lib/api/topic';
 
 import React, { useState, useEffect } from "react";
 import { LoadingButton } from "@mui/lab";
@@ -38,62 +39,29 @@ const StyledTable = styled(Table)(() => ({
   },
 }));
 
-const subscribarList = [
-  {
-    name: "john doe",
-    major: "ABC Fintech LTD.",
-    lecturer: "GV A",
-    isApproved: true,
-    students: [1],
-  },
-  {
-    name: "kessy bryan",
-    major: "My Fintech LTD.",
-    lecturer: "GV B",
-    isApproved: false,
-    students: [1],
-  },
-  {
-    name: "kessy bryan",
-    major: "My Fintech LTD.",
-    students: ["1", "3"],
-    isApproved: false,
-  },
-  {
-    name: "james cassegne",
-    major: "Collboy Tech LTD.",
-    lecturer: "GV C",
-    isApproved: true,
-    students: [1],
-  },
-  {
-    name: "lucy brown",
-    major: "ABC Fintech LTD.",
-    students: [1],
-  },
-  {
-    name: "lucy brown",
-    major: "ABC Fintech LTD.",
-    students: [1],
-  },
-  {
-    name: "lucy brown",
-    major: "ABC Fintech LTD.",
-    students: [1],
-  },
-  {
-    name: "lucy brown",
-    major: "ABC Fintech LTD.",
-    students: [1],
-  },
-  {
-    name: "lucy brown",
-    major: "ABC Fintech LTD.",
-    students: [2, 3],
-  },
-];
-
 const PaginationTable = () => {
+  const [subscribarList, setAllTopicData] = useState([]);
+  const [isRendered, isRenderedTable] = useState(false);
+
+  const getAllTopic = async () => {
+    try {
+      const result = await topicGetAll();
+      if (result) {
+        console.log("Update topic successfully", result);
+        setAllTopicData(result.content);
+        isRenderedTable(false);
+      } else {
+        console.log("Update topic fail");
+      }
+    } catch (e) {
+      console.log("Process update topic fail", e);
+    }
+  }
+
+  useEffect(() => {
+    getAllTopic();
+  }, [isRendered]);
+
   const [loading, setLoading] = useState(false);
   const [registeredTopic, setRegisteredTopic] = useState({});
 
@@ -101,6 +69,36 @@ const PaginationTable = () => {
   const [openJoinTopicModal, setOpenJoinModal] = useState(false);
   const handleClickOpenJoinModal = () => setOpenJoinModal(true);
   const handleCloseJoinModal = () => setOpenJoinModal(false);
+  const handleEnrollTopic = async () => {
+    setLoading(true);
+    try {
+      const request = {
+        "topicId": registeredTopic._id,
+        "name": registeredTopic.name,
+        "major": registeredTopic.major,
+        "instructor": `${JSON.parse(localStorage.userInfo).name} (${JSON.parse(localStorage.userInfo)._id})`,
+        "isApproved": false,
+        "reviewer": "",
+        "students": registeredTopic.students,
+      };
+
+      console.log(request)
+      const [result, err] = await topicUpdate(request);
+      if (result) {
+        console.log("Update successfully", result);
+        setOpenJoinModal(false);
+        setLoading(false);
+        isRenderedTable(true);
+      } else {
+        console.log("Update fail", err);
+        handleClickSnackbarError()
+        setLoading(false);
+      }
+    } catch (e) {
+      console.log("Process update fail", e);
+      setLoading(false);
+    }
+  }
 
   // Add reviewer modal
   const [openAddReviewerModal, setOpenAddReviewerModal] = useState(false);
@@ -112,6 +110,18 @@ const PaginationTable = () => {
   const handleSelectorChange = (event) => {
     setReviewer(event.target.value);
   };
+
+  // Noti error
+  const [openSnackbarError, setOpenError] = React.useState(false);
+  function handleClickSnackbarError() {
+    setOpenError(true);
+  }
+  function handleCloseSnackbarError(_, reason) {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenError(false);
+  }
 
   // Noti success
   const [openSnackbar, setOpen] = React.useState(false);
@@ -150,7 +160,7 @@ const PaginationTable = () => {
             <TableCell align="center">Chuyên ngành</TableCell>
             <TableCell align="center">Giáo viên hướng dẫn</TableCell>
             <TableCell align="center">Giáo viên phản biện</TableCell>
-            <TableCell align="center">Số lượng thành viên (Tối đa: 3)</TableCell>
+            <TableCell align="center">Số lượng sinh viên (Tối đa: 3)</TableCell>
             <TableCell align="right"></TableCell>
           </TableRow>
         </TableHead>
@@ -174,8 +184,8 @@ const PaginationTable = () => {
                     }
                   })()}
                 </TableCell>
-                <TableCell align="center">{subscriber.lecturer}</TableCell>
-                <TableCell align="center">{subscriber.reviewer}</TableCell>
+                <TableCell align="center">{(subscriber.instructor).replaceAll(" ", "\n")}</TableCell>
+                <TableCell align="center">{(subscriber.reviewer).replaceAll(" ", "\n")}</TableCell>
                 <TableCell align="center">{(subscriber.students)?.length}</TableCell>
                 <TableCell align="right">
                   <IconButton onClick={() => { handleClickOpenJoinModal(); setRegisteredTopic(subscriber) }}>
@@ -184,9 +194,10 @@ const PaginationTable = () => {
                   <IconButton onClick={handleClickSnackbar}>
                     <Icon color="success">done</Icon>
                   </IconButton>
-                  <IconButton onClick={() => { handleClickAddReviewerModal() }}>
-                    <PersonAddIcon color="primary" />
-                  </IconButton>
+                  {(JSON.parse(localStorage.userInfo).role == "lecturer" && JSON.parse(localStorage.userInfo).isLeader == true)
+                    ? <IconButton onClick={() => { handleClickAddReviewerModal() }}>
+                      <PersonAddIcon color="primary" />
+                    </IconButton> : <></>}
                 </TableCell>
               </TableRow>
             ))}
@@ -266,10 +277,10 @@ const PaginationTable = () => {
           {/* Quantity */}
           <Grid container spacing={2} sx={{ my: 1 }}>
             <Grid item xs={6}>
-              Số lượng thành viên
+              Số lượng sinh viên
             </Grid>
             <Grid item xs={6}>
-              <b>{(registeredTopic.students)?.length} / 3 tổng thành viên</b>
+              <b>{(registeredTopic.students)?.length} / 3 tổng sinh viên đã tham gia</b>
             </Grid>
           </Grid>
         </DialogContent>
@@ -301,6 +312,7 @@ const PaginationTable = () => {
               loading={loading}
               variant="contained"
               sx={{ mr: 2 }}
+              onClick={handleEnrollTopic}
             >
               Đăng ký hướng dẫn đề tài
             </LoadingButton> :
@@ -350,6 +362,12 @@ const PaginationTable = () => {
       <Snackbar open={openSnackbar} autoHideDuration={5000} onClose={handleCloseSnackbar}>
         <Alert onClose={handleCloseSnackbar} severity="success" sx={{ width: '100%' }} variant="filled">
           Bạn đã đăng ký hướng dẫn đề tài này.
+        </Alert>
+      </Snackbar>
+
+      <Snackbar open={openSnackbarError} autoHideDuration={5000} onClose={handleCloseSnackbarError}>
+        <Alert onClose={handleCloseSnackbarError} severity="error" sx={{ width: '100%' }} variant="filled">
+          Bạn đã tham gia đề tài khác.
         </Alert>
       </Snackbar>
     </Box >

@@ -103,6 +103,7 @@ const Layout1Topbar = () => {
       const result = await userLogout();
       if (result) {
         console.log("Logout successfully", result);
+        localStorage.clear();
         navigate('/session/signin');
       } else {
         console.log("Logout fail");
@@ -127,8 +128,8 @@ const Layout1Topbar = () => {
               <UserMenu>
                 <Hidden xsDown>
                   <Span>
-                    Hi <strong>{
-                      JSON.parse(localStorage.userInfo).name
+                    Xin chào, <strong>{
+                      JSON.parse(localStorage.userInfo).name ?? "Quản trị viên"
                     }</strong>
                   </Span>
                 </Hidden>
