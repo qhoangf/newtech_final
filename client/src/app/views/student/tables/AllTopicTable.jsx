@@ -70,6 +70,7 @@ const PaginationTable = () => {
     try {
       const request = {
         "userId": localStorage.infoUser._id,
+        "name": localStorage.infoUser.name,
         "topicId": registeredTopic._id,
       };
 
@@ -261,7 +262,13 @@ const PaginationTable = () => {
                     </> :
                     registeredTopic.students
                       ?.map((registeredTopicChild, index) => {
-                        <MenuItem onClick={handleCloseStudentsMenu}>{((registeredTopic.students)?.length > index) ? registeredTopicChild : ""}</MenuItem>
+                        <MenuItem onClick={handleCloseStudentsMenu}>
+                          {
+                            ((registeredTopic.students)?.length > index)
+                              ? `${registeredTopicChild.name}(${registeredTopicChild._id})`
+                              : ""
+                          }
+                        </MenuItem>
                       })
                 }
               </Menu>
