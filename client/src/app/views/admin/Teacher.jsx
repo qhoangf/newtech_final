@@ -30,7 +30,7 @@ const validationSchema = Yup.object().shape({
         .min(6, 'Tên giảng viên phải nhiều hơn 6 kí tự')
         .required('Bắt buộc phải có tên giảng viên!'),
     username: Yup.string()
-        .min(8, 'Tên đăng nhập phải nhiều hơn 6 kí tự')
+        .min(8, 'Tên đăng nhập phải nhiều hơn 8 kí tự')
         .required('Bắt buộc phải có tên đăng nhập!'),
     password: Yup.string()
         .min(6, 'Mật khẩu phải nhiều hơn 6 kí tự')
@@ -40,23 +40,20 @@ const validationSchema = Yup.object().shape({
 const Teacher = () => {
     const [loading, setLoading] = useState(false);
     const [reloadKey, setReloadKey] = useState(0);
+    const handleReload = () => {
+        if (reloadKey > 1)
+            setReloadKey(reloadKey - 1);
+        else
+            setReloadKey(reloadKey + 1);
+    };
 
-  const handleReload = () => {
-    if(reloadKey > 1)
-    setReloadKey(reloadKey - 1);
-    else
-    setReloadKey(reloadKey + 1);
-  };
-
-
-    let radioGroupValue = "software";
-    let checkboxValue = false;
-
+    const [majorValue, setMajorValue] = useState("software");
+    const [isLeader, setIsLeader] = useState(false);
     const handleChangeCheckBox = (event) => {
-        checkboxValue = event.target.checked;
+        setIsLeader(event.target.checked);
     };
     const handleChangeRadioGroup = (event) => {
-        radioGroupValue = event.target.value;
+        setMajorValue(event.target.value);
     };
     const handleFormSubmit = async (values) => {
         setLoading(true);
@@ -66,8 +63,8 @@ const Teacher = () => {
                 "name": values.name,
                 "username": values.username,
                 "password": values.password,
-                "major": radioGroupValue,
-                "isLeader": checkboxValue,
+                "major": majorValue,
+                "isLeader": isLeader,
                 "role": "lecturer",
             };
 
@@ -75,8 +72,8 @@ const Teacher = () => {
             const [result, err] = await userRegister(request);
             if (result) {
                 console.log("Register successfully", result);
-                handleReload();
                 setLoading(false);
+                handleReload();
             } else {
                 console.log("Register fail", err);
                 setLoading(false);
