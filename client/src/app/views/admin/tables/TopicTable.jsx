@@ -59,13 +59,13 @@ const PaginationTable = ({ isReload }) => {
 
   const getAllTopic = async () => {
     try {
-      const [result, err] = await topicGetAll();
+      const [result] = await topicGetAll();
       if (result) {
         console.log("Get all topic successfully", result);
         setAllTopicData(result.content);
         isRenderedTable(false);
       } else {
-        console.log("Get all topic fail", err);
+        console.log("Get all topic fail");
       }
     } catch (e) {
       console.log("Process get all topic fail", e);
@@ -155,6 +155,10 @@ const PaginationTable = ({ isReload }) => {
     setPage(0);
   };
 
+  function filterDataByStudent(data, student) {
+    return data.filter(item => item.students.includes(student));
+  }
+
   return (
     <Box width="100%" overflow="auto">
       <StyledTable>
@@ -227,16 +231,16 @@ const PaginationTable = ({ isReload }) => {
       </Dialog>
 
       {/* Edit modal */}
-      <Formik
-        onSubmit={handleFormSubmit}
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-      >
-        {({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => (
-          <form onSubmit={handleSubmit}>
-            <Dialog open={openEditModal} onClose={handleCloseEditModal} aria-labelledby="form-dialog-title">
-              <DialogTitle id="form-dialog-title">Thông tin đề tài</DialogTitle>
-              <DialogContent>
+      <Dialog open={openEditModal} onClose={handleCloseEditModal} aria-labelledby="form-dialog-title">
+        <DialogTitle id="form-dialog-title">Thông tin đề tài</DialogTitle>
+        <DialogContent>
+          <Formik
+            onSubmit={handleFormSubmit}
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+          >
+            {({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => (
+              <form onSubmit={handleSubmit}>
                 <TextField
                   fullWidth
                   size="small"
@@ -266,26 +270,26 @@ const PaginationTable = ({ isReload }) => {
                     <FormControlLabel value="security" control={<Radio />} label="An ninh mạng" />
                   </RadioGroup>
                 </FormControl>
+              </form>
+            )}
+          </Formik>
+        </DialogContent>
+        <DialogActions>
+          <Button color="error" onClick={handleCloseEditModal}>
+            Hủy
+          </Button>
+          <LoadingButton
+            type="submit"
+            color="primary"
+            loading={loading}
+            variant="contained"
+            sx={{ mr: 2 }}
+          >
+            Chỉnh sửa
+          </LoadingButton>
+        </DialogActions>
+      </Dialog>
 
-              </DialogContent>
-              <DialogActions>
-                <Button color="error" onClick={handleCloseEditModal}>
-                  Hủy
-                </Button>
-                <LoadingButton
-                  type="submit"
-                  color="primary"
-                  loading={loading}
-                  variant="contained"
-                  sx={{ mr: 2 }}
-                >
-                  Chỉnh sửa
-                </LoadingButton>
-              </DialogActions>
-            </Dialog>
-          </form>
-        )}
-      </Formik>
     </Box >
   );
 };
