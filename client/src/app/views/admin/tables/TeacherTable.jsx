@@ -129,7 +129,6 @@ const PaginationTable = ({ isReload }) => {
   // Edit Submit
   const [loading, setLoading] = useState(false);
   const handleFormSubmit = async (values) => {
-    console.log("here")
     setLoading(true);
     try {
       const request = {
@@ -241,16 +240,17 @@ const PaginationTable = ({ isReload }) => {
       </Dialog>
 
       {/* Edit modal */}
+      <Dialog open={openEditModal} onClose={handleCloseEditModal} aria-labelledby="form-dialog-title">
+              <DialogTitle id="form-dialog-title">Thông tin giảng viên</DialogTitle>
+              <DialogContent>
       <Formik
         onSubmit={handleFormSubmit}
-        initialValues={initialValues}
+        initialValues={currentEditUser}
         validationSchema={validationSchema}
       >
         {({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => (
           <form onSubmit={handleSubmit}>
-            <Dialog open={openEditModal} onClose={handleCloseEditModal} aria-labelledby="form-dialog-title">
-              <DialogTitle id="form-dialog-title">Thông tin giảng viên</DialogTitle>
-              <DialogContent>
+
                 <TextField
                   fullWidth
                   size="small"
@@ -259,7 +259,8 @@ const PaginationTable = ({ isReload }) => {
                   label="Tên giảng viên"
                   variant="outlined"
                   onBlur={handleBlur}
-                  defaultValue={currentEditUser?.name}
+                  //defaultValue={currentEditUser?.name}
+                  value={values?.name}
                   onChange={handleChange}
                   helperText={touched.name && errors.name}
                   error={Boolean(errors.name && touched.name)}
@@ -274,7 +275,8 @@ const PaginationTable = ({ isReload }) => {
                   label="Tên đăng nhập"
                   variant="outlined"
                   onBlur={handleBlur}
-                  defaultValue={currentEditUser?.username}
+                  //defaultValue={currentEditUser?.username}
+                  value={values?.username}
                   onChange={handleChange}
                   helperText={touched.username && errors.username}
                   error={Boolean(errors.username && touched.username)}
@@ -289,7 +291,8 @@ const PaginationTable = ({ isReload }) => {
                   label="Mật khẩu"
                   variant="outlined"
                   onBlur={handleBlur}
-                  defaultValue={currentEditUser?.password}
+                  //defaultValue={currentEditUser?.password}
+                  value={values?.password}
                   onChange={handleChange}
                   helperText={touched.password && errors.password}
                   error={Boolean(errors.password && touched.password)}
@@ -322,7 +325,7 @@ const PaginationTable = ({ isReload }) => {
                   <FormControlLabel required control={<Checkbox defaultChecked={currentEditUser.isLeader} onChange={handleChangeCheckBox} />} label="Trưởng bộ môn" />
                 </FormControl>
 
-              </DialogContent>
+
               <DialogActions>
                 <Button color="error" onClick={handleCloseEditModal}>
                   Hủy
@@ -337,10 +340,11 @@ const PaginationTable = ({ isReload }) => {
                   Chỉnh sửa
                 </LoadingButton>
               </DialogActions>
-            </Dialog>
-          </form>
-        )}
-      </Formik>
+            </form>
+            )}
+            </Formik>
+          </DialogContent>
+        </Dialog>
     </Box >
   );
 };
