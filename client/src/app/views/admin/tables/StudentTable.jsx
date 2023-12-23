@@ -244,7 +244,7 @@ const PaginationTable = () => {
                   label="Tên sinh viên"
                   variant="outlined"
                   onBlur={handleBlur}
-                  value={currentEditUser.name}
+                  defaultValue={currentEditUser.name}
                   onChange={handleChange}
                   helperText={touched.name && errors.name}
                   error={Boolean(errors.name && touched.name)}
@@ -259,7 +259,7 @@ const PaginationTable = () => {
                   label="Tên đăng nhập"
                   variant="outlined"
                   onBlur={handleBlur}
-                  value={currentEditUser.username}
+                  defaultValue={currentEditUser.username}
                   onChange={handleChange}
                   helperText={touched.username && errors.username}
                   error={Boolean(errors.username && touched.username)}
@@ -274,7 +274,7 @@ const PaginationTable = () => {
                   label="Mật khẩu"
                   variant="outlined"
                   onBlur={handleBlur}
-                  value={currentEditUser.password}
+                  defaultValue={currentEditUser.password}
                   onChange={handleChange}
                   helperText={touched.password && errors.password}
                   error={Boolean(errors.password && touched.password)}

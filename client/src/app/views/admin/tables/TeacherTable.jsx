@@ -61,6 +61,7 @@ const validationSchema = Yup.object().shape({
 const PaginationTable = ({ isReload }) => {
   const [subscribarList, setAllUserData] = useState([]);
   const [isRendered, isRenderedTable] = useState(false);
+  const [currentUser, setCurrentUser] = useState({});
 
   const getAllUser = async () => {
     try {
@@ -128,6 +129,7 @@ const PaginationTable = ({ isReload }) => {
   // Edit Submit
   const [loading, setLoading] = useState(false);
   const handleFormSubmit = async (values) => {
+    console.log("here")
     setLoading(true);
     try {
       const request = {
@@ -257,7 +259,7 @@ const PaginationTable = ({ isReload }) => {
                   label="Tên giảng viên"
                   variant="outlined"
                   onBlur={handleBlur}
-                  value={currentEditUser?.name}
+                  defaultValue={currentEditUser?.name}
                   onChange={handleChange}
                   helperText={touched.name && errors.name}
                   error={Boolean(errors.name && touched.name)}
@@ -272,7 +274,7 @@ const PaginationTable = ({ isReload }) => {
                   label="Tên đăng nhập"
                   variant="outlined"
                   onBlur={handleBlur}
-                  value={currentEditUser?.username}
+                  defaultValue={currentEditUser?.username}
                   onChange={handleChange}
                   helperText={touched.username && errors.username}
                   error={Boolean(errors.username && touched.username)}
@@ -287,7 +289,7 @@ const PaginationTable = ({ isReload }) => {
                   label="Mật khẩu"
                   variant="outlined"
                   onBlur={handleBlur}
-                  value={currentEditUser?.password}
+                  defaultValue={currentEditUser?.password}
                   onChange={handleChange}
                   helperText={touched.password && errors.password}
                   error={Boolean(errors.password && touched.password)}
