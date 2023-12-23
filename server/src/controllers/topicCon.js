@@ -25,6 +25,7 @@ const topicController = {
         isApproved: false,
         reviewer: "",
         students: [],
+        studentsName: [],
       });
 
       const result = await newTopic.save();
@@ -50,7 +51,7 @@ const topicController = {
         return res.status(404).json({ result: "fail", content: "Topic's name is empty" });
       }
 
-      const { topicId, name, major, instructor, isApproved, reviewer, students } = req.body;
+      const { topicId, name, major, instructor, isApproved, reviewer, students, studentsName } = req.body;
 
       const updateTopic = await Topic.findByIdAndUpdate(topicId, {
         name,
@@ -59,6 +60,7 @@ const topicController = {
         isApproved,
         reviewer,
         students,
+        studentsName,
       });
 
       if (updateTopic) {
@@ -78,22 +80,59 @@ const topicController = {
         return res.status(404).json({ result: "fail", content: checkResult.message });
       }
 
-      const { userId, topicId } = req.body;
+      const { userId, name, topicId } = req.body;
+
       const chosenTopic = await Topic.findById(topicId);
       if (!chosenTopic) {
         return res.status(404).json({ result: "fail", content: "Topic not found." });
       }
-      if (chosenTopic.students.includes(userId)) {
-        return res.status(404).json({ result: "fail", content: "User already enrolled." });
+      if (chosenTopic.students.some((student) => student.id === userId)) {
+        return res.status(404).json({ result: "fail", content: "Student already enrolled in this topic." });
       }
+
+      const otherTopicEnrollCheck = await Topic.findOne({ students: { $elemMatch: { id: userId } } });
+      if (otherTopicEnrollCheck) {
+        return res.status(404).json({ result: "fail", content: "Student has enrolled in other topic." });
+      }
+
+      const objectValue = {
+        id: userId,
+        name: name,
+      };
+
       if (chosenTopic.students.length == 3) {
         return res.status(404).json({ result: "fail", content: "Not more available slot" });
       }
 
-      chosenTopic.students.push(userId);
+      chosenTopic.students.push(objectValue);
 
       await chosenTopic.save();
-      return res.status(200).json({ result: "success", content: "Enroll successfully." });
+      return res.status(200).json({ result: "success", content: "Student enroll successfully." });
+    } catch (error) {
+      return res.status(500).json(error.message);
+    }
+  },
+
+  disEnroll: async (req, res) => {
+    try {
+      const checkResult = EmptyCheck(req);
+
+      if (!checkResult.isValid) {
+        return res.status(404).json({ result: "fail", content: checkResult.message });
+      }
+
+      const { userId, topicId } = req.body;
+
+      const chosenTopic = await Topic.findById(topicId);
+      if (!chosenTopic) {
+        return res.status(404).json({ result: "fail", content: "Topic not found." });
+      }
+      if (!chosenTopic.students.some((student) => student.id === userId)) {
+        return res.status(404).json({ result: "fail", content: "Student hasn't enrolled in this topic." });
+      }
+
+      await Topic.findOneAndUpdate({ _id: topicId }, { $pull: { students: { id: userId } } }, { safe: true, multi: false });
+      return res.status(200).json({ result: "success", content: "Student dis-enroll successfully." });
     } catch (error) {
       return res.status(500).json(error.message);
     }
@@ -155,6 +194,41 @@ const topicController = {
       return res.status(404).json({ result: "fail", content: "Assign to topic fail" });
     }
   },
+
+  // test: async (req, res) => {
+  //   try {
+  //     const topicId = req.body.topicId;
+  //     const userId = req.body.userId;
+  //     const name = req.body.name;
+
+  //     const objectValue = {
+  //       id: userId,
+  //       name: name,
+  //     };
+
+  //     const chosenTopic = await Topic.findById(topicId);
+
+  //     if (chosenTopic.students.some((student) => student.id === userId)) {
+  //       return res.status(404).json({ result: "fail", content: "Student already enrolled in this topic." });
+  //     }
+
+  //     const otherTopicEnrollCheck = await Topic.findOne({ students: { $elemMatch: { id: userId } } });
+  //     if (otherTopicEnrollCheck) {
+  //       return res.status(404).json({ result: "fail", content: "Student has enrolled in other topic." });
+  //     }
+
+  //     if (!chosenTopic) {
+  //       return res.status(404).json({ result: "fail", content: "Topic not found." });
+  //     }
+
+  //     chosenTopic.students.push(objectValue);
+  //     await chosenTopic.save();
+
+  //     return res.status(200).json({ result: "success", content: "Update topic successfully" });
+  //   } catch (error) {
+  //     return res.status(404).json({ result: "fail", content: "TopicId is null" });
+  //   }
+  // },
 };
 
 module.exports = topicController;

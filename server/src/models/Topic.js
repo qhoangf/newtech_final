@@ -29,8 +29,7 @@ let topicSchema = new mongoose.Schema(
     },
     students: [
       {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "users",
+        type: mongoose.Schema.Types.Mixed,
       },
     ],
   },
