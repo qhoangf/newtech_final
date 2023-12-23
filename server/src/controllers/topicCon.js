@@ -46,10 +46,8 @@ const topicController = {
 
   update: async (req, res) => {
     try {
-      const checkResult = EmptyCheck(req);
-
-      if (!checkResult.isValid) {
-        return res.status(404).json({ result: "fail", content: checkResult.message });
+      if (!name) {
+        return res.status(404).json({ result: "fail", content: "Topic's name is empty" });
       }
 
       const { topicId, name, major, instructor, isApproved, reviewer, students } = req.body;
