@@ -30,7 +30,7 @@ const validationSchema = Yup.object().shape({
         .min(6, 'Tên sinh viên phải nhiều hơn 6 kí tự')
         .required('Bắt buộc phải có tên sinh viên!'),
     username: Yup.string()
-        .min(8, 'Tên đăng nhập phải nhiều hơn 6 kí tự')
+        .min(8, 'Tên đăng nhập phải nhiều hơn 8 kí tự')
         .required('Bắt buộc phải có tên đăng nhập!'),
     password: Yup.string()
         .min(6, 'Mật khẩu phải nhiều hơn 6 kí tự')
@@ -39,10 +39,17 @@ const validationSchema = Yup.object().shape({
 
 const Student = () => {
     const [loading, setLoading] = useState(false);
-    let radioGroupValue = "software";
+    const [reloadKey, setReloadKey] = useState(0);
+    const handleReload = () => {
+        if (reloadKey > 1)
+            setReloadKey(reloadKey - 1);
+        else
+            setReloadKey(reloadKey + 1);
+    };
 
+    const [majorValue, setMajorValue] = useState("software");
     const handleChangeRadioGroup = (event) => {
-        radioGroupValue = event.target.value;
+        setMajorValue(event.target.value);
     };
     const handleFormSubmit = async (values) => {
         setLoading(true);
@@ -51,7 +58,7 @@ const Student = () => {
                 "name": values.name,
                 "username": values.username,
                 "password": values.password,
-                "major": radioGroupValue,
+                "major": majorValue,
                 "role": "student",
             };
 
@@ -59,7 +66,8 @@ const Student = () => {
             const [result, err] = await userRegister(request);
             if (result) {
                 console.log("Register successfully", result);
-                setLoading(true);
+                setLoading(false);
+                handleReload();
             } else {
                 console.log("Register fail", err);
                 setLoading(false);
@@ -76,7 +84,7 @@ const Student = () => {
                 <Grid container spacing={3}>
                     <Grid item lg={8} md={8} sm={12} xs={12}>
                         <H4>Tài khoản sinh viên</H4>
-                        <PaginationTable />
+                        <PaginationTable isReload={reloadKey} />
                     </Grid>
 
                     <Grid item lg={4} md={4} sm={12} xs={12}>

@@ -58,7 +58,7 @@ const validationSchema = Yup.object().shape({
     .required('Bắt buộc phải có mật khẩu!'),
 });
 
-const PaginationTable = ({isReload}) => {
+const PaginationTable = ({ isReload }) => {
   const [subscribarList, setAllUserData] = useState([]);
   const [isRendered, isRenderedTable] = useState(false);
 
@@ -83,9 +83,9 @@ const PaginationTable = ({isReload}) => {
 
   useEffect(() => {
     //Flag: sau khi tạo giảng viên thì trigger +1, -1 đẻ chạy api
-    if(isReload > 0)
-    getAllUser();
-  },[isReload])
+    if (isReload > 0)
+      getAllUser();
+  }, [isReload])
 
   // Modal Delete
   const [openDeleteModal, setOpenDelete] = useState(false);
@@ -116,15 +116,13 @@ const PaginationTable = ({isReload}) => {
   const [openEditModal, setOpenEdit] = useState(false);
   const handleClickOpenEditModal = () => setOpenEdit(true);
   const handleCloseEditModal = () => setOpenEdit(false);
-
-  let radioGroupValue = "software";
-  let checkboxValue = false;
-
+  const [majorValue, setMajorValue] = useState("software");
+  const [isLeader, setIsLeader] = useState(false);
   const handleChangeCheckBox = (event) => {
-    checkboxValue = event.target.checked;
+    setIsLeader(event.target.checked);
   };
   const handleChangeRadioGroup = (event) => {
-    radioGroupValue = event.target.value;
+    setMajorValue(event.target.value);
   };
 
   // Edit Submit
@@ -137,8 +135,8 @@ const PaginationTable = ({isReload}) => {
         "name": values.name,
         "username": values.username,
         "password": values.password,
-        "major": radioGroupValue,
-        "isLeader": checkboxValue,
+        "major": majorValue,
+        "isLeader": isLeader,
         "role": "lecturer",
       };
 
@@ -259,7 +257,7 @@ const PaginationTable = ({isReload}) => {
                   label="Tên giảng viên"
                   variant="outlined"
                   onBlur={handleBlur}
-                  value={currentEditUser.name}
+                  value={currentEditUser?.name}
                   onChange={handleChange}
                   helperText={touched.name && errors.name}
                   error={Boolean(errors.name && touched.name)}
@@ -274,7 +272,7 @@ const PaginationTable = ({isReload}) => {
                   label="Tên đăng nhập"
                   variant="outlined"
                   onBlur={handleBlur}
-                  value={currentEditUser.username}
+                  value={currentEditUser?.username}
                   onChange={handleChange}
                   helperText={touched.username && errors.username}
                   error={Boolean(errors.username && touched.username)}
@@ -289,7 +287,7 @@ const PaginationTable = ({isReload}) => {
                   label="Mật khẩu"
                   variant="outlined"
                   onBlur={handleBlur}
-                  value={currentEditUser.password}
+                  value={currentEditUser?.password}
                   onChange={handleChange}
                   helperText={touched.password && errors.password}
                   error={Boolean(errors.password && touched.password)}
