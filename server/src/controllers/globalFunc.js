@@ -6,7 +6,9 @@ const globalFunction = {
       for (const key in request.body) {
         if (Object.hasOwnProperty.call(request.body, key)) {
           const value = request.body[key];
-          if (value == "") {
+
+          if (value === "") {
+            console.log(value);
             emptyValues.push(key);
           }
         }
