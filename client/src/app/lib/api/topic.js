@@ -13,7 +13,7 @@ export async function topicUpdate(data) {
 }
 
 export async function topicDelete(data) {
-  return await AxiosCLient.fetchingWithData("delete", "/topic/delete", data);
+  return await AxiosCLient.fetchingWithData("post", "/topic/delete", data);
 }
 
 export async function topicGetAll() {

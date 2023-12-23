@@ -9,7 +9,7 @@ router.post("/getDetail", userCon.getDetail);
 router.get("/checkAuthen", userCon.checkAuthen);
 router.get("/logout", userCon.logout);
 router.post("/update", userCon.update);
-router.delete("/delete", userCon.delete);
+router.post("/delete", userCon.delete);
 
 // router.post("/deconsteUser/:id", hashMiddlewareController.verifyTokenAndAdminAuth, userCon.deconsteUser);
 

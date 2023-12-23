@@ -21,7 +21,7 @@ export async function userCheckAuthen() {
 }
 
 export async function userDelete(data) {
-  return await AxiosCLient.fetchingWithData("delete", "/user/delete", data);
+  return await AxiosCLient.fetchingWithData("post", "/user/delete", data);
 }
 
 export async function userGetAll(data) {
