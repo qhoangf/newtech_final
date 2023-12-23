@@ -44,19 +44,19 @@ const subscribarList = [
     major: "ABC Fintech LTD.",
     lecturer: "GV A",
     isApproved: true,
-    studentlist: [1],
+    students: [1],
   },
   {
     name: "kessy bryan",
     major: "My Fintech LTD.",
     lecturer: "GV B",
     isApproved: false,
-    studentlist: [1],
+    students: [1],
   },
   {
     name: "kessy bryan",
     major: "My Fintech LTD.",
-    studentlist: ["1", "3"],
+    students: ["1", "3"],
     isApproved: false,
   },
   {
@@ -64,32 +64,32 @@ const subscribarList = [
     major: "Collboy Tech LTD.",
     lecturer: "GV C",
     isApproved: true,
-    studentlist: [1],
+    students: [1],
   },
   {
     name: "lucy brown",
     major: "ABC Fintech LTD.",
-    studentlist: [1],
+    students: [1],
   },
   {
     name: "lucy brown",
     major: "ABC Fintech LTD.",
-    studentlist: [1],
+    students: [1],
   },
   {
     name: "lucy brown",
     major: "ABC Fintech LTD.",
-    studentlist: [1],
+    students: [1],
   },
   {
     name: "lucy brown",
     major: "ABC Fintech LTD.",
-    studentlist: [1],
+    students: [1],
   },
   {
     name: "lucy brown",
     major: "ABC Fintech LTD.",
-    studentlist: [2, 3],
+    students: [2, 3],
   },
 ];
 
@@ -160,10 +160,23 @@ const PaginationTable = () => {
             .map((subscriber, index) => (
               <TableRow key={index}>
                 <TableCell align="left">{subscriber.name}</TableCell>
-                <TableCell align="center">{subscriber.major}</TableCell>
+                <TableCell align="center">
+                  {(() => {
+                    switch (subscriber.major?.toLowerCase()) {
+                      case "software":
+                        return "Phần mềm";
+                      case "hardware":
+                        return "Phần cứng";
+                      case "security":
+                        return "An ninh mạng";
+                      default:
+                        return subscriber.major;
+                    }
+                  })()}
+                </TableCell>
                 <TableCell align="center">{subscriber.lecturer}</TableCell>
                 <TableCell align="center">{subscriber.reviewer}</TableCell>
-                <TableCell align="center">{(subscriber.studentlist)?.length}</TableCell>
+                <TableCell align="center">{(subscriber.students)?.length}</TableCell>
                 <TableCell align="right">
                   <IconButton onClick={() => { handleClickOpenJoinModal(); setRegisteredTopic(subscriber) }}>
                     <Icon color="primary">addcircleoutline</Icon>
@@ -256,7 +269,7 @@ const PaginationTable = () => {
               Số lượng thành viên
             </Grid>
             <Grid item xs={6}>
-              <b>{(registeredTopic.studentlist)?.length} / 3 tổng thành viên</b>
+              <b>{(registeredTopic.students)?.length} / 3 tổng thành viên</b>
             </Grid>
           </Grid>
         </DialogContent>
