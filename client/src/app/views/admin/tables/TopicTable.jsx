@@ -155,10 +155,6 @@ const PaginationTable = ({ isReload }) => {
     setPage(0);
   };
 
-  function filterDataByStudent(data, student) {
-    return data.filter(item => item.students.includes(student));
-  }
-
   return (
     <Box width="100%" overflow="auto">
       <StyledTable>
