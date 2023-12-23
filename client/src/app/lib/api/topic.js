@@ -8,6 +8,10 @@ export async function topicEnroll(data) {
   return await AxiosCLient.fetchingWithData("post", "/topic/enroll", data);
 }
 
+export async function topicDisenroll(data) {
+  return await AxiosCLient.fetchingWithData("post", "/topic/disEnroll", data);
+}
+
 export async function topicUpdate(data) {
   return await AxiosCLient.fetchingWithData("post", "/topic/update", data);
 }
