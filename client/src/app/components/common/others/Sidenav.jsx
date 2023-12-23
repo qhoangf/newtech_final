@@ -46,7 +46,7 @@ const Sidenav = ({ children }) => {
     <Fragment>
       <StyledScrollBar options={{ suppressScrollX: true }}>
         {children}
-        <MatxVerticalNav items={navigations} />
+        <MatxVerticalNav items={navigations.default} />
       </StyledScrollBar>
 
       <SideNavMobile onClick={() => updateSidebarMode({ mode: 'close' })} />
