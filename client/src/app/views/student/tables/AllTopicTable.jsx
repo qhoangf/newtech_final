@@ -69,8 +69,8 @@ const PaginationTable = () => {
     setLoading(true);
     try {
       const request = {
-        "userId": localStorage.infoUser._id,
-        "name": localStorage.infoUser.name,
+        "userId": JSON.parse(localStorage.infoUser)._id,
+        "name": JSON.parse(localStorage.infoUser).name,
         "topicId": registeredTopic._id,
       };
 
@@ -83,9 +83,11 @@ const PaginationTable = () => {
         isRenderedTable(true);
       } else {
         console.log("Enroll fail", err);
+        setLoading(false);
       }
     } catch (e) {
       console.log("Process enroll fail", e);
+      setLoading(false);
     }
   }
 
@@ -262,12 +264,8 @@ const PaginationTable = () => {
                     </> :
                     registeredTopic.students
                       ?.map((registeredTopicChild, index) => {
-                        <MenuItem onClick={handleCloseStudentsMenu}>
-                          {
-                            ((registeredTopic.students)?.length > index)
-                              ? `${registeredTopicChild.name}(${registeredTopicChild._id})`
-                              : ""
-                          }
+                        <MenuItem key={index} onClick={handleCloseStudentsMenu}>
+                          {`${registeredTopicChild.name}(${registeredTopicChild._id})`}
                         </MenuItem>
                       })
                 }
