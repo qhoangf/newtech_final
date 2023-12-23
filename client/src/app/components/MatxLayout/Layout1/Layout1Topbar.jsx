@@ -128,7 +128,7 @@ const Layout1Topbar = () => {
                 <Hidden xsDown>
                   <Span>
                     Hi <strong>{
-                      // user ? user.name : "user"
+                      JSON.parse(localStorage.userInfo).name
                     }</strong>
                   </Span>
                 </Hidden>

@@ -69,8 +69,8 @@ const PaginationTable = () => {
     setLoading(true);
     try {
       const request = {
-        "userId": JSON.parse(localStorage.infoUser)._id,
-        "name": JSON.parse(localStorage.infoUser).name,
+        "userId": JSON.parse(localStorage.userInfo)._id,
+        "name": JSON.parse(localStorage.userInfo).name,
         "topicId": registeredTopic._id,
       };
 
@@ -83,12 +83,25 @@ const PaginationTable = () => {
         isRenderedTable(true);
       } else {
         console.log("Enroll fail", err);
+        handleClickSnackbarError()
         setLoading(false);
       }
     } catch (e) {
       console.log("Process enroll fail", e);
       setLoading(false);
     }
+  }
+
+  // Noti error
+  const [openSnackbarError, setOpenError] = React.useState(false);
+  function handleClickSnackbarError() {
+    setOpenError(true);
+  }
+  function handleCloseSnackbarError(_, reason) {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenError(false);
   }
 
   // Noti success
@@ -129,6 +142,15 @@ const PaginationTable = () => {
     setAnchorEl(null);
   };
 
+  // Check isInTopic
+  const isUserInStudents = (data) => {
+    let useridToCheck = JSON.parse(localStorage.userInfo)._id;
+    if (data && data.students && data.students.length > 0) {
+      return data.students.some(student => student.id == useridToCheck);
+    }
+    return false;
+  };
+
   return (
     <Box width="100%" overflow="auto">
       <StyledTable>
@@ -166,12 +188,16 @@ const PaginationTable = () => {
                 <TableCell align="center">{subscriber.reviewer}</TableCell>
                 <TableCell align="center">{(subscriber.students)?.length}</TableCell>
                 <TableCell align="right">
-                  <IconButton onClick={() => { handleClickOpenJoinModal(); setRegisteredTopic(subscriber) }}>
-                    <Icon color="primary">addcircleoutline</Icon>
-                  </IconButton>
-                  <IconButton onClick={handleClickSnackbar}>
-                    <Icon color="success">done</Icon>
-                  </IconButton>
+                  {(isUserInStudents(subscriber))
+                    ?
+                    <IconButton onClick={handleClickSnackbar}>
+                      <Icon color="success">done</Icon>
+                    </IconButton>
+                    :
+                    <IconButton onClick={() => { handleClickOpenJoinModal(); setRegisteredTopic(subscriber) }}>
+                      <Icon color="primary">addcircleoutline</Icon>
+                    </IconButton>
+                  }
                 </TableCell>
               </TableRow>
             ))}
@@ -263,11 +289,11 @@ const PaginationTable = () => {
                       <MenuItem onClick={handleCloseStudentsMenu}>Chưa có thành viên nào tham gia</MenuItem>
                     </> :
                     registeredTopic.students
-                      ?.map((registeredTopicChild, index) => {
+                      ?.map((registeredTopicChild, index) => (
                         <MenuItem key={index} onClick={handleCloseStudentsMenu}>
-                          {`${registeredTopicChild.name}(${registeredTopicChild._id})`}
+                          {`${registeredTopicChild.name} (${registeredTopicChild.id})`}
                         </MenuItem>
-                      })
+                      ))
                 }
               </Menu>
             </Grid>
@@ -293,6 +319,12 @@ const PaginationTable = () => {
       <Snackbar open={openSnackbar} autoHideDuration={5000} onClose={handleCloseSnackbar}>
         <Alert onClose={handleCloseSnackbar} severity="success" sx={{ width: '100%' }} variant="filled">
           Bạn đã đăng ký tham gia đề tài này.
+        </Alert>
+      </Snackbar>
+
+      <Snackbar open={openSnackbarError} autoHideDuration={5000} onClose={handleCloseSnackbarError}>
+        <Alert onClose={handleCloseSnackbarError} severity="error" sx={{ width: '100%' }} variant="filled">
+          Bạn đã tham gia đề tài khác.
         </Alert>
       </Snackbar>
 

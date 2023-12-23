@@ -86,7 +86,7 @@ const Signin = () => {
       const result = await userCheckAuthen();
       if (result) {
         console.log("Check authen successfully", result);
-        localStorage.infoUser = JSON.stringify(result.content);
+        localStorage.userInfo = JSON.stringify(result.content);
 
         switch (result.content.role) {
           case "admin":

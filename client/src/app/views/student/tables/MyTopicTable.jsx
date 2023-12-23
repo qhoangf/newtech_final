@@ -18,7 +18,7 @@ import {
 } from "@mui/material";
 
 import { useEffect, useState } from "react";
-import { topicGetAll, topicEnroll } from 'app/lib/api/topic';
+import { topicGetAll, topicDisenroll } from 'app/lib/api/topic';
 
 const StyledTable = styled(Table)(() => ({
   whiteSpace: "pre",
@@ -33,10 +33,7 @@ const StyledTable = styled(Table)(() => ({
 const PaginationTable = () => {
   const [subscribarList, setMyTopicData] = useState([]);
   const [isRendered, isRenderedTable] = useState(false);
-
-  const filterDataByStudent = (data, student) => {
-    return data.filter(item => item.students.includes(student));
-  }
+  const [filteredData, setFilteredData] = useState([]);
 
   const getAllTopic = async () => {
     try {
@@ -44,9 +41,10 @@ const PaginationTable = () => {
       if (result) {
         console.log("Get all topic successfully", result);
 
-        const myTopicData = filterDataByStudent(result.content, "user1");
-        setMyTopicData(myTopicData);
-        isRenderedTable(false);
+        const userId = JSON.parse(localStorage.userInfo)._id;
+        setFilteredData((result.content).filter(item =>
+          item.students.some(student => student.id == userId)
+        ));
       } else {
         console.log("Get all topic fail");
       }
@@ -54,6 +52,11 @@ const PaginationTable = () => {
       console.log("Process get all topic fail", e);
     }
   }
+
+  useEffect(() => {
+    setMyTopicData(filteredData);
+    isRenderedTable(false);
+  }, [filteredData]);
 
   useEffect(() => {
     getAllTopic();
@@ -65,24 +68,24 @@ const PaginationTable = () => {
   const handleClickOpenDeleteModal = () => setOpenDelete(true);
   const handleCloseDeleteModal = () => setOpenDelete(false);
   const handleSubmitDeleteModal = async () => {
-    // try {
-    //   const request = {
-    //     "userId": localStorage.infoUser._id,
-    //     "topicId": chosenTopic._id,
-    //   };
+    try {
+      const request = {
+        "userId": JSON.parse(localStorage.userInfo)._id,
+        "topicId": chosenTopic._id,
+      };
 
-    //   console.log(request)
-    //   const [result, err] = await topicDisenroll(request);
-    //   if (result) {
-    //     console.log("Disenroll successfully", result);
-    //     setOpenDelete(false);
-    //     isRenderedTable(true);
-    //   } else {
-    //     console.log("Disenroll fail", err);
-    //   }
-    // } catch (e) {
-    //   console.log("Process disenroll fail", e);
-    // }
+      console.log(request)
+      const [result, err] = await topicDisenroll(request);
+      if (result) {
+        console.log("Disenroll successfully", result);
+        setOpenDelete(false);
+        isRenderedTable(true);
+      } else {
+        console.log("Disenroll fail", err);
+      }
+    } catch (e) {
+      console.log("Process disenroll fail", e);
+    }
   };
 
   // Pagination
@@ -129,9 +132,9 @@ const PaginationTable = () => {
                     }
                   })()}
                 </TableCell>
-                <TableCell align="center">{subscriber.lecturer}</TableCell>
+                <TableCell align="center">{subscriber.instructor}</TableCell>
                 <TableCell align="center">{subscriber.reviewer}</TableCell>
-                <TableCell align="center">{subscriber.students}</TableCell>
+                <TableCell align="center">{(subscriber.students)?.length}</TableCell>
                 <TableCell align="right">
                   <IconButton onClick={() => { handleClickOpenDeleteModal(); setChosenTopic(subscriber) }}>
                     <Icon color="error">deleteforever</Icon>
