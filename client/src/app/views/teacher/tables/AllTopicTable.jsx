@@ -67,14 +67,14 @@ const PaginationTable = () => {
   // Topic
   const [subscribarList, setAllTopicData] = useState([]);
   const [isRendered, isRenderedTable] = useState(false);
+  const [filteredData, setFilteredData] = useState([]);
 
   const getAllTopic = async () => {
     try {
       const result = await topicGetAll();
       if (result) {
         console.log("Update topic successfully", result);
-        setAllTopicData(result.content);
-        isRenderedTable(false);
+        setFilteredData((result.content).filter(item => item.major === JSON.parse(localStorage.userInfo).major));
       } else {
         console.log("Update topic fail");
       }
@@ -82,6 +82,11 @@ const PaginationTable = () => {
       console.log("Process update topic fail", e);
     }
   }
+
+  useEffect(() => {
+    setAllTopicData(filteredData);
+    isRenderedTable(false);
+  }, [filteredData]);
 
   useEffect(() => {
     getAllTopic();
