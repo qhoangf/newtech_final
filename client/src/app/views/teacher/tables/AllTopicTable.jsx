@@ -273,8 +273,8 @@ const PaginationTable = () => {
                     }
                   })()}
                 </TableCell>
-                <TableCell align="center">{(subscriber.instructor).replaceAll(" ", "\n")}</TableCell>
-                <TableCell align="center">{(subscriber.reviewer).replaceAll(" ", "\n")}</TableCell>
+                <TableCell align="center">{(subscriber.instructor)}</TableCell>
+                <TableCell align="center">{(subscriber.reviewer)}</TableCell>
                 <TableCell align="center">{(subscriber.students)?.length}</TableCell>
                 <TableCell align="right">
                   {(!subscriber.instructor || JSON.parse(localStorage.userInfo).isLeader == true && !subscriber.isApproved)

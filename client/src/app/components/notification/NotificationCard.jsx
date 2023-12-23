@@ -5,18 +5,18 @@ import "./about.css"
 const homeAbout = [
   {
     id: 1,
-    title: "Thông báo 1",
-    desc: "Nội dung",
+    title: "Hạn chót nộp đề tài",
+    desc: "Hạn chót nộp đề tài Khóa luận tốt nghiệp của các nhóm đến hết ngày 26/12/2023",
   },
   {
-    id: 1,
-    title: "Thông báo 2",
-    desc: "Nội dung",
+    id: 2,
+    title: "Thông báo mở đăng ký",
+    desc: "Mở đợt đăng ký đề tài Khóa luận tốt nghiệp từ ngày 26/10/2023",
   },
   {
-    id: 1,
-    title: "Thông báo 3",
-    desc: "Nội dung",
+    id: 3,
+    title: "Hạn chót nộp đề tài",
+    desc: "Hạn chót nộp đề tài Kỹ thuật lập trình của các nhóm đến hết ngày 20/12/2023",
   },
 ]
 
