@@ -24,6 +24,10 @@ export async function topicGetAll() {
   return await AxiosCLient.fetching("get", "/topic/getAll");
 }
 
+export async function topicGetAllDemo() {
+  return await AxiosCLient.fetching("get", "/topic/getAllDemo");
+}
+
 export async function topicDetail(data) {
   return await AxiosCLient.fetchingWithData("post", "/topic/getDetail", data);
 }

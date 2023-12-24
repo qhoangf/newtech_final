@@ -27,7 +27,7 @@ import * as Yup from 'yup';
 import { useEffect, useState } from "react";
 import { Formik } from "formik";
 import { LoadingButton } from "@mui/lab";
-import { topicGetAll, topicUpdate, topicDelete } from 'app/lib/api/topic';
+import { topicGetAll, topicUpdate, topicDelete, topicGetAllDemo } from 'app/lib/api/topic';
 
 const StyledTable = styled(Table)(() => ({
   whiteSpace: "pre",
@@ -54,23 +54,43 @@ const validationSchema = Yup.object().shape({
 });
 
 const PaginationTable = ({ isReload }) => {
+  // const subscribarList = [{
+  //   "id": 1,
+  //   "name": "Tên đề tài mẫu 1",
+  //   "major": "software",
+  //   "startDate": "12/24/2023 12:45:01 AM",
+  //   "endDate": "02/22/2024 12:45:01 AM",
+  // }, {
+  //   "id": 2,
+  //   "name": "Tên đề tài mẫu 1",
+  //   "major": "software",
+  //   "startDate": "12/24/2023 12:45:01 AM",
+  //   "endDate": "02/22/2024 12:45:01 AM",
+  // }, {
+  //   "id": 3,
+  //   "name": "Tên đề tài mẫu 1",
+  //   "major": "software",
+  //   "startDate": "12/24/2023 12:45:01 AM",
+  //   "endDate": "02/22/2024 12:45:01 AM",
+  // }];
+
   const [subscribarList, setAllTopicData] = useState([]);
   const [isRendered, isRenderedTable] = useState(false);
 
   const getAllTopic = async () => {
     try {
-      const result = await topicGetAll();
+      const result = await topicGetAllDemo();
       if (result) {
-        console.log("Get all topic successfully", result);
+        console.log("Get all topic successful", result);
         setAllTopicData(result.content);
         isRenderedTable(false);
       } else {
-        console.log("Get all topic fail");
+
       }
     } catch (e) {
       console.log("Process get all topic fail", e);
     }
-  }
+  };
 
   useEffect(() => {
     getAllTopic();
@@ -79,7 +99,8 @@ const PaginationTable = ({ isReload }) => {
   useEffect(() => {
     //Flag: sau khi tạo giảng viên thì trigger +1, -1 đẻ chạy api
     if (isReload > 0)
-      getAllTopic();
+      console.log("Rendering data");
+    getAllTopic();
   }, [isReload])
 
   // Modal Delete
@@ -97,7 +118,7 @@ const PaginationTable = ({ isReload }) => {
       if (result) {
         console.log("Delete successfully", result);
         setOpenDelete(false);
-        isRenderedTable(true);
+        // isRenderedTable(true);
       } else {
         console.log("Delete fail", err);
       }
@@ -138,7 +159,7 @@ const PaginationTable = ({ isReload }) => {
         console.log("Update successfully", result);
         setOpenEdit(false);
         setLoading(false);
-        isRenderedTable(true);
+        // isRenderedTable(true);
       } else {
         console.log("Update fail", err);
         setLoading(false);

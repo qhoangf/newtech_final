@@ -44,6 +44,15 @@ const topicController = {
     }
   },
 
+  getAllDemo: async (req, res) => {
+    try {
+      const topics = await Topic.find();
+      return res.status(200).json({ result: "success", content: topics });
+    } catch (error) {
+      return res.status(404).json(error);
+    }
+  },
+
   update: async (req, res) => {
     try {
       if (!req.body.name) {
