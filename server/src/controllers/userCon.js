@@ -143,8 +143,8 @@ const userController = {
         const saltcode = await bcrypt.genSalt(10);
         const hashcode = await bcrypt.hash(req.body.password, saltcode);
 
-        hashedPassword = hashcode;
-        user = await User.findByIdAndUpdate(userId, { name, username, hashedPassword, major, role, isLeader });
+        password = hashcode;
+        user = await User.findByIdAndUpdate(userId, { name, username, password, major, role, isLeader });
       } else {
         user = await User.findByIdAndUpdate(userId, { name, username, major, role, isLeader });
       }
